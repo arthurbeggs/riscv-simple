@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file
+   path="div_s_sim/div_s_memoryC0_uid112_invTables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="div_s_sim/div_s_memoryC0_uid113_invTables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="div_s_sim/div_s_memoryC1_uid116_invTables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="div_s_sim/div_s_memoryC2_uid120_invTables_lutmem.hex"
+   type="HEX" />
+ <file path="div_s_sim/div_s.vo" type="VERILOG" />
+ <topLevel name="div_s" />
+ <deviceFamily name="cyclonev" />
+</simPackage>

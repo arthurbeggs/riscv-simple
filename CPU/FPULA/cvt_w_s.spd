@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="cvt_w_s_sim/cvt_w_s.vo" type="VERILOG" />
+ <topLevel name="cvt_w_s" />
+ <deviceFamily name="cyclonev" />
+</simPackage>

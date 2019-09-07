@@ -1,0 +1,14 @@
+DEPTH = 16384;
+WIDTH = 32;
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+CONTENT
+BEGIN
+00000000 : 00100293;   % 3: li t0 1 %
+00000001 : 00200313;   % 4: li t1 2 %
+00000002 : d002f053;   % 10: fcvt.s.w ft0 t0 %
+00000003 : d00370d3;   % 13: fcvt.s.w ft1 t1 %
+00000004 : a0101253;   % 17: flt.s tp ft0 ft1 %
+00000005 : c0007553;   % 21: fcvt.w.s a0 ft0 %
+00000006 : c000f5d3;   % 25: fcvt.w.s a1 ft1 %
+END;

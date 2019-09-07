@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="fmin_s_sim/fmin_s.vo" type="VERILOG" />
+ <topLevel name="fmin_s" />
+ <deviceFamily name="cyclonev" />
+</simPackage>

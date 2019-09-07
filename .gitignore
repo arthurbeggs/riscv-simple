@@ -1,0 +1,34 @@
+# Ignored Files
+~*
+*~
+c5_pin_model_dump.txt
+
+# Altera Quartus ignored file and folder patterns
+**/db
+**/incremental_db
+**/output_files
+**/simulation
+**/greybox_tmp
+**/.qsys_edit
+*cr_ie_info.json
+*qar_info.json
+*.qws
+*.done
+*.jdi
+*.pof
+*.rpt
+*.smsg
+*.sof
+*.srf
+*.summary
+*.bak
+*.temp
+*.qar
+*.qarlog
+
+# Compiled files
+**/bin
+**/obj
+**/dep
+**/lib
+
