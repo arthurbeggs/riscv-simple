@@ -2,7 +2,7 @@ module CLOCK_Interface(
 	input 		iCLK_50,						// Clock 50MHz externo
 	output 		oCLK_50,oCLK_25,oCLK_100, oCLK_150,oCLK_200,oCLK_27,oCLK_18,		// Clocks gerados aqui
 	output  		CLK,							// Clock controlado que comandará o processador
-	output 		Reset,						// Sinal de reset 
+	output 		Reset,						// Sinal de reset
 	output reg 	CLKSelectFast, CLKSelectAuto,		// flip-flops dos comandos
 	input [3:0] iKEY,							// Comando dos botões
 	input [7:0] fdiv,							// Divisor de frequencia
@@ -25,7 +25,7 @@ reg  oCLK_50a;
 reg [1:0] rreset;
 assign	Reset = ~iKEY[0] || (rreset<2'b11) ;  // Reset assincrono
 
-	
+
 // inicia resetado 3 ciclos
 
 initial
@@ -53,7 +53,7 @@ end
 
 //PLL para gerar outros clocks
 
-PLL_Main PLL1 (.rst(Reset),.refclk(iCLK_50),
+PLL_Main PLL1 (.rst(1'b0),.refclk(iCLK_50),
 					.outclk_0(oCLK_25),.outclk_1(oCLK_100),.outclk_2(oCLK_150),
 					.outclk_3(oCLK_200),.outclk_4(oCLK_18),.outclk_5(oCLK_27),
 					.locked(wLock));
@@ -67,7 +67,7 @@ assign wClk=oCLK_100;   // Escolher manualmente  iCLK_50  wClk1=100MHz:(fdiv)  w
  always @(posedge oCLK_100)
 	oCLK_50a = ~oCLK_50a;
 
-	
+
 // Define se o CLK_50 será externo iCLK_50 ou interno oCLK_50
 assign oCLK_50 = (wLock? oCLK_50a: iCLK_50);
 
@@ -76,7 +76,7 @@ assign oCLK_50 = (wLock? oCLK_50a: iCLK_50);
 wire Parar;
 mono Timer10 (.clock50(oCLK_50),.enable(Timer),.stop(Parar),.rst(Reset));
 
-//Clock escolha 
+//Clock escolha
 assign CLK = CLKSelectAuto? (CLKSelectFast? CLKAutoFast:CLKAutoSlow):CLKManual;
 //assign CLK=CLKAutoFast;
 
@@ -86,7 +86,7 @@ always @(posedge iKEY[3] or posedge Reset)    //Clock Manual
 	else
 		CLKManual <= ~CLKManual;
 
-		
+
 always @(posedge iKEY[2] or posedge iBreak or posedge Parar) begin  // Congelamento do Clock
 	if (iBreak || Parar)
 		CLKSelectAuto <= 1'b0;

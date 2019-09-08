@@ -4,7 +4,7 @@
 	`include "Parametros.v"
 `endif
 
- 
+
 
 module TopDE (
       ///////// ADC Analog-Digital Converter/////////
@@ -50,7 +50,7 @@ module TopDE (
       ///////// GPIO Generic Paralel I/O/////////
       inout     [35:0]         GPIO_0,
 //    inout     [35:0]         GPIO_1,
- 
+
 
       ///////// DISPLAYS HEX /////////
       output      [6:0]  HEX0,
@@ -150,31 +150,31 @@ module TopDE (
       output      [7:0]  VGA_R,
       output             VGA_SYNC_N,
       output             VGA_VS,
-		
+
 
 	 ////// Pinos virtuais para simulação ///////////
    // output          MClock2, //Clock25, Clock50, Clock100,
-    output  [31:0]  PC, 
+    output  [31:0]  PC,
 	 output  [31:0]  Instrucao,
-    output  [31:0]  BR_Leitura1, 
-	 output  [31:0]  BR_Leitura2, 
-	 output  [31:0]  BR_Escrita, 
-	 output  [31:0]  Saida_ULA, 
+    output  [31:0]  BR_Leitura1,
+	 output  [31:0]  BR_Leitura2,
+	 output  [31:0]  BR_Escrita,
+	 output  [31:0]  Saida_ULA,
     input   [ 4:0]  RegDispSelect,
 	 output  [31:0]  RegDisp,
 	 output  [31:0]  FRegDisp,
 	 output 	[31:0]  CSRegDisp,
-    output  [31:0]  MemD_Endereco, 
-	 output  [31:0]  MemD_DadoEscrita, 
+    output  [31:0]  MemD_Endereco,
+	 output  [31:0]  MemD_DadoEscrita,
 	 output  [31:0]  MemD_DadoLeitura,
-    output  [ 3:0]  MemD_ByteEnable, 
+    output  [ 3:0]  MemD_ByteEnable,
     output  [ 5:0]  Estado,
 	 output  [31:0]  Debug,
 
 
 	 output  [ 2:0]  Uniao
 //	 output 	[ 0:0]  MClock,
-//	 output 	[ 0:0]  LeMem, 
+//	 output 	[ 0:0]  LeMem,
 //	 output 	[ 0:0]  EscreveMem
 
 `ifdef RV32IMF
@@ -185,81 +185,81 @@ module TopDE (
 	 output  [31:0]  Entrada1_FPULA,
 	 output  [31:0]  Entrada_FRegister,
 	 output          Escreve_FReg
-`endif	 
+`endif
 
 `ifdef PIPELINE
 	// Pinos virtuais para debug do pipeline
 	,
 	output 	[31:0] wiIF_PC,
 	output 	[31:0] wiIF_Instr,
-	output 	[31:0] wiIF_PC4,	
-	
+	output 	[31:0] wiIF_PC4,
+
 	output 	[31:0] wID_PC,
 	output 	[31:0] wID_Instr,
 	output 	[31:0] wID_PC4,
-	
-	output 	[31:0] wEX_PC,    
-	output 	[31:0] wEX_Read1,  
-	output 	[31:0] wEX_Read2, 		
-	output 	[ 4:0] wEX_Rs1,			
-	output 	[ 4:0] wEX_Rs2,				
-	output 	[ 4:0] wEX_Rd,				
-	output 	[ 2:0] wEX_Funct3,		
+
+	output 	[31:0] wEX_PC,
+	output 	[31:0] wEX_Read1,
+	output 	[31:0] wEX_Read2,
+	output 	[ 4:0] wEX_Rs1,
+	output 	[ 4:0] wEX_Rs2,
+	output 	[ 4:0] wEX_Rd,
+	output 	[ 2:0] wEX_Funct3,
 	output 	[ 4:0] wEX_CALUControl,
 
 	output   [ 6:0] wEX_Uniao,
-	output 	[ 1:0] wEX_COrigAULA,	
-	output	[ 1:0] wEX_COrigBULA,	
-//	output 	[ 0:0] wEX_CMemRead, 	
-//	output	[ 0:0] wEX_CMemWrite,	
+	output 	[ 1:0] wEX_COrigAULA,
+	output	[ 1:0] wEX_COrigBULA,
+//	output 	[ 0:0] wEX_CMemRead,
+//	output	[ 0:0] wEX_CMemWrite,
 //	output	[ 0:0] wEX_CRegWrite,
-	
-	output 	[31:0] wEX_Immediate,   
-	output 	[31:0] wEX_PC4,	
+
+	output 	[31:0] wEX_Immediate,
+	output 	[31:0] wEX_PC4,
 	output 	[11:0] wEX_CSR,
 	output 	[31:0] wEX_CSRead,
 	output 	[31:0] wEX_Instr,
-	output 	[NTYPE-1:0] wEX_InstrType,		
+	output 	[NTYPE-1:0] wEX_InstrType,
 
-	output 	[31:0] wMEM_PC,          
-	output 	[31:0] wMEM_ALUresult,  
-	output 	[31:0] wMEM_ForwardB, 
-	
+	output 	[31:0] wMEM_PC,
+	output 	[31:0] wMEM_ALUresult,
+	output 	[31:0] wMEM_ForwardB,
+
 	output 	[ 6:0] wMEM_Uniao,
-//	output   [ 0:0] wMEM_CMemRead,  
-//	output   [ 0:0] wMEM_CMemWrite, 
-//	output   [ 0:0] wMEM_CRegWrite, 
+//	output   [ 0:0] wMEM_CMemRead,
+//	output   [ 0:0] wMEM_CMemWrite,
+//	output   [ 0:0] wMEM_CRegWrite,
 
 	output 	[ 4:0] wMEM_Rd,
-	output 	[ 2:0] wMEM_Funct3,	
+	output 	[ 2:0] wMEM_Funct3,
 	output 	[31:0] wMEM_PC4,
 	output 	[11:0] wMEM_CSR,
 	output 	[31:0] wMEM_CSRead,
 	output 	[31:0] wMEM_Instr,
 	output 	[NTYPE-1:0] wMEM_InstrType,
 
-	output 	[31:0] wWB_PC,  			
-	output 	[31:0] wWB_MemLoad,		
-	output 	[31:0] wWB_ALUresult, 	
+	output 	[31:0] wWB_PC,
+	output 	[31:0] wWB_MemLoad,
+	output 	[31:0] wWB_ALUresult,
 	output 	[ 4:0] wWB_Rd,
 
-	output 	[ 4:0] wWB_Uniao, 	
+	output 	[ 4:0] wWB_Uniao,
 	output 	[31:0] wWB_PC4,
 
 	output 	[11:0] wWB_CSR,
 	output 	[31:0] wWB_CSRead,
 	output 	[NTYPE-1:0] wWB_InstrType,
-	
+
 	output 	[31:0] wWB_RegWrite
-	
-`endif	
+
+`endif
 
 );
 
 
 
 // ******** Sinais de monitoramento *****************************************
-wire [31:0] mPC; 
+wire [31:0] mPC;
 wire [31:0] mInstr;
 wire [31:0] mDebug;
 wire [ 4:0] mRegDispSelect;
@@ -274,7 +274,7 @@ wire [31:0] mFVGARead;
 wire [31:0] mRead1;
 wire [31:0] mRead2;
 wire [31:0] mRegWrite;
-wire [31:0] mULA;	
+wire [31:0] mULA;
 wire 			mEbreak;
 
 `ifdef RV32IMF
@@ -284,7 +284,7 @@ wire [31:0] mFRead2;
 wire [31:0] mOrigAFPALU;
 wire [31:0] mFWriteData;
 wire        mCFRegWrite;
-`endif	
+`endif
 
 `ifdef PIPELINE
 
@@ -330,7 +330,7 @@ assign wEX_InstrType		= oRegIDEX[NTYPE+275-1:275];
 
 assign wMEM_PC          = oRegEXMEM[ 31:  0];
 assign wMEM_ALUresult   = oRegEXMEM[ 63: 32];
-assign wMEM_ForwardB 	= oRegEXMEM[ 95: 64]; 
+assign wMEM_ForwardB 	= oRegEXMEM[ 95: 64];
 assign wMEM_Uniao			= {oRegEXMEM[ 98: 96],oRegEXMEM[142],oRegEXMEM[109:107]};
 
 assign wMEM_Rd				= oRegEXMEM[103: 99];
@@ -363,17 +363,17 @@ assign wWB_RegWrite     = oWB_RegWrite;
 
 
 
-// **************  Definicao do endereco inicial do PC  ************************* 
+// **************  Definicao do endereco inicial do PC  *************************
 wire [31:0] PCinicial = BEGINNING_TEXT;
 
 
-// ********************** Barramento de Dados *********************************** 
+// ********************** Barramento de Dados ***********************************
 wire [31:0] DAddress, DWriteData;
 wire [31:0] DReadData;
 wire        DWriteEnable, DReadEnable;
 wire [ 3:0] DByteEnable;
 
-// ********************** Barramento de Instrucoes ******************************* 
+// ********************** Barramento de Instrucoes *******************************
 wire [31:0] IAddress, IWriteData;
 wire [31:0] IReadData;
 wire        IWriteEnable, IReadEnable;
@@ -424,7 +424,7 @@ wire Reset, CLKSelectFast, CLKSelectAuto;
 
 CLOCK_Interface CLOCK0(
 	 .iCLK_50(CLOCK_50),						 // 50MHz
-    .oCLK_50(oCLK_50),                  // 50MHz  <<  Que será usado em todos os dispositivos	 
+    .oCLK_50(oCLK_50),                  // 50MHz  <<  Que será usado em todos os dispositivos
     .oCLK_100(oCLK_100),                // 100MHz
 	 .oCLK_150(oCLK_150),
     .oCLK_200(oCLK_200),                // 200MHz Usado no SignalTap II
@@ -437,7 +437,7 @@ CLOCK_Interface CLOCK0(
     .CLKSelectAuto(CLKSelectAuto),      // Para visualização
     .iKEY(KEY),                         // controles dos clocks e reset
     .fdiv({3'b0,SW[4:0]}),              // divisor da frequencia CLK = iCLK_50/fdiv
-    .Timer(SW[5]),                      // Timer de 10 segundos 
+    .Timer(SW[5]),                      // Timer de 10 segundos
 	 .iBreak(wbreak)			 				 // Break Point
 );
 
@@ -468,7 +468,7 @@ CPU CPU0 (
 	 .mRegWrite(mRegWrite),
 	 .mULA(mULA),
 	 .mEbreak(mEbreak),
-	 
+
 `ifdef RV32IMF
 	 .mFPALU(mFPALU),
 	 .mFRead1(mFRead1),
@@ -479,22 +479,22 @@ CPU CPU0 (
 `endif
 
     // Barramento Dados
-    .DwReadEnable(DReadEnable), 
+    .DwReadEnable(DReadEnable),
 	 .DwWriteEnable(DWriteEnable),
     .DwByteEnable(DByteEnable),
-    .DwAddress(DAddress), 
+    .DwAddress(DAddress),
 	 .DwWriteData(DWriteData),
 	 .DwReadData(DReadData),
 
     // Barramento Instrucoes
-    .IwReadEnable(IReadEnable), 
+    .IwReadEnable(IReadEnable),
 	 .IwWriteEnable(IWriteEnable),
     .IwByteEnable(IByteEnable),
-    .IwAddress(IAddress), 
-	 .IwWriteData(IWriteData), 
+    .IwAddress(IAddress),
+	 .IwWriteData(IWriteData),
 	 .IwReadData(IReadData)
-	 
-	 
+
+
 `ifdef PIPELINE
 	,
 	 .oiIF_PC(oiIF_PC),
@@ -506,8 +506,8 @@ CPU CPU0 (
 	 .oRegMEMWB(oRegMEMWB),
 	 .oWB_RegWrite(oWB_RegWrite)
 `endif
-	 
-	 
+
+
 
 );
 
@@ -518,40 +518,40 @@ CPU CPU0 (
 `ifdef MULTICICLO // Multiciclo
 
 Memory_Interface MEMORY(
-    .iCLK(CLK), 
+    .iCLK(CLK),
 	 .iCLKMem(oCLK_50),
     // Barramento
-    .wReadEnable(DReadEnable), 
+    .wReadEnable(DReadEnable),
 	 .wWriteEnable(DWriteEnable),
     .wByteEnable(DByteEnable),
-    .wAddress(DAddress), 
-	 .wWriteData(DWriteData), 
+    .wAddress(DAddress),
+	 .wWriteData(DWriteData),
 	 .wReadData(DReadData)
 );
 
 `else		// Uniciclo e Pipeline
 
 DataMemory_Interface MEMDATA(
-    .iCLK(CLK), 
-	 .iCLKMem(oCLK_50), 
+    .iCLK(CLK),
+	 .iCLKMem(oCLK_50),
     // Barramento de dados
-    .wReadEnable(DReadEnable), 
+    .wReadEnable(DReadEnable),
 	 .wWriteEnable(DWriteEnable),
     .wByteEnable(DByteEnable),
-    .wAddress(DAddress), 
-	 .wWriteData(DWriteData), 
+    .wAddress(DAddress),
+	 .wWriteData(DWriteData),
 	 .wReadData(DReadData)
 );
 
 CodeMemory_Interface MEMCODE(
-    .iCLK(CLK), 
+    .iCLK(CLK),
 	 .iCLKMem(oCLK_50),
     // Barramento de Instrucoes
-    .wReadEnable(IReadEnable), 
+    .wReadEnable(IReadEnable),
 	 .wWriteEnable(IWriteEnable),
     .wByteEnable(IByteEnable),
-    .wAddress(IAddress), 
-	 .wWriteData(IWriteData), 
+    .wAddress(IAddress),
+	 .wWriteData(IWriteData),
 	 .wReadData(IReadData)
 );
 
@@ -559,7 +559,7 @@ CodeMemory_Interface MEMCODE(
 
 
 
-// ****************LEDR Interface  ************************************* 
+// ****************LEDR Interface  *************************************
 assign LEDR[9:4]   = mControlState;
 assign LEDR[3]		 = 1'b0;
 assign LEDR[2]     = CLKSelectAuto;
@@ -567,8 +567,8 @@ assign LEDR[1]     = CLKSelectFast;
 assign LEDR[0]     = CLK;
 
 
-	 
-// ********************* 7 Segment Displays Interface ********************** 
+
+// ********************* 7 Segment Displays Interface **********************
 wire [31:0] wOutput;
 
 assign wOutput = 	SW[9:8]==2'b11 ? mPC :
@@ -576,13 +576,13 @@ assign wOutput = 	SW[9:8]==2'b11 ? mPC :
 						SW[9:8]==2'b01 ? mDebug :
 						SW[9:8]==2'b00 ? 32'b0 : 32'b0; // slot livre
 
-Display7_Interface Display70(	
-	.HEX0_D(HEX0), 
-	.HEX1_D(HEX1), 
-	.HEX2_D(HEX2), 
-	.HEX3_D(HEX3), 
-	.HEX4_D(HEX4), 
-	.HEX5_D(HEX5), 
+Display7_Interface Display70(
+	.HEX0_D(HEX0),
+	.HEX1_D(HEX1),
+	.HEX2_D(HEX2),
+	.HEX3_D(HEX3),
+	.HEX4_D(HEX4),
+	.HEX5_D(HEX5),
 	.Output(wOutput)
 );
 
@@ -591,13 +591,13 @@ Display7_Interface Display70(
 // ********************* StopWatch Interface *****************************
 STOPWATCH_Interface  stopwatch0 (
 	.iCLK(CLK),
-   .iCLK_50(oCLK_50), 
+   .iCLK_50(oCLK_50),
     // Barramento
-    .wReadEnable(DReadEnable), 
+    .wReadEnable(DReadEnable),
 	 .wWriteEnable(DWriteEnable),
     .wByteEnable(DByteEnable),
-    .wAddress(DAddress), 
-	 .wWriteData(DWriteData), 
+    .wAddress(DAddress),
+	 .wWriteData(DWriteData),
 	 .wReadData(DReadData)
 );
 
@@ -608,85 +608,113 @@ LFSR_interface  lfsr0 (
 	.iCLK(CLK),
 	.iCLK_50(oCLK_50),
 	// Barramento
-    .wReadEnable(DReadEnable), 
+    .wReadEnable(DReadEnable),
 	 .wWriteEnable(DWriteEnable),
     .wByteEnable(DByteEnable),
-    .wAddress(DAddress), 
-	 .wWriteData(DWriteData), 
+    .wAddress(DAddress),
+	 .wWriteData(DWriteData),
 	 .wReadData(DReadData)
 );
-											
-	 
-// **************************** Break Interface ***************************** 
+
+
+// **************************** Break Interface *****************************
 wire wbreak;
 
 Break_Interface  break0 (
-   .iCLK_50(oCLK_50), 
-	.iCLK(CLK), 
+   .iCLK_50(oCLK_50),
+	.iCLK(CLK),
 	.iEbreak(mEbreak),
 	.Reset(Reset),
    .oBreak(wbreak),
 	.iKEY(KEY),
 	.iPC(mPC),
     // Barramento
-    .wReadEnable(DReadEnable), 
+    .wReadEnable(DReadEnable),
 	 .wWriteEnable(DWriteEnable),
     .wByteEnable(DByteEnable),
-    .wAddress(DAddress), 
-	 .wWriteData(DWriteData), 
+    .wAddress(DAddress),
+	 .wWriteData(DWriteData),
 	 .wReadData(DReadData)
-);									
+);
 
-	
+
 // ***************************** VGA Interface ******************************
 wire [4:0]  wVGASelectIn;
 wire [31:0] wVGAReadIn;
 assign wVGAReadIn       = (~SW[7] ? mVGARead : mFVGARead); // POR FALTA DE SW ALTEREI O mFVGARead(Float) para mCSRVGARead(Control Status)
 assign mVGASelect       = wVGASelectIn;
 
-VGA_Interface VGA0 (
-    .iCLK(CLK), 
-	 .iCLK_50(oCLK_50),
-	 .iCLK2_50(CLOCK2_50), 
-	 .iRST(Reset),
-	 .oVGA_CLK(VGA_CLK),
-    .oVGA_HS(VGA_HS), 
-	 .oVGA_VS(VGA_VS), 
-	 .oVGA_BLANK_N(VGA_BLANK_N), 
-	 .oVGA_SYNC_N(VGA_SYNC_N),
-    .oVGA_R(VGA_R), 
-	 .oVGA_G(VGA_G), 
-	 .oVGA_B(VGA_B),
-    .oVGASelect(wVGASelectIn),
-    .iVGARead(wVGAReadIn),
-    .iDebugEnable(SW[9]),
-	 .iframesw(SW[6]),
-    // Barramento
-    .wReadEnable(DReadEnable), 
-	 .wWriteEnable(DWriteEnable),
-    .wByteEnable(DByteEnable),
-    .wAddress(DAddress), 
-	 .wWriteData(DWriteData), 
-	 .wReadData(DReadData)
+// VGA_Interface VGA0 (
+//     .iCLK(CLK),
+// 	 .iCLK_50(oCLK_50),
+// 	 .iCLK2_50(CLOCK2_50),
+// 	 .iRST(Reset),
+// 	 .oVGA_CLK(VGA_CLK),
+//     .oVGA_HS(VGA_HS),
+// 	 .oVGA_VS(VGA_VS),
+// 	 .oVGA_BLANK_N(VGA_BLANK_N),
+// 	 .oVGA_SYNC_N(VGA_SYNC_N),
+//     .oVGA_R(VGA_R),
+// 	 .oVGA_G(VGA_G),
+// 	 .oVGA_B(VGA_B),
+//     .oVGASelect(wVGASelectIn),
+//     .iVGARead(wVGAReadIn),
+//     .iDebugEnable(SW[9]),
+// 	 .iframesw(SW[6]),
+//     // Barramento
+//     .wReadEnable(DReadEnable),
+// 	 .wWriteEnable(DWriteEnable),
+//     .wByteEnable(DByteEnable),
+//     .wAddress(DAddress),
+// 	 .wWriteData(DWriteData),
+// 	 .wReadData(DReadData)
+// );
+
+video_interface video_interface (
+    .clock_core             (CLK),
+    .clock_memory           (oCLK_100),
+    .clock_video            (oCLK_25),
+    .reset                  (Reset),
+    .frame_select_switch    (SW[6]),
+    .osd_display            (SW[9]),
+    .reg_debug_data         (wVGAReadIn),
+    .reg_debug_address      (wVGASelectIn),
+    .pc                     (mPC),
+    .inst                   (mInstr),
+    .epc                    (32'b0),
+    .ecause                 (4'b0),
+    .bus_data_fetched       (DReadData),
+    .bus_address            (DAddress),
+    .bus_write_data         (DWriteData),
+    .bus_byte_enable        (DByteEnable),
+    .bus_read_enable        (DReadEnable),
+    .bus_write_enable       (DWriteEnable),
+    .vga_red                (VGA_R),
+    .vga_green              (VGA_G),
+    .vga_blue               (VGA_B),
+    .vga_clock              (VGA_CLK),
+    .vga_horizontal_sync    (VGA_HS),
+    .vga_vertical_sync      (VGA_VS),
+    .vga_blank              (VGA_BLANK_N),
+    .vga_sync               (VGA_SYNC_N)
 );
 
 
-
-// ************************* Teclado PS2 Interface ************************** 
+// ************************* Teclado PS2 Interface **************************
 wire ps2_scan_ready_clock, keyboard_interrupt;
 
 TecladoPS2_Interface TecladoPS20 (
-    .iCLK(CLK), 
-	 .iCLK_50(oCLK_50), 
+    .iCLK(CLK),
+	 .iCLK_50(oCLK_50),
 	 .Reset(Reset),
     .PS2_KBCLK(PS2_CLK),
     .PS2_KBDAT(PS2_DAT),
     // Barramento
-    .wReadEnable(DReadEnable), 
+    .wReadEnable(DReadEnable),
 	 .wWriteEnable(DWriteEnable),
     .wByteEnable(DByteEnable),
-    .wAddress(DAddress), 
-	 .wWriteData(DWriteData), 
+    .wAddress(DAddress),
+	 .wWriteData(DWriteData),
 	 .wReadData(DReadData)
     //Interrupcao
 //    .ps2_scan_ready_clock(ps2_scan_ready_clock),
@@ -699,8 +727,8 @@ TecladoPS2_Interface TecladoPS20 (
 wire audio_clock_flip_flop, audio_proc_clock_flip_flop;
 
 AudioCODEC_Interface Audio0 (
-    .iCLK(CLK), 
-	 .iCLK_50(oCLK_50),  
+    .iCLK(CLK),
+	 .iCLK_50(oCLK_50),
     .iCLK_18(oCLK_18),
 	 .Reset(Reset),
     .oTD1_RESET_N(TD_RESET_N),
@@ -716,11 +744,11 @@ AudioCODEC_Interface Audio0 (
     .wsaudio_outL(wsaudio_outL),
     .wsaudio_outR(wsaudio_outR),
     // Barramento
-    .wReadEnable(DReadEnable), 
+    .wReadEnable(DReadEnable),
 	 .wWriteEnable(DWriteEnable),
     .wByteEnable(DByteEnable),
-    .wAddress(DAddress), 
-	 .wWriteData(DWriteData), 
+    .wAddress(DAddress),
+	 .wWriteData(DWriteData),
 	 .wReadData(DReadData)
     // Interrupcao
 //    .audio_clock_flip_flop(audio_clock_flip_flop),
@@ -732,23 +760,23 @@ AudioCODEC_Interface Audio0 (
 
 
 
-// ************************ Sintetizador Interface ************************* 
+// ************************ Sintetizador Interface *************************
 wire [15:0] wsaudio_outL, wsaudio_outR;
 
 Sintetizador_Interface Sintetizador0 (
-    .iCLK(CLK), 
-	 .iCLK_50(oCLK_50), 
+    .iCLK(CLK),
+	 .iCLK_50(oCLK_50),
 	 .Reset(Reset),
     .AUD_DACLRCK(AUD_DACLRCK),
     .AUD_BCLK(AUD_BCLK),
-    .wsaudio_outL(wsaudio_outL), 
+    .wsaudio_outL(wsaudio_outL),
 	 .wsaudio_outR(wsaudio_outR),
     //  Barramento
-    .wReadEnable(DReadEnable), 
+    .wReadEnable(DReadEnable),
 	 .wWriteEnable(DWriteEnable),
     .wByteEnable(DByteEnable),
-    .wAddress(DAddress), 
-	 .wWriteData(DWriteData), 
+    .wAddress(DAddress),
+	 .wWriteData(DWriteData),
 	 .wReadData(DReadData)
 );
 
@@ -763,11 +791,11 @@ RS232_Interface Serial0 (
 	 .iUART_RXD(GPIO_0[27]),
     .oUART_TXD(GPIO_0[26]),
     //  Barramento
-    .wReadEnable(DReadEnable), 
+    .wReadEnable(DReadEnable),
 	 .wWriteEnable(DWriteEnable),
     .wByteEnable(DByteEnable),
-    .wAddress(DAddress), 
-	 .wWriteData(DWriteData), 
+    .wAddress(DAddress),
+	 .wWriteData(DWriteData),
 	 .wReadData(DReadData)
 );
 
@@ -784,11 +812,11 @@ ADC_Interface ADCI0 (
     .ADC_DOUT(ADC_DOUT),
     .ADC_SCLK(ADC_SCLK),
     //  Barramento
-    .wReadEnable(DReadEnable), 
+    .wReadEnable(DReadEnable),
 	 .wWriteEnable(DWriteEnable),
     .wByteEnable(DByteEnable),
-    .wAddress(DAddress), 
-	 .wWriteData(DWriteData), 
+    .wAddress(DAddress),
+	 .wWriteData(DWriteData),
 	 .wReadData(DReadData)
 );
 
@@ -800,17 +828,17 @@ ADC_Interface ADCI0 (
 //wire reg_mouse_keyboard, received_data_en_contador_enable;
 //
 //MousePS2_Interface Mouse0 (
-//  .iCLK(CLK), 
-//	 .iCLK_50(oCLK_50), 
+//  .iCLK(CLK),
+//	 .iCLK_50(oCLK_50),
 //	 .Reset(Reset),
 //  .PS2_KBCLK(PS2_CLK),
 //  .PS2_KBDAT(PS2_DAT),
 //  //  Barramento
-//  .wReadEnable(DReadEnable), 
+//  .wReadEnable(DReadEnable),
 //	 .wWriteEnable(DWriteEnable),
 //  .wByteEnable(DByteEnable),
-//  .wAddress(DAddress), 
-//	 .wWriteData(DWriteData), 
+//  .wAddress(DAddress),
+//	 .wWriteData(DWriteData),
 //	 .wReadData(DReadData),
 //  // Interrupcao
 //  .reg_mouse_keyboard(reg_mouse_keyboard),
@@ -821,26 +849,26 @@ ADC_Interface ADCI0 (
 
 // **************************** IrDA Interface *****************************
 //IrDA_Interface  IrDA0 (
-// .iCLK_50(oCLK_50), 
-//	.iCLK(CLK), 
+// .iCLK_50(oCLK_50),
+//	.iCLK(CLK),
 //	.Reset(Reset),
 // .oIRDA_TXD(IRDA_TXD),    //    IrDA Transmitter
 // .iIRDA_RXD(IRDA_RXD),    //    IrDA Receiver
 // //  Barramento
-// .wReadEnable(DReadEnable), 
+// .wReadEnable(DReadEnable),
 //	.wWriteEnable(DWriteEnable),
 // .wByteEnable(DByteEnable),
-// .wAddress(DAddress), 
-//	.wWriteData(DWriteData), 
+// .wAddress(DAddress),
+//	.wWriteData(DWriteData),
 //	.wReadData(DReadData)
 //);
 //
 //IrDA_decoder  IrDA_decoder0 (
-// .iCLK_50(oCLK_50), 
-//	.iCLK(CLK), 
+// .iCLK_50(oCLK_50),
+//	.iCLK(CLK),
 //	.Reset(Reset),
 // .iIRDA_RXD(IRDA_RXD),    //    IrDA Receiver
-//	
+//
 //	.wAddress(DAddress),
 //	.oCode(DReadData),
 //	.wReadEnable(DReadEnable),

@@ -1725,8 +1725,13 @@ set_instance_assignment -name VIRTUAL_PIN ON -to wEX_Instr
 set_instance_assignment -name VIRTUAL_PIN ON -to wMEM_Instr
 set_global_assignment -name EDA_TEST_BENCH_FILE Testes/TopDE_tb.v -section_id TopDE
 set_global_assignment -name EDA_TEST_BENCH_FILE Testes/FPALU_tb.v -section_id FPALU_tb
-set_global_assignment -name VERILOG_FILE TopDE.v
+set_global_assignment -name SEARCH_PATH vga
+set_global_assignment -name SEARCH_PATH cpu/fpula
+set_global_assignment -name SEARCH_PATH audiocodec
+set_global_assignment -name SEARCH_PATH tempo
+set_global_assignment -name SEARCH_PATH memoria
 set_global_assignment -name VERILOG_FILE Parametros.v
+set_global_assignment -name VERILOG_FILE TopDE.v
 set_global_assignment -name VERILOG_FILE CPU/CPU.v
 set_global_assignment -name VERILOG_FILE CPU/Datapath_UNI.v
 set_global_assignment -name VERILOG_FILE CPU/Datapath_MULTI.v
@@ -1806,17 +1811,14 @@ set_global_assignment -name VERILOG_FILE AudioCODEC/I2C_AV_Config.v
 set_global_assignment -name VERILOG_FILE AudioCODEC/AudioVideo_PLL.v
 set_global_assignment -name VERILOG_FILE AudioCODEC/audio_converter.v
 set_global_assignment -name VERILOG_FILE AudioCODEC/audio_clock.v
-set_global_assignment -name VERILOG_FILE VGA/VGA_Interface.v
-set_global_assignment -name VERILOG_FILE VGA/VgaAdapter.v
-set_global_assignment -name VERILOG_FILE VGA/VGA_Audio_PLL.v
-set_global_assignment -name VERILOG_FILE VGA/RegDisplay.v
-set_global_assignment -name VERILOG_FILE VGA/HexFont.v
-set_global_assignment -name QIP_FILE VGA/MemoryVGA.qip
-set_global_assignment -name QIP_FILE VGA/MemoryVGA1.qip
-set_global_assignment -name MIF_FILE VGA/frame0.mif
-set_global_assignment -name MIF_FILE VGA/frame1.mif
-set_global_assignment -name QIP_FILE VGA/VgaPll.qip
-set_global_assignment -name SIP_FILE VGA/VgaPll.sip
+set_global_assignment -name VERILOG_FILE memory/framebuffer_interface.v
+set_global_assignment -name VERILOG_FILE memory/cyclone_v/framebuffer_memory.v
+set_global_assignment -name QIP_FILE memory/cyclone_v/framebuffer_memory.qip
+set_global_assignment -name MIF_FILE default_framebuffer.mif
+set_global_assignment -name VERILOG_FILE video/video_interface.v
+set_global_assignment -name VERILOG_FILE video/video_compositor.v
+set_global_assignment -name VERILOG_FILE video/vga_driver.v
+set_global_assignment -name VERILOG_FILE video/font.v
 set_global_assignment -name QIP_FILE CPU/FPULA/add_sub.qip
 set_global_assignment -name SIP_FILE CPU/FPULA/add_sub.sip
 set_global_assignment -name QIP_FILE CPU/FPULA/mul_s.qip
@@ -1848,9 +1850,4 @@ set_global_assignment -name VECTOR_WAVEFORM_FILE Testes/Waveform2.vwf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Testes/Waveform1_PIPE.vwf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Testes/Waveform1_PIPEtt.vwf
 set_global_assignment -name VERILOG_FILE Testes/FPALU_tb.v
-set_global_assignment -name SEARCH_PATH vga
-set_global_assignment -name SEARCH_PATH cpu/fpula
-set_global_assignment -name SEARCH_PATH audiocodec
-set_global_assignment -name SEARCH_PATH tempo
-set_global_assignment -name SEARCH_PATH memoria
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
