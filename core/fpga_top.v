@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//                    uCHARLES RISC-V - Módulo Top Level                     //
+//                       uCHARLES - Módulo Top Level                         //
 //                                                                           //
 //          Código fonte em https://github.com/arthurbeggs/uCHARLES          //
 //                            BSD 3-Clause License                           //
