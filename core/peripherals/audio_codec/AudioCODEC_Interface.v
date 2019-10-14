@@ -52,16 +52,16 @@ AudioVideo_PLL av_pll(
     .outclk_1()
 );*/
 
-PLL_Audio pll1 (
-		.refclk(iCLK_50),   //  refclk.clk
-		.rst(Reset),      //   reset.reset
-		.outclk_0(AUD_CTRL_CLK), // outclk0.clk
-		.outclk_1(), // outclk1.clk
-		.locked()    //  locked.export
-	);
+// PLL_Audio pll1 (
+// 		.refclk(iCLK_50),   //  refclk.clk
+// 		.rst(Reset),      //   reset.reset
+// 		.outclk_0(AUD_CTRL_CLK), // outclk0.clk
+// 		.outclk_1(), // outclk1.clk
+// 		.locked()    //  locked.export
+// 	);
 
 
-//assign AUD_CTRL_CLK = iCLK_18;
+assign AUD_CTRL_CLK = iCLK_18;
 
 I2C_AV_Config u3(
 //    Host Side

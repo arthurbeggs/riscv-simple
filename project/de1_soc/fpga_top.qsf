@@ -68,112 +68,6 @@ set_global_assignment -name VERILOG_SHOW_LMF_MAPPING_MESSAGES OFF
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name VERILOG_FILE ../../core/config.v
-set_global_assignment -name SDC_FILE ../../core/fpga_top.sdc
-set_global_assignment -name VERILOG_FILE ../../core/fpga_top.v
-set_global_assignment -name VERILOG_FILE ../../core/clock/STOPWATCH_Interface.v
-set_global_assignment -name VERILOG_FILE ../../core/clock/Stopwatch_divider_clk.v
-set_global_assignment -name VERILOG_FILE ../../core/clock/reset_delay.v
-set_global_assignment -name VERILOG_FILE ../../core/clock/PLL_Main.v -library PLL_Main
-set_global_assignment -name QIP_FILE ../../core/clock/PLL_Main.qip
-set_global_assignment -name SOURCE_FILE ../../core/clock/PLL_Main.cmp
-set_global_assignment -name VERILOG_FILE ../../core/clock/PLL_Main/PLL_Main_0002.v -library PLL_Main
-set_global_assignment -name QIP_FILE ../../core/clock/PLL_Main/PLL_Main_0002.qip -library PLL_Main
-set_global_assignment -name VERILOG_FILE ../../core/clock/oneshot.v
-set_global_assignment -name VERILOG_FILE ../../core/clock/mono.v
-set_global_assignment -name VERILOG_FILE ../../core/clock/CLOCK_Interface.v
-set_global_assignment -name VERILOG_FILE ../../core/clock/breaker.v
-set_global_assignment -name QIP_FILE ../../core/clock/breaker.qip
-set_global_assignment -name VERILOG_FILE ../../core/clock/Break_Interface.v
-set_global_assignment -name QIP_FILE ../../core/memory/cyclone_v/text_memory.qip
-set_global_assignment -name QIP_FILE ../../core/memory/cyclone_v/framebuffer_memory.qip
-set_global_assignment -name QIP_FILE ../../core/memory/cyclone_v/data_memory.qip
-set_global_assignment -name VERILOG_FILE ../../core/memory/MemStore.v
-set_global_assignment -name VERILOG_FILE ../../core/memory/Memory_Interface.v
-set_global_assignment -name VERILOG_FILE ../../core/memory/MemLoad.v
-set_global_assignment -name VERILOG_FILE ../../core/memory/framebuffer_interface.v
-set_global_assignment -name VERILOG_FILE ../../core/memory/DataMemory_Interface.v
-set_global_assignment -name VERILOG_FILE ../../core/memory/CodeMemory_Interface.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/lfsr/LFSR_word.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/lfsr/lfsr_interface.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/sqrt_s.v -library sqrt_s
-set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/sqrt_s.qip
-set_global_assignment -name SOURCE_FILE ../../core/risc_v/FPULA/sqrt_s.cmp
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/mul_s.v -library mul_s
-set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/mul_s.qip
-set_global_assignment -name SOURCE_FILE ../../core/risc_v/FPULA/mul_s.cmp
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/FPALU.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/fmin_s.v -library fmin_s
-set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/fmin_s.qip
-set_global_assignment -name SOURCE_FILE ../../core/risc_v/FPULA/fmin_s.cmp
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/fmax_s.v -library fmax_s
-set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/fmax_s.qip
-set_global_assignment -name SOURCE_FILE ../../core/risc_v/FPULA/fmax_s.cmp
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/div_s.v -library div_s
-set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/div_s.qip
-set_global_assignment -name SOURCE_FILE ../../core/risc_v/FPULA/div_s.cmp
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/cvt_wu_s.v -library cvt_wu_s
-set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/cvt_wu_s.qip
-set_global_assignment -name SOURCE_FILE ../../core/risc_v/FPULA/cvt_wu_s.cmp
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/cvt_w_s.v -library cvt_w_s
-set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/cvt_w_s.qip
-set_global_assignment -name SOURCE_FILE ../../core/risc_v/FPULA/cvt_w_s.cmp
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/cvt_s_wu.v -library cvt_s_wu
-set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/cvt_s_wu.qip
-set_global_assignment -name SOURCE_FILE ../../core/risc_v/FPULA/cvt_s_wu.cmp
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/cvt_s_w.v -library cvt_s_w
-set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/cvt_s_w.qip
-set_global_assignment -name SOURCE_FILE ../../core/risc_v/FPULA/cvt_s_w.cmp
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/comp_s.v
-set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/comp_s.qip
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/add_sub.v -library add_sub
-set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/add_sub.qip
-set_global_assignment -name SOURCE_FILE ../../core/risc_v/FPULA/add_sub.cmp
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/Registers.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/ImmGen.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FwdHazardUnitM.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/FRegisters.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/ExceptionControl.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/Datapath_UNI.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/Datapath_PIPEM.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/Datapath_MULTI.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/CSRegisters.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/CPU.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/Control_UNI.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/Control_PIPEM.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/Control_MULTI.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/BranchControl.v
-set_global_assignment -name VERILOG_FILE ../../core/risc_v/ALU.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/video/video_interface.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/video/video_compositor.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/video/vga_driver.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/video/font.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/rs232/RS232_Interface.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/rs232/async.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/TecladoPS2_Interface.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/tecladoPS2.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/scan2ascii.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/PS2_Controller.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/MousePS2_Interface.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/mouse_hugo.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/keyscan.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/keyboard.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/Altera_UP_PS2_Data_In.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/Altera_UP_PS2_Command_Out.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/PLL_Audio.v -library PLL_Audio
-set_global_assignment -name QIP_FILE ../../core/peripherals/audio_codec/PLL_Audio.qip
-set_global_assignment -name SOURCE_FILE ../../core/peripherals/audio_codec/PLL_Audio.cmp
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/I2C_Controller.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/I2C_AV_Config.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/AudioVideo_PLL.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/AudioCODEC_Interface.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/audio_converter.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/audio_clock.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/adc/submodules/altera_up_avalon_adv_adc.v -library ADC_Controller
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/adc/submodules/ADC_Controller_adc_mega_0.v -library ADC_Controller
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/adc/ADC_Interface.v
-set_global_assignment -name VERILOG_FILE ../../core/peripherals/adc/ADC_Controller.v -library ADC_Controller
-set_global_assignment -name QIP_FILE ../../core/peripherals/adc/ADC_Controller.qip
 
 
 #============================================================
@@ -1117,7 +1011,6 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_VS
 #============================================================
 
 
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
 set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH fpga_top_tb -section_id eda_simulation
@@ -1125,3 +1018,82 @@ set_global_assignment -name EDA_TEST_BENCH_NAME fpga_top_tb -section_id eda_simu
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME dut -section_id fpga_top_tb
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME fpga_top_tb -section_id fpga_top_tb
 set_global_assignment -name EDA_TEST_BENCH_FILE ../../test/verilog_testbench/fpga_top_tb.v -section_id fpga_top_tb
+set_global_assignment -name VERILOG_MACRO "DE1_SOC=<None>"
+set_global_assignment -name VERILOG_FILE ../../core/config.v
+set_global_assignment -name SDC_FILE ../../core/fpga_top.sdc
+set_global_assignment -name VERILOG_FILE ../../core/fpga_top.v
+set_global_assignment -name VERILOG_FILE ../../core/clock/clock_interface.v
+set_global_assignment -name VERILOG_FILE ../../core/clock/clock_divider.v
+set_global_assignment -name VERILOG_FILE ../../core/clock/clock_counters.v
+set_global_assignment -name VERILOG_FILE ../../core/clock/clock_control.v
+set_global_assignment -name QIP_FILE ../../core/clock/cyclone_v/pll.qip
+set_global_assignment -name VERILOG_FILE ../../core/clock/breakpoint_interface.v
+set_global_assignment -name QIP_FILE ../../core/clock/cyclone_v/breakpoint_address.qip
+set_global_assignment -name VERILOG_FILE ../../core/clock/rtc_interface.v
+set_global_assignment -name QIP_FILE ../../core/memory/cyclone_v/framebuffer_memory.qip
+set_global_assignment -name QIP_FILE ../../core/memory/cyclone_v/data_memory.qip
+set_global_assignment -name QIP_FILE ../../core/memory/cyclone_v/text_memory.qip
+set_global_assignment -name VERILOG_FILE ../../core/memory/MemStore.v
+set_global_assignment -name VERILOG_FILE ../../core/memory/Memory_Interface.v
+set_global_assignment -name VERILOG_FILE ../../core/memory/MemLoad.v
+set_global_assignment -name VERILOG_FILE ../../core/memory/framebuffer_interface.v
+set_global_assignment -name VERILOG_FILE ../../core/memory/DataMemory_Interface.v
+set_global_assignment -name VERILOG_FILE ../../core/memory/CodeMemory_Interface.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/lfsr/LFSR_word.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/lfsr/lfsr_interface.v
+set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/sqrt_s.qip
+set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/mul_s.qip
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/FPULA/FPALU.v
+set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/fmin_s.qip
+set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/fmax_s.qip
+set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/div_s.qip
+set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/cvt_wu_s.qip
+set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/cvt_w_s.qip
+set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/cvt_s_wu.qip
+set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/cvt_s_w.qip
+set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/comp_s.qip
+set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/add_sub.qip
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/Registers.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/ImmGen.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/FwdHazardUnitM.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/FRegisters.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/ExceptionControl.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/Datapath_UNI.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/Datapath_PIPEM.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/Datapath_MULTI.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/CSRegisters.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/CPU.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/Control_UNI.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/Control_PIPEM.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/Control_MULTI.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/BranchControl.v
+set_global_assignment -name VERILOG_FILE ../../core/risc_v/ALU.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/video/video_interface.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/video/video_compositor.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/video/vga_driver.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/video/font.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/rs232/RS232_Interface.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/rs232/async.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/TecladoPS2_Interface.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/tecladoPS2.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/scan2ascii.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/PS2_Controller.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/MousePS2_Interface.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/oneshot.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/mouse_hugo.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/keyscan.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/keyboard.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/Altera_UP_PS2_Data_In.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/Altera_UP_PS2_Command_Out.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/I2C_Controller.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/I2C_AV_Config.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/AudioCODEC_Interface.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/audio_converter.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/audio_clock.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/reset_delay.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/adc/submodules/altera_up_avalon_adv_adc.v -library ADC_Controller
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/adc/submodules/ADC_Controller_adc_mega_0.v -library ADC_Controller
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/adc/ADC_Interface.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/adc/ADC_Controller.v -library ADC_Controller
+set_global_assignment -name QIP_FILE ../../core/peripherals/adc/ADC_Controller.qip
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

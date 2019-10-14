@@ -9,8 +9,8 @@
 `define CONFIG_AND_CONSTANTS
 
 // Selecione a microarquitetura a ser sintetizada [ative somente uma]
-`define UNICICLO
-//`define MULTICICLO
+// `define UNICICLO
+`define MULTICICLO
 // `define PIPELINE
 
 
@@ -304,7 +304,7 @@ parameter
      IRDA_READ_ADDRESS          = 32'hFF20_0508,            // Relatorio questao B.10) - Grupo 2 - (2/2016)
     IRDA_WRITE_ADDRESS         = 32'hFF20_050C,         // Relatorio questao B.10) - Grupo 2 - (2/2016)
 
-     STOPWATCH_ADDRESS           = 32'hFF20_0510,           //Feito em 2/2016 para servir de cronometro
+     RTC_ADDRESS                    = 32'hFF20_0510,           //Feito em 2/2016 para servir de cronometro
 
      LFSR_ADDRESS                    = 32'hFF20_0514,           // Gerador de numeros aleatorios
 

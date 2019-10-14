@@ -3,47 +3,45 @@
 `endif
 
 module CodeMemory_Interface (
-    input wire              iCLK, iCLKMem,
-    //  Barramento de IO
-    input wire              wReadEnable, wWriteEnable,
-    input wire      [3:0]   wByteEnable,
-    input wire      [31:0]  wAddress, wWriteData,
-    output logic    [31:0]  wReadData
+    input  iCLK,
+    input  iCLKMem,
+    input  wReadEnable,
+    input  wWriteEnable,
+    input  [3:0]  wByteEnable,
+    input  [31:0] wAddress,
+    input  [31:0] wWriteData,
+    output reg [31:0] wReadData
 );
 
-    wire        wMemWriteMB0,wMemReadMB0;
-    wire [31:0] wMemDataMB0;
-    wire        is_usermem;
-     wire [31:0] usermem_add;
+wire [31:0] wMemDataMB0;
+wire [31:0] usermem_addr;
+wire wMemWriteMB0;
+wire is_usermem;
+reg  MemWritten;
+
+assign is_usermem   = (wAddress >= BEGINNING_TEXT) && (wAddress <= END_TEXT);
+assign usermem_addr = wAddress - BEGINNING_TEXT;
+assign wMemWriteMB0 = ~MemWritten && wWriteEnable && is_usermem;
 
 text_memory text_memory(
-    .address(usermem_add[TEXT_WIDTH-1:2]),
-    .clock(iCLKMem),
-    .q(wMemDataMB0)
+    .address    (usermem_addr[TEXT_WIDTH-1:2]),
+    .byteena    (wByteEnable),
+    .clock      (iCLKMem),
+    .data       (wWriteData),
+    .wren       (wMemWriteMB0),
+    .q          (wMemDataMB0)
 );
 
-    reg MemWritten;
-    initial MemWritten <= 1'b0;
-    always @(iCLK) MemWritten <= iCLK;
+initial MemWritten <= 1'b0;
+always @(iCLK) MemWritten <= iCLK;
 
-
-    assign is_usermem   = wAddress >= BEGINNING_TEXT  && wAddress <= END_TEXT;        // Programa usuario .text
-
-    assign usermem_add  = wAddress - BEGINNING_TEXT;
-
-    assign wMemReadMB0  = wReadEnable  && is_usermem;
-
-    assign wMemWriteMB0 = ~MemWritten && wWriteEnable && is_usermem;
-//    assign wMemWriteMB0 = wWriteEnable && is_usermem;
-
-    always @(*)
-        if(wReadEnable)
-            begin
-                if(is_usermem)      wReadData <= wMemDataMB0; else
-                wReadData <= 32'hzzzzzzzz;
-            end
-        else
-            wReadData <= 32'hzzzzzzzz;
-
+always @(*) begin
+    if(is_usermem) begin
+        if(wReadEnable) wReadData <= wMemDataMB0;
+        else            wReadData <= 32'b1;
+    end
+    else                wReadData <= 32'hzzzzzzzz;
+end
 
 endmodule
+

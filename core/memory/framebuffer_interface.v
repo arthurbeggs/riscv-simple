@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//               RISC-V SiMPLE - Interface da Memória de Vídeo               //
+//                  uCHARLES - Interface da Memória de Vídeo                 //
 //                                                                           //
 //        Código fonte em https://github.com/arthurbeggs/riscv-simple        //
 //                            BSD 3-Clause License                           //

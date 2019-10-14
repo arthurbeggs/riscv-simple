@@ -46,7 +46,7 @@ begin
     end
     else
      begin
-        i<=6'bx; // para não dar warning
+        i <= 6'bxxxxxx; // para não dar warning
         if(iRegWrite)
                 registers[iWriteRegister] <= iWriteData;
      end
