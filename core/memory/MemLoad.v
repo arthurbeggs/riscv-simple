@@ -6,11 +6,10 @@
 /* define a partir do funct3 qual a forma de acesso a memoria lb, lh, lw */
 
 module MemLoad(
-    input  [1:0]  iAlignment,
-    input  [2:0]  iFunct3,
+    input  [ 1:0] iAlignment,
+    input  [ 2:0] iFunct3,
     input  [31:0] iData,
     output logic [31:0] oData
-
 );
 
 logic [15:0] Halfword;
@@ -46,3 +45,4 @@ always @(*) begin
 end
 
 endmodule
+

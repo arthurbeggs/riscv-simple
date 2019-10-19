@@ -6,69 +6,64 @@
 // * Bloco de Controle PIPELINE
 // *
 
-
  module Control_PIPEM(
     input  [31:0] iInstr,
 `ifdef RV32IMF
-     input         iFPALUReady,
+    input  iFPALUReady,
 `endif
 
-     output         oEcall,
-     output             oEbreak,
-     output             oInvInstr,
-    output [ 1:0]   oOrigAULA,
-     output [ 1:0]  oOrigBULA,
-     output         oRegWrite,
-     output         oCSRegWrite,
-     output         oMemWrite,
-     output         oMemRead,
-     output [ 2:0]  oMem2Reg,
-     output [ 2:0]  oOrigPC,
-     output [ 4:0] oALUControl,
+    output oEcall,
+    output oEbreak,
+    output oInvInstr,
+    output [ 1:0] oOrigAULA,
+    output [ 1:0] oOrigBULA,
+    output oRegWrite,
+    output oCSRegWrite,
+    output oMemWrite,
+    output oMemRead,
+    output [ 2:0] oMem2Reg,
+    output [ 2:0] oOrigPC,
+    output [ 4:0] oALUControl,
  `ifdef RV32IMF
-     output        oFRegWrite,
-     output [ 4:0] oFPALUControl,
-     output        oFPALUStart,
+    output oFRegWrite,
+    output [ 4:0] oFPALUControl,
+    output oFPALUStart,
  `endif
-     output [NTYPE-1:0] oInstrType  //{CSR,FPULA2Reg,FAIsInt,FAisFloat,FStore,FLoad,DivRem,Load,Store,TipoR,TipoI,Jal,Jalr,Branch} // Identifica o tipo da instrucao que esta sendo decodificada pelo controle
+    output [NTYPE-1:0] oInstrType  //{CSR,FPULA2Reg,FAIsInt,FAisFloat,FStore,FLoad,DivRem,Load,Store,TipoR,TipoI,Jal,Jalr,Branch} // Identifica o tipo da instrucao que esta sendo decodificada pelo controle
 );
 
 
-wire [6:0]      Opcode = iInstr[ 6: 0];
-wire [2:0]      Funct3  = iInstr[14:12];
-wire [6:0]      Funct7  = iInstr[31:25];
-wire [11:0]     Funct12  = iInstr[31:20];   // funct 7 + rs2 para instruções como ecall, uret e ebreak
+wire [ 6:0] Opcode  = iInstr[ 6: 0];
+wire [ 2:0] Funct3  = iInstr[14:12];
+wire [ 6:0] Funct7  = iInstr[31:25];
+wire [11:0] Funct12 = iInstr[31:20];   // funct 7 + rs2 para instruções como ecall, uret e ebreak
 `ifdef RV32IMF
-wire [4:0]      Rs2    = iInstr[24:20]; // Para os converts de ponto flutuante
+wire [ 4:0] Rs2     = iInstr[24:20]; // Para os converts de ponto flutuante
 `endif
 
-always @(*)
-begin
-                oInvInstr     <= 1'b0;
-                oEbreak       <= 1'b0;
-                oEcall        <= 1'b0;
-                oOrigAULA     <= 2'b00;
-                oOrigBULA     <= 2'b00;
-                oRegWrite     <= 1'b0;
-                oCSRegWrite   <= 1'b0;
-                oMemWrite     <= 1'b0;
-                oMemRead      <= 1'b0;
-                oALUControl   <= OPNULL;
-                oMem2Reg      <= 3'b000;
-                oOrigPC       <= 3'b000;
-                oInstrType    <= 14'b00000000000000;
+always @(*) begin
+    oInvInstr     <= 1'b0;
+    oEbreak       <= 1'b0;
+    oEcall        <= 1'b0;
+    oOrigAULA     <= 2'b00;
+    oOrigBULA     <= 2'b00;
+    oRegWrite     <= 1'b0;
+    oCSRegWrite   <= 1'b0;
+    oMemWrite     <= 1'b0;
+    oMemRead      <= 1'b0;
+    oALUControl   <= OPNULL;
+    oMem2Reg      <= 3'b000;
+    oOrigPC       <= 3'b000;
+    oInstrType    <= 14'b00000000000000;
 `ifdef RV32IMF
-                oFRegWrite    <= 1'b0;
-                oFPALUControl <= FOPNULL;
-                oFPALUStart   <= 1'b0;
+    oFRegWrite    <= 1'b0;
+    oFPALUControl <= FOPNULL;
+    oFPALUStart   <= 1'b0;
 `endif
 
     case(Opcode)
-
         OPC_SYSTEM:
             begin
-
-
                 oMemWrite     <= 1'b0;
                 oMemRead      <= 1'b0;
 `ifdef RV32IMF
@@ -928,9 +923,8 @@ begin
                 oFPALUStart   <= 1'b0;
 `endif
         end
-
     endcase
-
 end
 
 endmodule
+

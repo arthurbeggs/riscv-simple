@@ -164,8 +164,8 @@ Registers REGISTERS0 (
     .oReadData1     (wRead1),
     .oReadData2     (wRead2),
 
-    .iVGASelect     (reg_debug_address),    // para mostrar Regs na tela
-    .oVGARead       (reg_debug_data)        // para mostrar Regs na tela
+    .iVGASelect     (reg_debug_address),
+    .oVGARead       (reg_debug_data)
 );
 
 
@@ -184,8 +184,8 @@ FRegisters REGISTERS1 (
     .oReadData1     (wFRead1),
     .oReadData2     (wFRead2),
 
-    .iVGASelect     (reg_debug_address),    // para mostrar Regs na tela
-    .oVGARead       (fp_reg_debug_data)     // para mostrar Regs na tela colocar wfvgaread
+    .iVGASelect     (reg_debug_address),
+    .oVGARead       (fp_reg_debug_data)
 );
 `endif
 
@@ -218,8 +218,8 @@ CSRegisters CSRegister2 (
     .time_counter           (time_counter),
     .instret_counter        (instret_counter),
 
-    .csr_debug_address      (csr_debug_address),    // para mostrar Regs na tela
-    .csr_debug_data         (csr_debug_data)        // para mostrar Regs na tela colocar wfvgaread
+    .csr_debug_address      (csr_debug_address),
+    .csr_debug_data         (csr_debug_data)
 );
 
 // unidade de controle de exceções

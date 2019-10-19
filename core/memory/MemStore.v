@@ -6,12 +6,11 @@
 /* define a partir do funct3 qual a forma de acesso a memoria sb, sh, sw e ByteEnable */
 
 module MemStore(
-    input  [1:0]  iAlignment,
-    input  [2:0]  iFunct3,
+    input  [ 1:0] iAlignment,
+    input  [ 2:0] iFunct3,
     input  [31:0] iData,
     output logic [31:0] oData,
-    output logic [3:0]  oByteEnable
-
+    output logic [ 3:0] oByteEnable
 );
 
 always @(*) begin

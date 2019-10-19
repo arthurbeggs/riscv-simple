@@ -403,32 +403,18 @@ Datapath_PIPEM DATAPATH0 (
     .iRST                   (iRST),
     .iInitialPC             (initial_pc),
 
-      // Sinais de monitoramento
+     // Sinais de monitoramento
     .mPC                    (pc),
     .mInstr                 (inst),
-    .mDebug                 (mDebug),
-    .mRegDispSelect         (mRegDispSelect),
-    .mRegDisp               (mRegDisp),
-    .mCSRegDisp             (mCSRegDisp),
-    .mFRegDisp              (mFRegDisp),
-    .mVGASelect             (reg_debug_address),
-    .mVGARead               (reg_debug_data),
-    .mFVGARead              (fp_reg_debug_data),
-    .mCSRVGARead            (csr_debug_data),
-    .mRead1                 (mRead1),
-    .mRead2                 (mRead2),
-    .mRegWrite              (mRegWrite),
-    .mULA                   (mULA),
-`ifdef RV32IMF
-    .mFPALU                 (mFPALU),
-    .mFRead1                (mFRead1),
-    .mFRead2                (mFRead2),
-    .mOrigAFPALU            (mOrigAFPALU),
-    .mFWriteData            (mFWriteData),
-    .mCFRegWrite            (mCFRegWrite),
-    .oEX_FPALUReady         (wEX_FPALUReady),
-`endif
+    .reg_debug_address      (reg_debug_address),
+    .csr_debug_address      (csr_debug_address),
+    .reg_debug_data         (reg_debug_data),
+    .fp_reg_debug_data      (fp_reg_debug_data),
+    .csr_debug_data         (csr_debug_data),
 
+    // Contadores
+    .cycles_counter         (core_clock_ticks),
+    .time_counter           (miliseconds),
 
     // Sinais do Controle
     .wID_Instr              (wID_Instr),
@@ -445,9 +431,9 @@ Datapath_PIPEM DATAPATH0 (
     .wID_COrigPC            (wID_COrigPC),
     .wID_InstrType          (wID_InstrType),
 `ifdef RV32IMF
-     .wID_CFRegWrite        (wID_CFRegWrite),
-     .wID_CFPALUControl     (wID_CFPALUControl),
-     .wID_CFPALUStart       (wID_CFPALUStart),
+    .wID_CFRegWrite         (wID_CFRegWrite),
+    .wID_CFPALUControl      (wID_CFPALUControl),
+    .wID_CFPALUStart        (wID_CFPALUStart),
 `endif
 
     // Barramento de dados
@@ -464,17 +450,7 @@ Datapath_PIPEM DATAPATH0 (
     .IwByteEnable           (IByteEnable),
     .IwWriteData            (IWriteData),
     .IwReadData             (IReadData),
-    .IwAddress              (IAddress),
-
-     // Para Debug
-     .oiIF_PC               (oiIF_PC),
-     .oiIF_Instr            (oiIF_Instr),
-     .oiIF_PC4              (oiIF_PC4),
-     .oRegIFID              (oRegIFID),
-     .oRegIDEX              (oRegIDEX),
-     .oRegEXMEM             (oRegEXMEM),
-     .oRegMEMWB             (oRegMEMWB),
-     .oWB_RegWrite          (oWB_RegWrite)
+    .IwAddress              (IAddress)
 );
 `endif
 

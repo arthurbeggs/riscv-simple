@@ -95,7 +95,7 @@ wire [ 4:0] wRs1        = wInstr[19:15];
 wire [ 4:0] wRs2        = wInstr[24:20];
 wire [ 4:0] wRd         = wInstr[11: 7];
 wire [ 2:0] wFunct3     = wInstr[14:12];
-wire [ 6:0] wOpcode     = wInstr[ 6: 0];
+// wire [ 6:0] wOpcode     = wInstr[ 6: 0];
 
 // Barramento da Memoria de Instrucoes
 assign IwReadEnable     = ON;
@@ -119,8 +119,8 @@ Registers REGISTERS0 (
     .oReadData1     (wRead1),
     .oReadData2     (wRead2),
 
-    .iVGASelect     (reg_debug_address),    // para mostrar Regs na tela
-    .oVGARead       (reg_debug_data)        // para mostrar Regs na tela
+    .iVGASelect     (reg_debug_address),
+    .oVGARead       (reg_debug_data)
 );
 
 
@@ -139,8 +139,8 @@ FRegisters REGISTERS1 (
     .oReadData1     (wFRead1),
     .oReadData2     (wFRead2),
 
-    .iVGASelect     (reg_debug_address),    // para mostrar Regs na tela
-    .oVGARead       (fp_reg_debug_data)     // para mostrar Regs na tela colocar wfvgaread
+    .iVGASelect     (reg_debug_address),
+    .oVGARead       (fp_reg_debug_data)
 );
 `endif
 
@@ -176,8 +176,8 @@ CSRegisters CSRegister2 (
     .time_counter           (time_counter),
     .instret_counter        (instret_counter),
 
-    .csr_debug_address      (csr_debug_address),    // para mostrar Regs na tela
-    .csr_debug_data         (csr_debug_data)        // para mostrar Regs na tela colocar wfvgaread
+    .csr_debug_address      (csr_debug_address),
+    .csr_debug_data         (csr_debug_data)
 );
 
 
