@@ -154,8 +154,12 @@ wire [ 3:0] DByteEnable;
 
 
 //****************************** Clock Interface *****************************//
-wire CLK, oCLK_100, oCLK_50, oCLK_25, oCLK_18;
-wire Reset;
+wire core_clock;
+wire clock_100mhz;
+wire clock_50mhz;
+wire clock_25mhz;
+wire clock_18mhz;
+wire reset;
 wire clock_manual_mode;
 wire clock_slow_mode;
 wire [63:0] miliseconds;
@@ -173,12 +177,12 @@ clock_interface clock_interface (
     .clock_slow_mode        (clock_slow_mode),
     .core_clock_ticks       (core_clock_ticks),
     .miliseconds            (miliseconds),
-    .clock_100mhz           (oCLK_100),
-    .clock_50mhz            (oCLK_50),
-    .clock_25mhz            (oCLK_25),
-    .clock_18mhz            (oCLK_18),
-    .core_clock             (CLK),
-    .reset                  (Reset)
+    .clock_100mhz           (clock_100mhz),
+    .clock_50mhz            (clock_50mhz),
+    .clock_25mhz            (clock_25mhz),
+    .clock_18mhz            (clock_18mhz),
+    .core_clock             (core_clock),
+    .reset                  (reset)
 );
 
 
@@ -195,12 +199,12 @@ rtc_interface rtc_interface (
 wire stall_core;
 
 breakpoint_interface breakpoint_interface (
-    .core_clock             (CLK),
-    .reset                  (Reset),
+    .core_clock             (core_clock),
+    .reset                  (reset),
     .clock_mode_button      (KEY[2]),
     .countdown_enable       (SW[5]),
-    .ebreak_syscall         (mEbreak),
-    .pc                     (mPC),
+    .ebreak_syscall         (ebreak_syscall),
+    .pc                     (pc),
     .miliseconds            (miliseconds),
     .wReadEnable            (DReadEnable),
     .wAddress               (DAddress),
@@ -210,29 +214,36 @@ breakpoint_interface breakpoint_interface (
 
 
 //************************************ CPU ***********************************//
-wire [31:0] mPC;
-wire [31:0] mInstr;
+wire [31:0] pc;
+wire [31:0] inst;
 wire [ 5:0] mControlState;
-wire [ 4:0] mVGASelect;
-wire [31:0] mVGARead;
-wire [31:0] mFVGARead;
-wire [31:0] mCSRVGARead;
-wire        mEbreak;
+wire [ 4:0] reg_debug_address;
+wire [11:0] csr_debug_address;
+wire [31:0] reg_debug_data;
+wire [31:0] fp_reg_debug_data;
+wire [31:0] csr_debug_data;
+wire ebreak_syscall;
 
 CPU CPU0 (
-    .iCLK                   (CLK),      // Clock real do Processador
-    .iCLK_50                (oCLK_50),  // Clock 50MHz fixo, usado so na FPU Uniciclo
-    .iRST                   (Reset),
+    .iCLK                   (core_clock),      // Clock real do Processador
+    .iCLK_50                (clock_50mhz),  // Clock 50MHz fixo, usado so na FPU Uniciclo
+    .iRST                   (reset),
+    .initial_pc             (BEGINNING_TEXT),
 
     // Sinais de debug
-    .mPC                    (mPC),
-    .mInstr                 (mInstr),
+    .pc                     (pc),
+    .inst                   (inst),
     .mControlState          (mControlState),
-    .mVGASelect             (mVGASelect),
-    .mVGARead               (mVGARead),
-    .mCSRVGARead            (mCSRVGARead),
-    .mFVGARead              (mFVGARead),
-    .mEbreak                (mEbreak),
+    .reg_debug_address      (reg_debug_address),
+    .csr_debug_address      (csr_debug_address),
+    .reg_debug_data         (reg_debug_data),
+    .fp_reg_debug_data      (fp_reg_debug_data),
+    .csr_debug_data         (csr_debug_data),
+    .ebreak_syscall         (ebreak_syscall),
+
+    // Contadores
+    .core_clock_ticks       (core_clock_ticks),
+    .miliseconds            (miliseconds),
 
     // Barramento Dados
     .DReadEnable            (DReadEnable),
@@ -248,13 +259,13 @@ CPU CPU0 (
 assign LEDR[9:3]    = mControlState;
 assign LEDR[2]      = ~clock_manual_mode;
 assign LEDR[1]      = ~clock_slow_mode;
-assign LEDR[0]      = CLK;
+assign LEDR[0]      = core_clock;
 
 
 //****************************** LFSR Interface ******************************//
 LFSR_interface  lfsr0 (
-    .iCLK                   (CLK),
-    .iCLK_50                (oCLK_50),
+    .iCLK                   (core_clock),
+    .iCLK_50                (clock_50mhz),
     .wReadEnable            (DReadEnable),
     .wWriteEnable           (DWriteEnable),
     .wByteEnable            (DByteEnable),
@@ -266,24 +277,21 @@ LFSR_interface  lfsr0 (
 
 //****************************** VGA Interface *******************************//
 `ifdef USE_VIDEO
-wire [4:0]  wVGASelectIn;
-wire [31:0] wVGAReadIn;
-assign wVGAReadIn       = (~SW[7] ? mVGARead : mFVGARead); // POR FALTA DE SW ALTEREI O mFVGARead(Float) para mCSRVGARead(Control Status)
-assign mVGASelect       = wVGASelectIn;
-
 video_interface video_interface (
-    .clock_core             (CLK),
-    .clock_memory           (oCLK_100),
-    .clock_video            (oCLK_25),
-    .reset                  (Reset),
+    .clock_core             (core_clock),
+    .clock_memory           (clock_100mhz),
+    .clock_video            (clock_25mhz),
+    .reset                  (reset),
     .frame_select_switch    (SW[6]),
-    .osd_display            (SW[9]),
-    .reg_debug_data         (wVGAReadIn),
-    .reg_debug_address      (wVGASelectIn),
-    .pc                     (mPC),
-    .inst                   (mInstr),
-    .epc                    (32'b0),
-    .ecause                 (4'b0),
+    .osd_enable             (SW[9]),
+    .osd_select_regfile     (SW[7]),
+    .reg_debug_address      (reg_debug_address),
+    .csr_debug_address      (csr_debug_address),
+    .reg_debug_data         (reg_debug_data),
+    .fp_reg_debug_data      (fp_reg_debug_data),
+    .csr_debug_data         (csr_debug_data),
+    .pc                     (pc),
+    .inst                   (inst),
     .bus_data_fetched       (DReadData),
     .bus_address            (DAddress),
     .bus_write_data         (DWriteData),
@@ -307,9 +315,9 @@ video_interface video_interface (
 wire ps2_scan_ready_clock, keyboard_interrupt;
 
 TecladoPS2_Interface TecladoPS20 (
-    .iCLK                   (CLK),
-    .iCLK_50                (oCLK_50),
-    .Reset                  (Reset),
+    .iCLK                   (core_clock),
+    .iCLK_50                (clock_50mhz),
+    .Reset                  (reset),
     .PS2_KBCLK              (PS2_CLK),
     .PS2_KBDAT              (PS2_DAT),
     .wReadEnable            (DReadEnable),
@@ -332,10 +340,10 @@ wire [15:0] wsaudio_outL, wsaudio_outR;
 // wire audio_clock_flip_flop, audio_proc_clock_flip_flop;
 
 AudioCODEC_Interface Audio0 (
-    .iCLK                   (CLK),
-    .iCLK_50                (oCLK_50),
-    .iCLK_18                (oCLK_18),
-    .Reset                  (Reset),
+    .iCLK                   (core_clock),
+    .iCLK_50                (clock_50mhz),
+    .iCLK_18                (clock_18mhz),
+    .Reset                  (reset),
     .oTD1_RESET_N           (TD_RESET_N),
     .I2C_SDAT               (FPGA_I2C_SDAT),
     .oI2C_SCLK              (FPGA_I2C_SCLK),
@@ -367,9 +375,9 @@ AudioCODEC_Interface Audio0 (
 `ifdef USE_SYNTH
 
 Sintetizador_Interface Sintetizador0 (
-    .iCLK                   (CLK),
-    .iCLK_50                (oCLK_50),
-    .Reset                  (Reset),
+    .iCLK                   (core_clock),
+    .iCLK_50                (clock_50mhz),
+    .Reset                  (reset),
     .AUD_DACLRCK            (AUD_DACLRCK),
     .AUD_BCLK               (AUD_BCLK),
     .wsaudio_outL           (wsaudio_outL),
@@ -387,9 +395,9 @@ Sintetizador_Interface Sintetizador0 (
 //***************************** RS232 Interface ******************************//
 `ifdef USE_RS232
 RS232_Interface Serial0 (
-    .iCLK                   (CLK),
-    .iCLK_50                (oCLK_50),
-    .Reset                  (Reset),
+    .iCLK                   (core_clock),
+    .iCLK_50                (clock_50mhz),
+    .Reset                  (reset),
     .iUART_RXD              (GPIO_0[27]),
     .oUART_TXD              (GPIO_0[26]),
     .wReadEnable            (DReadEnable),
@@ -405,9 +413,9 @@ RS232_Interface Serial0 (
 //****************************** ADC Interface *******************************//
 `ifdef USE_ADC
 ADC_Interface ADCI0 (
-    .iCLK_50                (oCLK_50),
-    .iCLK                   (CLK),
-    .Reset                  (Reset),
+    .iCLK_50                (clock_50mhz),
+    .iCLK                   (core_clock),
+    .Reset                  (reset),
     .ADC_CS_N               (ADC_CS_N),
     .ADC_DIN                (ADC_DIN),
     .ADC_DOUT               (ADC_DOUT),
@@ -427,9 +435,9 @@ ADC_Interface ADCI0 (
 wire reg_mouse_keyboard, received_data_en_contador_enable;
 
 MousePS2_Interface Mouse0 (
-    .iCLK                   (CLK),
-    .iCLK_50                (oCLK_50),
-    .Reset                  (Reset),
+    .iCLK                   (core_clock),
+    .iCLK_50                (clock_50mhz),
+    .Reset                  (reset),
     .PS2_KBCLK              (PS2_CLK),
     .PS2_KBDAT              (PS2_DAT),
     .wReadEnable            (DReadEnable),
@@ -449,9 +457,9 @@ MousePS2_Interface Mouse0 (
 //****************************** IrDA Interface ******************************//
 `ifdef USE_INFRARED
 IrDA_Interface  IrDA0 (
-    .iCLK_50                (oCLK_50),
-    .iCLK                   (CLK),
-    .Reset                  (Reset),
+    .iCLK_50                (clock_50mhz),
+    .iCLK                   (core_clock),
+    .Reset                  (reset),
     .oIRDA_TXD              (IRDA_TXD),
     .iIRDA_RXD              (IRDA_RXD),
     .wReadEnable            (DReadEnable),
@@ -463,9 +471,9 @@ IrDA_Interface  IrDA0 (
 );
 
 IrDA_decoder  IrDA_decoder0 (
-    .iCLK_50                (oCLK_50),
-    .iCLK                   (CLK),
-    .Reset                  (Reset),
+    .iCLK_50                (clock_50mhz),
+    .iCLK                   (core_clock),
+    .Reset                  (reset),
     .iIRDA_RXD              (IRDA_RXD),
     .wAddress               (DAddress),
     .oCode                  (DReadData),

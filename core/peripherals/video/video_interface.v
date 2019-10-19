@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
-//                  RISC-V SiMPLE - Interface de Vídeo VGA                   //
+//                     uCHARLES - Interface de Vídeo VGA                     //
 //                                                                           //
-//        Código fonte em https://github.com/arthurbeggs/riscv-simple        //
+//          Código fonte em https://github.com/arthurbeggs/uCHARLES          //
 //                            BSD 3-Clause License                           //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -15,14 +15,16 @@ module video_interface (
     input  clock_video,
     input  reset,
     input  frame_select_switch,
-    input  osd_display,
+    input  osd_enable,
+    input  osd_select_regfile,
 
     output [4:0]  reg_debug_address,
+    output [11:0] csr_debug_address,
     input  [31:0] reg_debug_data,
+    input  [31:0] fp_reg_debug_data,
+    input  [31:0] csr_debug_data,
     input  [31:0] pc,
     input  [31:0] inst,
-    input  [31:0] epc,
-    input  [3:0]  ecause,
 
     output [31:0] bus_data_fetched,
     input  [31:0] bus_address,
@@ -75,13 +77,15 @@ video_compositor video_compositor (
     .pixel_frame1           (pixel_frame1),
     .frame_select_memory    (frame_select_memory),
     .frame_select_switch    (frame_select_switch),
-    .osd_display            (osd_display),
-    .reg_debug_data         (reg_debug_data),
+    .osd_enable             (osd_enable),
+    .osd_select_regfile     (osd_select_regfile),
     .reg_debug_address      (reg_debug_address),
+    .reg_debug_data         (reg_debug_data),
+    .fp_reg_debug_data      (fp_reg_debug_data),
+    .csr_debug_address      (csr_debug_address),
+    .csr_debug_data         (csr_debug_data),
     .pc                     (pc),
     .inst                   (inst),
-    .epc                    (epc),
-    .ecause                 (ecause),
     .pixel_red              (pixel_red),
     .pixel_green            (pixel_green),
     .pixel_blue             (pixel_blue)

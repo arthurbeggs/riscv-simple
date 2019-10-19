@@ -7,84 +7,76 @@
 // *
 
 module Control_MULTI (
-
-    input            iCLK, iRST,
-    input       [31:0] iInstr,
-    output           oEcall,
-    output           oEbreak,
-    output           oInvInstruction,
-    output           oEscreveIR,
-    output           oEscrevePC,
-    output           oEscrevePCCond,
-    output           oEscrevePCBack,
-   output   [ 2:0] oOrigAULA,
-   output   [ 2:0] oOrigBULA,
-   output   [ 2:0] oMem2Reg,
-    output  [ 2:0] oOrigPC,
-    output           oIouD,
-   output            oRegWrite,
-    output           oCSRegWrite, // habilita escrita no CSR
-   output            oMemWrite,
-    output           oMemRead,
-    output  [ 4:0] oALUControl,
-    output   [ 5:0] oState
+    input  iCLK,
+    input  iRST,
+    input  [31:0] iInstr,
+    output oEcall,
+    output oEbreak,
+    output oInvInstruction,
+    output oEscreveIR,
+    output oEscrevePC,
+    output oEscrevePCCond,
+    output oEscrevePCBack,
+    output [ 2:0] oOrigAULA,
+    output [ 2:0] oOrigBULA,
+    output [ 2:0] oMem2Reg,
+    output [ 2:0] oOrigPC,
+    output oIouD,
+    output oRegWrite,
+    output oCSRegWrite, // habilita escrita no CSR
+    output oMemWrite,
+    output oMemRead,
+    output [63:0] instret_counter,
+    output [ 4:0] oALUControl,
+    output [ 5:0] oState
 `ifdef RV32IMF
     ,
-    input           iFPALUReady,
-    output          oFRegWrite,
-    output   [ 4:0] oFPALUControl,
-    output          oOrigAFPALU,
-    output          oFPALUStart,
-    output          oFWriteData,
-    output          oWrite2Mem
+    input  iFPALUReady,
+    output oFRegWrite,
+    output [ 4:0] oFPALUControl,
+    output oOrigAFPALU,
+    output oFPALUStart,
+    output oFWriteData,
+    output oWrite2Mem
 `endif
-    );
+);
 
+reg  [ 5:0] pr_state;       // present state
+wire [ 5:0] nx_state;     // next state
 
-reg     [ 5:0]  pr_state;       // present state
-wire  [ 5:0]  nx_state;     // next state
-
-wire [6:0] Opcode = iInstr[ 6: 0];
-wire [2:0] Funct3   = iInstr[14:12];
-wire [6:0] Funct7   = iInstr[31:25];
-wire [11:0] Funct12= iInstr[31:20];
+wire [ 6:0] Opcode  = iInstr[ 6: 0];
+wire [ 2:0] Funct3  = iInstr[14:12];
+wire [ 6:0] Funct7  = iInstr[31:25];
+wire [11:0] Funct12 = iInstr[31:20];
 `ifdef RV32IMF
-wire [4:0] Rs2    = iInstr[24:20]; // Para os converts de ponto flutuante
+wire [ 4:0] Rs2     = iInstr[24:20]; // Para os converts de ponto flutuante
 `endif
+reg  [ 4:0] contador;
 
-assign  oState  = pr_state;
+assign oState  = pr_state;
 
-reg [4:0] contador;
-
-initial
-    begin
-        pr_state    <= ST_FETCH;
-        contador <= 5'd0;
-    end
-
-
+initial begin
+    pr_state        <= ST_FETCH;
+    contador        <= 5'd0;
+    instret_counter <= 64'b0;
+end
 
 // a cada ciclo de Clock
-always @(posedge iCLK or posedge iRST)
-    begin
-        if (iRST)
-            begin
-                pr_state    <= ST_FETCH;
-                contador <= 5'd0;
-            end
-        else
-            begin
-                pr_state    <= nx_state;
-                if (nx_state == ST_DIVREM)
-                    contador <= contador + 5'd1;
-                else
-                    contador <= 5'd0;
-            end
+always @(posedge iCLK or posedge iRST) begin
+    if (iRST) begin
+        pr_state        <= ST_FETCH;
+        contador        <= 5'd0;
+        instret_counter <= 64'b0;
     end
+    else begin
+        pr_state        <= nx_state;
+        if (pr_state == ST_FETCH)   instret_counter <= instret_counter + 64'd1;
+        if (nx_state == ST_DIVREM)  contador        <= contador + 5'd1;
+        else                        contador        <= 5'd0;
+    end
+end
 
-
-
-always @(*)
+always @(*) begin
     case (pr_state)
         ST_FETCH:
             begin
@@ -2393,12 +2385,10 @@ always @(*)
                 oFWriteData    <= 1'b0;
                 oWrite2Mem     <= 1'b0;
 `endif
-
-
                 nx_state        <= ST_ERRO;
             end
-
     endcase
+end
 
 
 endmodule

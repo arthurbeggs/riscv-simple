@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
-//                    RISC-V SiMPLE - Driver de Vídeo VGA                    //
+//                       uCHARLES - Driver de Vídeo VGA                      //
 //                                                                           //
-//        Código fonte em https://github.com/arthurbeggs/riscv-simple        //
+//          Código fonte em https://github.com/arthurbeggs/uCHARLES          //
 //                            BSD 3-Clause License                           //
 ///////////////////////////////////////////////////////////////////////////////
 

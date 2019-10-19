@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//                     uCHARLES - RISC-V - Módulo Top Level                  //
+//                          uCHARLES - Softcore RISC-V                       //
 //                                                                           //
 //          Código fonte em https://github.com/arthurbeggs/uCHARLES          //
 //                            BSD 3-Clause License                           //
@@ -10,43 +10,39 @@
 `endif
 
 module CPU (
-    input  wire         iCLK,
-    input  wire         iCLK_50,
-    input  wire         iRST,
+    input  iCLK,
+    input  iCLK_50,
+    input  iRST,
+    input  [31:0] initial_pc,
 
     // Sinais de monitoramento
-    output wire [31:0]  mPC,
-    output wire [31:0]  mInstr,
-    output wire [ 5:0]  mControlState,
-    input  wire [ 4:0]  mVGASelect,
-    output wire [31:0]  mVGARead,
-    output wire [31:0]  mCSRVGARead,
-    output wire [31:0]  mFVGARead,
-    output wire         mEbreak,
+    output [31:0] pc,
+    output [31:0] inst,
+    output [ 5:0] mControlState,
+    input  [ 4:0] reg_debug_address,
+    input  [11:0] csr_debug_address,
+    output [31:0] reg_debug_data,
+    output [31:0] fp_reg_debug_data,
+    output [31:0] csr_debug_data,
+    output ebreak_syscall,
+
+    input  [63:0] core_clock_ticks,
+    input  [63:0] miliseconds,
 
     // Barramentos de dados
-    output wire         DReadEnable,
-    output wire         DWriteEnable,
-    output wire [ 3:0]  DByteEnable,
-    output wire [31:0]  DAddress,
-    output wire [31:0]  DWriteData,
-    input  wire [31:0]  DReadData
+    output DReadEnable,
+    output DWriteEnable,
+    output [ 3:0] DByteEnable,
+    output [31:0] DAddress,
+    output [31:0] DWriteData,
+    input  [31:0] DReadData
 
     // // Interrupções
     // input  wire [7:0]   iPendingInterrupt
 );
 
 
-assign mEbreak = wCEbreak; // saida do ebreak para a interface de clock
-
 // ************************* Memoria RAM Interface **************************
-wire         IReadEnable;
-wire         IWriteEnable;
-wire [ 3:0]  IByteEnable;
-wire [31:0]  IAddress;
-wire [31:0]  IWriteData;
-wire [31:0]  IReadData;
-
 `ifdef MULTICICLO
 Memory_Interface MEMORY(
     .iCLK                   (iCLK),
@@ -60,6 +56,13 @@ Memory_Interface MEMORY(
 );
 
 `else       // Uniciclo e Pipeline
+wire IReadEnable;
+wire IWriteEnable;
+wire [ 3:0] IByteEnable;
+wire [31:0] IAddress;
+wire [31:0] IWriteData;
+wire [31:0] IReadData;
+
 DataMemory_Interface MEMDATA(
     .iCLK                   (iCLK),
     .iCLKMem                (iCLK_50),
@@ -92,24 +95,24 @@ assign mControlState    = 6'b000000;
 // Unidade de Controle
 wire [ 1:0] wCOrigAULA;
 wire [ 1:0] wCOrigBULA;
-wire        wCRegWrite;
-wire        wCCSRegWrite;
-wire        wCMemWrite;
-wire        wCMemRead;
-wire        wCInvInstruction;
-wire        wCEcall;
-wire        wCEbreak;
+wire wCRegWrite;
+wire wCCSRegWrite;
+wire wCMemWrite;
+wire wCMemRead;
+wire wCInvInstruction;
+wire wCEcall;
 wire [ 2:0] wCMem2Reg;
 wire [ 2:0] wCOrigPC;
 wire [ 4:0] wCALUControl;
+wire [63:0] instret_counter;
 `ifdef RV32IMF
-wire        wCFRegWrite;
+wire wCFRegWrite;
 wire [ 4:0] wCFPALUControl;
-wire        wCOrigAFPALU;
-wire        wCFPALU2Reg;
-wire        wCFWriteData;
-wire        wCWrite2Mem;
-wire        wCFPstart;
+wire wCOrigAFPALU;
+wire wCFPALU2Reg;
+wire wCFWriteData;
+wire wCWrite2Mem;
+wire wCFPstart;
 `endif
 
  Control_UNI CONTROL0 (
@@ -122,7 +125,7 @@ wire        wCFPstart;
     .oMemRead               (wCMemRead),
     .oInvInstruction        (wCInvInstruction),
     .oEcall                 (wCEcall),
-    .oEbreak                (wCEbreak),
+    .oEbreak                (ebreak_syscall),
     .oMem2Reg               (wCMem2Reg),
     .oOrigPC                (wCOrigPC),
     .oALUControl            (wCALUControl)
@@ -136,7 +139,6 @@ wire        wCFPstart;
      .oWrite2Mem            (wCWrite2Mem),
      .oFPstart              (wCFPstart)
 `endif
-
 );
 
 // Caminho de Dados
@@ -146,20 +148,20 @@ Datapath_UNI DATAPATH0 (
     .iCLK                   (iCLK),
     .iCLK50                 (iCLK_50),
     .iRST                   (iRST),
-    .iInitialPC             (BEGINNING_TEXT),
+    .iInitialPC             (initial_pc),
 
      // Sinais de monitoramento
-    .mPC                    (mPC),
-    .mInstr                 (mInstr),
+    .mPC                    (pc),
+    .mInstr                 (inst),
     .mDebug                 (mDebug),
     .mRegDispSelect         (mRegDispSelect),
     .mRegDisp               (mRegDisp),
     .mCSRegDisp             (mCSRegDisp),
     .mFRegDisp              (mFRegDisp),
-    .mVGASelect             (mVGASelect),
-    .mVGARead               (mVGARead),
-    .mCSRVGARead            (mCSRVGARead),
-    .mFVGARead              (mFVGARead),
+    .mVGASelect             (reg_debug_address),
+    .mVGARead               (reg_debug_data),
+    .mCSRVGARead            (csr_debug_data),
+    .mFVGARead              (fp_reg_debug_data),
     .mRead1                 (mRead1),
     .mRead2                 (mRead2),
     .mRegWrite              (mRegWrite),
@@ -218,306 +220,275 @@ Datapath_UNI DATAPATH0 (
 //********************************* Multiciclo *******************************//
 `ifdef MULTICICLO
 
-assign IReadEnable     = OFF;
-assign IWriteEnable    = OFF;
-assign IByteEnable     = 4'b0000;
-assign IWriteData      = ZERO;
-assign IAddress        = ZERO;
+// Unidade de Controle
+wire oInvInstruction; // invalid instruction
+wire wCEcall;
+wire wCInvInstruction;
+wire wCEscreveIR;
+wire wCEscrevePC;
+wire wCEscrevePCCond;
+wire wCEscrevePCBack;
+wire [ 2:0] wCOrigAULA;
+wire [ 2:0] wCOrigBULA;
+wire [ 2:0] wCMem2Reg;
+wire [ 2:0] wCOrigPC;
+wire wCIouD;
+wire wCRegWrite;
+wire wCCSRegWrite; // habilita escrita no bando de registradores CSR pela codificação de 12 bits
+wire wCMemWrite;
+wire wCMemRead;
+wire [ 4:0] wCALUControl;
+wire [63:0] instret_counter;
+wire [ 5:0] wCState;
+`ifdef RV32IMF
+wire wFPALUReady;
+wire wCFRegWrite;
+wire [ 4:0] wCFPALUControl;
+wire wCOrigAFPALU;
+wire wCFPALUStart;
+wire wCFWriteData;
+wire wCWrite2Mem;
+`endif
 
 assign mControlState    = wCState;
 
 
-// Unidade de Controle
-
-wire             oInvInstruction; // invalid instruction
-wire             wCEcall;
-wire             wCEbreak;
-wire             wCInvInstruction;
-wire             wCEscreveIR;
-wire             wCEscrevePC;
-wire             wCEscrevePCCond;
-wire             wCEscrevePCBack;
-wire    [ 2:0] wCOrigAULA;
-wire    [ 2:0] wCOrigBULA;
-wire    [ 2:0] wCMem2Reg;
-wire    [ 2:0] wCOrigPC;
-wire             wCIouD;
-wire             wCRegWrite;
-wire             wCCSRegWrite; // habilita escrita no bando de registradores CSR pela codificação de 12 bits
-wire             wCMemWrite;
-wire             wCMemRead;
-wire    [ 4:0] wCALUControl;
-wire    [ 5:0] wCState;
-`ifdef RV32IMF
-wire             wFPALUReady;
-wire             wCFRegWrite;
-wire  [ 4:0] wCFPALUControl;
-wire             wCOrigAFPALU;
-wire             wCFPALUStart;
-wire             wCFWriteData;
-wire             wCWrite2Mem;
-`endif
-
-
-
 Control_MULTI CONTROL0 (
-    .iCLK(iCLK),
-    .iRST(iRST), // reseta a máquina de estados quando ocorrer exceção
-    .iInstr(wInstr),
-    .oEcall(wCEcall),
-    .oEbreak(wCEbreak),
-    .oInvInstruction(wCInvInstruction),
-    .oEscreveIR(wCEscreveIR),
-    .oEscrevePC(wCEscrevePC),
-    .oEscrevePCCond(wCEscrevePCCond),
-    .oEscrevePCBack(wCEscrevePCBack),
-   .oOrigAULA(wCOrigAULA),
-   .oOrigBULA(wCOrigBULA),
-   .oMem2Reg(wCMem2Reg),
-    .oOrigPC(wCOrigPC),
-    .oIouD(wCIouD),
-   .oRegWrite(wCRegWrite),
-    .oCSRegWrite(wCCSRegWrite),
-   .oMemWrite(wCMemWrite),
-    .oMemRead(wCMemRead),
-    .oALUControl(wCALUControl),
-    .oState(wCState)
+    .iCLK                   (iCLK),
+    .iRST                   (iRST), // reseta a máquina de estados quando ocorrer exceção
+    .iInstr                 (wInstr),
+    .oEcall                 (wCEcall),
+    .oEbreak                (ebreak_syscall),
+    .oInvInstruction        (wCInvInstruction),
+    .oEscreveIR             (wCEscreveIR),
+    .oEscrevePC             (wCEscrevePC),
+    .oEscrevePCCond         (wCEscrevePCCond),
+    .oEscrevePCBack         (wCEscrevePCBack),
+    .oOrigAULA              (wCOrigAULA),
+    .oOrigBULA              (wCOrigBULA),
+    .oMem2Reg               (wCMem2Reg),
+    .oOrigPC                (wCOrigPC),
+    .oIouD                  (wCIouD),
+    .oRegWrite              (wCRegWrite),
+    .oCSRegWrite            (wCCSRegWrite),
+    .oMemWrite              (wCMemWrite),
+    .oMemRead               (wCMemRead),
+    .instret_counter        (instret_counter),
+    .oALUControl            (wCALUControl),
+    .oState                 (wCState)
 `ifdef RV32IMF
     ,
-    .iFPALUReady(wFPALUReady),
-    .oFRegWrite(wCFRegWrite),
-    .oFPALUControl(wCFPALUControl),
-    .oOrigAFPALU(wCOrigAFPALU),
-    .oFPALUStart(wCFPALUStart),
-    .oFWriteData(wCFWriteData),
-    .oWrite2Mem(wCWrite2Mem)
+    .iFPALUReady            (wFPALUReady),
+    .oFRegWrite             (wCFRegWrite),
+    .oFPALUControl          (wCFPALUControl),
+    .oOrigAFPALU            (wCOrigAFPALU),
+    .oFPALUStart            (wCFPALUStart),
+    .oFWriteData            (wCFWriteData),
+    .oWrite2Mem             (wCWrite2Mem)
 `endif
-    );
-
-
+);
 
 
 // Caminho de Dados
-wire    [31:0] wInstr;
-
+wire [31:0] wInstr;
 
 Datapath_MULTI DATAPATH0 (
-    .iCLK(iCLK),
-    .iCLK50(iCLK_50),
-    .iRST(iRST),
-    .iInitialPC(BEGINNING_TEXT),
-
+    .iCLK                   (iCLK),
+    .iCLK50                 (iCLK_50),
+    .iRST                   (iRST),
+    .iInitialPC             (initial_pc),
 
      // Sinais de monitoramento
-    .mPC(mPC),
-    .mInstr(mInstr),
-    .mDebug(mDebug),
-    .mRegDispSelect(mRegDispSelect),
-    .mRegDisp(mRegDisp),
-     .mCSRegDisp(mCSRegDisp),
-     .mFRegDisp(mFRegDisp),
-    .mVGASelect(mVGASelect),
-    .mVGARead(mVGARead),
-     .mCSRVGARead(mCSRVGARead),
-     .mFVGARead(mFVGARead),
-     .mRead1(mRead1),
-     .mRead2(mRead2),
-     .mRegWrite(mRegWrite),
-     .mULA(mULA),
-`ifdef RV32IMF
-     .mFPALU(mFPALU),
-     .mFRead1(mFRead1),
-     .mFRead2(mFRead2),
-     .mOrigAFPALU(mOrigAFPALU),
-     .mFWriteData(mFWriteData),
-     .mCFRegWrite(mCFRegWrite),
-`endif
+    .mPC                    (pc),
+    .mInstr                 (inst),
+    .reg_debug_address      (reg_debug_address),
+    .csr_debug_address      (csr_debug_address),
+    .reg_debug_data         (reg_debug_data),
+    .fp_reg_debug_data      (fp_reg_debug_data),
+    .csr_debug_data         (csr_debug_data),
+
+    // Contadores
+    .cycles_counter         (core_clock_ticks),
+    .time_counter           (miliseconds),
+    .instret_counter        (instret_counter),
+
     // Sinais do Controle
-    .wInstr(wInstr),
-    .wCEcall(wCEcall),
-    .wCState(wCState),
-    .wCInvInstruction(wCInvInstruction),
-    .wCEscreveIR(wCEscreveIR),
-    .wCEscrevePC(wCEscrevePC),
-    .wCEscrevePCCond(wCEscrevePCCond),
-    .wCEscrevePCBack(wCEscrevePCBack),
-   .wCOrigAULA(wCOrigAULA),
-   .wCOrigBULA(wCOrigBULA),
-   .wCMem2Reg(wCMem2Reg),
-    .wCOrigPC(wCOrigPC),
-    .wCIouD(wCIouD),
-   .wCCSRegWrite(wCCSRegWrite), // habilita escrita no bando de registradores CSR pela codificação de 12 bits
-    .wCRegWrite(wCRegWrite),
-   .wCMemWrite(wCMemWrite),
-    .wCMemRead(wCMemRead),
-    .wCALUControl(wCALUControl),
+    .wInstr                 (wInstr),
+    .wCEcall                (wCEcall),
+    .wCState                (wCState),
+    .wCInvInstruction       (wCInvInstruction),
+    .wCEscreveIR            (wCEscreveIR),
+    .wCEscrevePC            (wCEscrevePC),
+    .wCEscrevePCCond        (wCEscrevePCCond),
+    .wCEscrevePCBack        (wCEscrevePCBack),
+    .wCOrigAULA             (wCOrigAULA),
+    .wCOrigBULA             (wCOrigBULA),
+    .wCMem2Reg              (wCMem2Reg),
+    .wCOrigPC               (wCOrigPC),
+    .wCIouD                 (wCIouD),
+    .wCCSRegWrite           (wCCSRegWrite), // habilita escrita no bando de registradores CSR pela codificação de 12 bits
+    .wCRegWrite             (wCRegWrite),
+    .wCMemWrite             (wCMemWrite),
+    .wCMemRead              (wCMemRead),
+    .wCALUControl           (wCALUControl),
 `ifdef RV32IMF
-    .wFPALUReady(wFPALUReady),
-    .wCFRegWrite(wCFRegWrite),
-    .wCFPALUControl(wCFPALUControl),
-    .wCOrigAFPALU(wCOrigAFPALU),
-    .wCFPALUStart(wCFPALUStart),
-    .wCFWriteData(wCFWriteData),
-    .wCWrite2Mem(wCWrite2Mem),
+    .wFPALUReady            (wFPALUReady),
+    .wCFRegWrite            (wCFRegWrite),
+    .wCFPALUControl         (wCFPALUControl),
+    .wCOrigAFPALU           (wCOrigAFPALU),
+    .wCFPALUStart           (wCFPALUStart),
+    .wCFWriteData           (wCFWriteData),
+    .wCWrite2Mem            (wCWrite2Mem),
 `endif
 
     // Barramento
-    .DwWriteEnable(DWriteEnable), .DwReadEnable(DReadEnable),
-    .DwByteEnable(DByteEnable),
-    .DwWriteData(DWriteData),
-    .DwAddress(DAddress),
-    .DwReadData(DReadData)
+    .DwWriteEnable          (DWriteEnable),
+    .DwReadEnable           (DReadEnable),
+    .DwByteEnable           (DByteEnable),
+    .DwWriteData            (DWriteData),
+    .DwAddress              (DAddress),
+    .DwReadData             (DReadData)
 );
 `endif
 
 
-
-
-
-
-
 /*************  PIPELINE **********************************/
-
 `ifdef PIPELINE
 
 assign mControlState    = 6'b111111;
 
-
-
 // Unidade de Controle
-wire            wCEbreak;
-wire        wID_CRegWrite;
-wire        wID_CSRegWrite;
-wire        wID_CEcall;
-wire            wID_CInvInstr;
-wire [ 1:0] wID_COrigAULA;
-wire [ 1:0] wID_COrigBULA;
-wire [ 2:0] wID_COrigPC;
-wire [ 2:0] wID_CMem2Reg;
-wire            wID_CMemRead;
-wire            wID_CMemWrite;
-wire [ 4:0] wID_CALUControl;
+wire wID_CRegWrite;
+wire wID_CSRegWrite;
+wire wID_CEcall;
+wire wID_CInvInstr;
+wire [1:0] wID_COrigAULA;
+wire [1:0] wID_COrigBULA;
+wire [2:0] wID_COrigPC;
+wire [2:0] wID_CMem2Reg;
+wire wID_CMemRead;
+wire wID_CMemWrite;
+wire [4:0] wID_CALUControl;
 wire [NTYPE-1:0] wID_InstrType;
 `ifdef RV32IMF
-wire        wID_CFRegWrite;
-wire [ 4:0] wID_CFPALUControl;
-wire        wID_CFPALUStart;
+wire wID_CFRegWrite;
+wire [4:0] wID_CFPALUControl;
+wire wID_CFPALUStart;
 `endif
 
 Control_PIPEM CONTROL0 (
-    .iInstr(wID_Instr),
+    .iInstr                 (wID_Instr),
 `ifdef RV32IMF
-     .iFPALUReady(wEX_FPALUReady),
+     .iFPALUReady           (wEX_FPALUReady),
 `endif
-     .oInvInstr(wID_CInvInstr),
-     .oEbreak(wCEbreak),
-     .oEcall(wID_CEcall),
-    .oOrigAULA(wID_COrigAULA),
-    .oOrigBULA(wID_COrigBULA),
-    .oMem2Reg(wID_CMem2Reg),
-    .oRegWrite(wID_CRegWrite),
-     .oCSRegWrite(wID_CSRegWrite),
-    .oMemWrite(wID_CMemWrite),
-     .oMemRead(wID_CMemRead),
-    .oALUControl(wID_CALUControl),
-    .oOrigPC(wID_COrigPC),
-     .oInstrType(wID_InstrType)
+    .oInvInstr              (wID_CInvInstr),
+    .oEbreak                (ebreak_syscall),
+    .oEcall                 (wID_CEcall),
+    .oOrigAULA              (wID_COrigAULA),
+    .oOrigBULA              (wID_COrigBULA),
+    .oMem2Reg               (wID_CMem2Reg),
+    .oRegWrite              (wID_CRegWrite),
+    .oCSRegWrite            (wID_CSRegWrite),
+    .oMemWrite              (wID_CMemWrite),
+    .oMemRead               (wID_CMemRead),
+    .oALUControl            (wID_CALUControl),
+    .oOrigPC                (wID_COrigPC),
+    .oInstrType             (wID_InstrType)
 `ifdef RV32IMF
      ,
-     .oFRegWrite(wID_CFRegWrite),
-     .oFPALUControl(wID_CFPALUControl),
-     .oFPALUStart(wID_CFPALUStart)
+     .oFRegWrite            (wID_CFRegWrite),
+     .oFPALUControl         (wID_CFPALUControl),
+     .oFPALUStart           (wID_CFPALUStart)
 `endif
 );
 
 
 // Caminho de Dados
-wire    [31:0] wID_Instr;
+wire [31:0] wID_Instr;
 `ifdef RV32IMF
-wire         wEX_FPALUReady;
+wire wEX_FPALUReady;
 `endif
 
 Datapath_PIPEM DATAPATH0 (
-    .iCLK(iCLK),
-    .iCLK50(iCLK_50),
-    .iRST(iRST),
-    .iInitialPC(BEGINNING_TEXT),
+    .iCLK                   (iCLK),
+    .iCLK50                 (iCLK_50),
+    .iRST                   (iRST),
+    .iInitialPC             (initial_pc),
 
       // Sinais de monitoramento
-    .mPC(mPC),
-    .mInstr(mInstr),
-    .mDebug(mDebug),
-    .mRegDispSelect(mRegDispSelect),
-    .mRegDisp(mRegDisp),
-     .mCSRegDisp(mCSRegDisp),
-     .mFRegDisp(mFRegDisp),
-    .mVGASelect(mVGASelect),
-    .mVGARead(mVGARead),
-     .mFVGARead(mFVGARead),
-     .mCSRVGARead(mCSRVGARead),
-     .mRead1(mRead1),
-     .mRead2(mRead2),
-     .mRegWrite(mRegWrite),
-     .mULA(mULA),
+    .mPC                    (pc),
+    .mInstr                 (inst),
+    .mDebug                 (mDebug),
+    .mRegDispSelect         (mRegDispSelect),
+    .mRegDisp               (mRegDisp),
+    .mCSRegDisp             (mCSRegDisp),
+    .mFRegDisp              (mFRegDisp),
+    .mVGASelect             (reg_debug_address),
+    .mVGARead               (reg_debug_data),
+    .mFVGARead              (fp_reg_debug_data),
+    .mCSRVGARead            (csr_debug_data),
+    .mRead1                 (mRead1),
+    .mRead2                 (mRead2),
+    .mRegWrite              (mRegWrite),
+    .mULA                   (mULA),
 `ifdef RV32IMF
-     .mFPALU(mFPALU),
-     .mFRead1(mFRead1),
-     .mFRead2(mFRead2),
-     .mOrigAFPALU(mOrigAFPALU),
-     .mFWriteData(mFWriteData),
-     .mCFRegWrite(mCFRegWrite),
-     .oEX_FPALUReady(wEX_FPALUReady),
+    .mFPALU                 (mFPALU),
+    .mFRead1                (mFRead1),
+    .mFRead2                (mFRead2),
+    .mOrigAFPALU            (mOrigAFPALU),
+    .mFWriteData            (mFWriteData),
+    .mCFRegWrite            (mCFRegWrite),
+    .oEX_FPALUReady         (wEX_FPALUReady),
 `endif
 
 
     // Sinais do Controle
-    .wID_Instr(wID_Instr),
-     .wID_CInvInstr(wID_CInvInstr),
-     .wID_CEcall(wID_CEcall),
-    .wID_COrigAULA(wID_COrigAULA),
-    .wID_COrigBULA(wID_COrigBULA),
-    .wID_CMem2Reg(wID_CMem2Reg),
-    .wID_CRegWrite(wID_CRegWrite),
-     .wID_CSRegWrite(wID_CSRegWrite),
-    .wID_CMemWrite(wID_CMemWrite),
-     .wID_CMemRead(wID_CMemRead),
-    .wID_CALUControl(wID_CALUControl),
-    .wID_COrigPC(wID_COrigPC),
-     .wID_InstrType(wID_InstrType),
+    .wID_Instr              (wID_Instr),
+    .wID_CInvInstr          (wID_CInvInstr),
+    .wID_CEcall             (wID_CEcall),
+    .wID_COrigAULA          (wID_COrigAULA),
+    .wID_COrigBULA          (wID_COrigBULA),
+    .wID_CMem2Reg           (wID_CMem2Reg),
+    .wID_CRegWrite          (wID_CRegWrite),
+    .wID_CSRegWrite         (wID_CSRegWrite),
+    .wID_CMemWrite          (wID_CMemWrite),
+    .wID_CMemRead           (wID_CMemRead),
+    .wID_CALUControl        (wID_CALUControl),
+    .wID_COrigPC            (wID_COrigPC),
+    .wID_InstrType          (wID_InstrType),
 `ifdef RV32IMF
-     .wID_CFRegWrite(wID_CFRegWrite),
-     .wID_CFPALUControl(wID_CFPALUControl),
-     .wID_CFPALUStart(wID_CFPALUStart),
+     .wID_CFRegWrite        (wID_CFRegWrite),
+     .wID_CFPALUControl     (wID_CFPALUControl),
+     .wID_CFPALUStart       (wID_CFPALUStart),
 `endif
-
 
     // Barramento de dados
-    .DwReadEnable(DReadEnable), .DwWriteEnable(DWriteEnable),
-    .DwByteEnable(DByteEnable),
-    .DwWriteData(DWriteData),
-    .DwReadData(DReadData),
-    .DwAddress(DAddress),
+    .DwReadEnable           (DReadEnable),
+    .DwWriteEnable          (DWriteEnable),
+    .DwByteEnable           (DByteEnable),
+    .DwWriteData            (DWriteData),
+    .DwReadData             (DReadData),
+    .DwAddress              (DAddress),
 
     // Barramento de instrucoes
-    .IwReadEnable(IReadEnable), .IwWriteEnable(IWriteEnable),
-    .IwByteEnable(IByteEnable),
-    .IwWriteData(IWriteData),
-    .IwReadData(IReadData),
-    .IwAddress(IAddress),
+    .IwReadEnable           (IReadEnable),
+    .IwWriteEnable          (IWriteEnable),
+    .IwByteEnable           (IByteEnable),
+    .IwWriteData            (IWriteData),
+    .IwReadData             (IReadData),
+    .IwAddress              (IAddress),
 
      // Para Debug
-     .oiIF_PC(oiIF_PC),
-     .oiIF_Instr(oiIF_Instr),
-     .oiIF_PC4(oiIF_PC4),
-     .oRegIFID(oRegIFID),
-     .oRegIDEX(oRegIDEX),
-     .oRegEXMEM(oRegEXMEM),
-     .oRegMEMWB(oRegMEMWB),
-     .oWB_RegWrite(oWB_RegWrite)
-
+     .oiIF_PC               (oiIF_PC),
+     .oiIF_Instr            (oiIF_Instr),
+     .oiIF_PC4              (oiIF_PC4),
+     .oRegIFID              (oRegIFID),
+     .oRegIDEX              (oRegIDEX),
+     .oRegEXMEM             (oRegEXMEM),
+     .oRegMEMWB             (oRegMEMWB),
+     .oWB_RegWrite          (oWB_RegWrite)
 );
-
 `endif
 
-
 endmodule
+
