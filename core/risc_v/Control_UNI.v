@@ -6,59 +6,49 @@
 // * Bloco de Controle UNICICLO
 // *
 
-
  module Control_UNI(
     input  [31:0] iInstr,
-    output [ 1:0]   oOrigAULA,
-     output [ 1:0]  oOrigBULA,
-     output         oRegWrite,
-     output             oCSRegWrite,
-     output         oMemWrite,
-     output         oMemRead,
-     output         oInvInstruction,
-     output             oEcall,
-     output         oEbreak,
-     output [ 2:0]  oMem2Reg,
-     output [ 2:0]  oOrigPC,
-     output [ 4:0] oALUControl
+    output [ 1:0] oOrigAULA,
+    output [ 1:0] oOrigBULA,
+    output oRegWrite,
+    output oCSRegWrite,
+    output oMemWrite,
+    output oMemRead,
+    output oInvInstruction,
+    output oEcall,
+    output oEbreak,
+    output [ 2:0] oMem2Reg,
+    output [ 2:0] oOrigPC,
+    output [ 4:0] oALUControl
 `ifdef RV32IMF
-     ,
-     output       oFRegWrite,    // Controla a escrita no FReg
-     output [4:0] oFPALUControl, // Controla a operacao a ser realizda pela FPULA
-     output       oOrigAFPALU,   // Controla se a entrada A da FPULA  float ou int
-     output       oFPALU2Reg,    // Controla a escrita no registrador de inteiros (origem FPULA ou nao?)
-     output       oFWriteData,   // Controla a escrita nos FRegisters (origem FPALU(0) : origem memoria(1)?)
-     output       oWrite2Mem,     // Controla a escrita na memoria (origem Register(0) : FRegister(1))
-     output       oFPstart          // controla/liga a FPULA
+    ,
+    output oFRegWrite,    // Controla a escrita no FReg
+    output [ 4:0] oFPALUControl, // Controla a operacao a ser realizda pela FPULA
+    output oOrigAFPALU,   // Controla se a entrada A da FPULA  float ou int
+    output oFPALU2Reg,    // Controla a escrita no registrador de inteiros (origem FPULA ou nao?)
+    output oFWriteData,   // Controla a escrita nos FRegisters (origem FPALU(0) : origem memoria(1)?)
+    output oWrite2Mem,     // Controla a escrita na memoria (origem Register(0) : FRegister(1))
+    output oFPstart          // controla/liga a FPULA
 `endif
 );
 
-wire            wEbreak;
-wire [6:0]  Opcode  = iInstr[ 6: 0];
-wire [2:0]  Funct3  = iInstr[14:12];
-wire [6:0]  Funct7  = iInstr[31:25];
+wire wEbreak;
+wire [ 6:0] Opcode  = iInstr[ 6: 0];
+wire [ 2:0] Funct3  = iInstr[14:12];
+wire [ 6:0] Funct7  = iInstr[31:25];
 wire [11:0] Funct12 = iInstr[31:20]; // instruções de systema ecall e ebreak em que funct12 = funct7 + rs2
 `ifdef RV32IMF
-wire [4:0]  Rs2     = iInstr[24:20]; // Para os converts de ponto flutuante
+wire [ 4:0] Rs2     = iInstr[24:20]; // Para os converts de ponto flutuante
 `endif
 
 assign oEbreak = wEbreak;
 
-
-always @(*)
-
+always @(*) begin
     case(Opcode)
-
-
         OPC_SYSTEM:
             begin
-
-
                 oMemWrite               <= 1'b0;
                 oMemRead                <= 1'b0;
-
-
-
 `ifdef RV32IMF
                 oFPALU2Reg              <= 1'b0;
                 oFPALUControl           <= OPNULL;
@@ -918,7 +908,8 @@ always @(*)
                 oFPstart                    <= 1'b0;
 `endif
         end
-
     endcase
+end
 
 endmodule
+

@@ -153,27 +153,15 @@ Datapath_UNI DATAPATH0 (
      // Sinais de monitoramento
     .mPC                    (pc),
     .mInstr                 (inst),
-    .mDebug                 (mDebug),
-    .mRegDispSelect         (mRegDispSelect),
-    .mRegDisp               (mRegDisp),
-    .mCSRegDisp             (mCSRegDisp),
-    .mFRegDisp              (mFRegDisp),
-    .mVGASelect             (reg_debug_address),
-    .mVGARead               (reg_debug_data),
-    .mCSRVGARead            (csr_debug_data),
-    .mFVGARead              (fp_reg_debug_data),
-    .mRead1                 (mRead1),
-    .mRead2                 (mRead2),
-    .mRegWrite              (mRegWrite),
-    .mULA                   (mULA),
-`ifdef RV32IMF
-    .mFPALU                 (mFPALU),
-    .mFRead1                (mFRead1),
-    .mFRead2                (mFRead2),
-    .mOrigAFPALU            (mOrigAFPALU),
-    .mFWriteData            (mFWriteData),
-    .mCFRegWrite            (mCFRegWrite),
-`endif
+    .reg_debug_address      (reg_debug_address),
+    .csr_debug_address      (csr_debug_address),
+    .reg_debug_data         (reg_debug_data),
+    .fp_reg_debug_data      (fp_reg_debug_data),
+    .csr_debug_data         (csr_debug_data),
+
+    // Contadores
+    .cycles_counter         (core_clock_ticks),
+    .time_counter           (miliseconds),
 
     // Sinais do Controle
     .wInstr                 (wInstr),
