@@ -1,25 +1,14 @@
-/*
- * ALU
- *
- */
-//`define RV32I
-//`define RV32IM
-//`define RV32IMF
-
 `ifndef CONFIG_AND_CONSTANTS
     `include "config.v"
 `endif
 
-
-
-
 module ALU (
-    input        [4:0]  iControl,
+    input  [ 4:0] iControl,
     input signed [31:0] iA,
     input signed [31:0] iB,
-    output           oZero,
-    output       [31:0] oResult
-    );
+    output reg oZero,
+    output reg [31:0] oResult
+);
 
 //  wire [4:0] iControl=OPMUL;      // Usado para as análises
 
@@ -33,9 +22,7 @@ assign mulu = $unsigned(iA) * $unsigned(iB);
 assign mulsu= $signed(iA) * $unsigned(iB);
 `endif
 
-
-always @(*)
-begin
+always @(*) begin
     case (iControl)
         OPAND:
             oResult  <= iA & iB;
@@ -78,13 +65,12 @@ begin
         OPREMU:
             oResult  <= $unsigned(iA) % $unsigned(iB);
 `endif
-
         OPNULL:
             oResult  <= ZERO;
-
         default:
             oResult  <= ZERO;
     endcase
 end
 
 endmodule
+

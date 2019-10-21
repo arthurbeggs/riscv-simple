@@ -165,7 +165,12 @@ begin
     //RxD_data_error <= (sampleNow && RxD_state==4'b0010 && ~RxD_bit);  // error if a stop bit is not received
 end
 
-pulso px (.clock(clk), .trigger(RxD_data_ready), .pulso(Data_Ready_Pulse));  /////// Cria um pulso correspondente ao tempo de 2 bits
+pulse px (  /////// Cria um pulso correspondente ao tempo de 2 bits
+    .clock(clk),
+    .trigger(RxD_data_ready),
+    .pulso(Data_Ready_Pulse)
+);
+
 
 reg [l2o+1:0] GapCnt = 0;
 always @(posedge clk)
@@ -182,22 +187,22 @@ always @(posedge clk)
 endmodule
 
 
-
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // dummy module used to be able to raise an assertion in Verilog
 module ASSERTION_ERROR();
 endmodule
 
 
-
-////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 module BaudTickGen(
-    input clk, enable,
+    input  clk,
+    input  enable,
     output tick  // generate a tick at the specified baud rate * oversampling
 );
-parameter ClkFrequency = 50000000;
-parameter Baud = 115200;
-parameter Oversampling = 1;
+
+parameter  ClkFrequency = 50000000;
+parameter  Baud = 115200;
+parameter  Oversampling = 1;
 
 function integer log2(input integer v);
     begin
@@ -212,54 +217,45 @@ reg [AccWidth:0] Acc = 0;
 localparam ShiftLimiter = log2(Baud*Oversampling >> (31-AccWidth));  // this makes sure Inc calculation doesn't overflow
 localparam Inc = ((Baud*Oversampling << (AccWidth-ShiftLimiter))+(ClkFrequency>>(ShiftLimiter+1)))/(ClkFrequency>>ShiftLimiter);
 
-always @(posedge clk)
+always @(posedge clk) begin
     if(enable)
         Acc <= Acc[AccWidth-1:0] + Inc[AccWidth:0];
     else
         Acc <= Inc[AccWidth:0];
+end
 
 assign tick = Acc[AccWidth];
 
 endmodule
 
 
+///////////////////////////////////////////////////////////////////////////////
+module pulse (
+    input  clock,                   // Clock de entrada 50MHz
+    input  trigger,                 // Trigger, comanda o inicio do pulso
+    output reg pulso                // saida do pulso
+);
 
+integer contador;                   // conta ate 1024 ciclos
 
-////////////////////////////////////////////////////////////////
+initial begin
+    pulso       <= 0;               // inicio sem pulso e contador = 0
+    contador    <= 0;
+end
 
-module pulso(clock, trigger, pulso);
-input  clock;                               // Clock de entrada 50MHz
-input  trigger;                             // Trigger, comanda o inicio do pulso
-output pulso;                               // saida do pulso
+always @(posedge clock) begin       // a cada borda de clock
+    if(pulso)                       // se o pulso tiver ativado conta
+        contador    <= contador + 1;
 
-
-integer contador;                           // conta ate 1024 ciclos
-
-initial
-    begin
-        pulso       = 0;                    // inicio sem pulso e contador = 0
-        contador    = 0;
+    if(contador == 1736) begin      // 50MHz / 115200 bits/seg / 2  tempo para a escrita de 2 bits  424 instrucoes do uniciclo ou 86 LWs do multiciclo
+        pulso       <= 0;           // chegou ao final abaixa o pulso
+        contador    <= 0;
     end
-
-always @(posedge clock)                     // a cada borda de clock
-    begin
-
-        if(pulso)                           // se o pulso tiver ativado conta
-            contador    <= contador + 1;
-        //TODO: Adicionar else para prevenir síntese de latches
-
-        if(contador == 1736)                // 50MHz / 115200 bits/seg / 2  tempo para a escrita de 2 bits  424 instrucoes do uniciclo ou 86 LWs do multiciclo
-        begin
-            pulso       <= 0;               // chegou ao final abaixa o pulso
-            contador    <= 0;
-        end
-        else
-            if(trigger)                     // veio um trigger levanta o pulso
-            begin
-                pulso       <= 1;
-                contador    <= 0;
-            end
-            //TODO: Adicionar else para prevenir síntese de latches
+    else if(trigger) begin          // veio um trigger levanta o pulso
+        pulso       <= 1;
+        contador    <= 0;
     end
+end
 
 endmodule
+

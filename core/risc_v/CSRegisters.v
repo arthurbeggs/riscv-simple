@@ -26,9 +26,9 @@ module CSRegisters (
     output reg [31:0] csr_debug_data
 );
 
-wire [ 4:0] real_read_address;
-wire [ 4:0] real_write_address;
-wire [ 4:0] real_debug_address;
+reg  [ 4:0] real_read_address;
+reg  [ 4:0] real_write_address;
+reg  [ 4:0] real_debug_address;
 reg  [31:0] registers[17:0];
 integer i;
 

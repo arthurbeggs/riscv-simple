@@ -3,15 +3,14 @@
 `endif
 
 module oneshot(
-    output reg pulse_out,
+    input clk,
     input trigger_in,
-    input clk
-    );
+    output reg pulse_out
+);
 
 reg delay;
 
-always @ (posedge clk)
-begin
+always @ (posedge clk) begin
     if (trigger_in && !delay)
             pulse_out <= 1'b1;
     else
@@ -21,3 +20,4 @@ begin
 end
 
 endmodule
+

@@ -24,6 +24,7 @@ module fpga_top(
     output          AUD_DACDAT,
     inout           AUD_DACLRCK,
     output          AUD_XCK,
+    output          TD_RESET_N,
 `endif
 
 `ifdef USE_DRAM
@@ -69,7 +70,6 @@ module fpga_top(
     input           TD_CLK27,
     input   [7:0]   TD_DATA,
     input           TD_HS,
-    output          TD_RESET_N,
     input           TD_VS,
 `endif
 
@@ -162,6 +162,7 @@ wire clock_18mhz;
 wire reset;
 wire clock_manual_mode;
 wire clock_slow_mode;
+wire stall_core;
 wire [63:0] miliseconds;
 wire [63:0] core_clock_ticks;
 
@@ -183,33 +184,6 @@ clock_interface clock_interface (
     .clock_18mhz            (clock_18mhz),
     .core_clock             (core_clock),
     .reset                  (reset)
-);
-
-
-//****************************** RTC Interface *******************************//
-rtc_interface rtc_interface (
-    .miliseconds            (miliseconds[31:0]),
-    .wReadEnable            (DReadEnable),
-    .wAddress               (DAddress),
-    .wReadData              (DReadData)
-);
-
-
-//***************************** Break Interface ******************************//
-wire stall_core;
-
-breakpoint_interface breakpoint_interface (
-    .core_clock             (core_clock),
-    .reset                  (reset),
-    .clock_mode_button      (KEY[2]),
-    .countdown_enable       (SW[5]),
-    .ebreak_syscall         (ebreak_syscall),
-    .pc                     (pc),
-    .miliseconds            (miliseconds),
-    .wReadEnable            (DReadEnable),
-    .wAddress               (DAddress),
-    .wReadData              (DReadData),
-    .stall_core             (stall_core)
 );
 
 
@@ -252,6 +226,35 @@ CPU CPU0 (
     .DAddress               (DAddress),
     .DWriteData             (DWriteData),
     .DReadData              (DReadData)
+);
+
+
+//****************************** RTC Interface *******************************//
+rtc_interface rtc_interface (
+    .miliseconds            (miliseconds[31:0]),
+    .wReadEnable            (DReadEnable),
+    .wAddress               (DAddress),
+    .wReadData              (DReadData)
+);
+
+
+//***************************** Break Interface ******************************//
+breakpoint_interface breakpoint_interface (
+    .core_clock             (core_clock),
+    .clock_50mhz            (clock_50mhz),
+    .reset                  (reset),
+    .clock_mode_button      (KEY[2]),
+    .countdown_enable       (SW[5]),
+    .ebreak_syscall         (ebreak_syscall),
+    .pc                     (pc),
+    .miliseconds            (miliseconds),
+    .wReadEnable            (DReadEnable),
+    .wWriteEnable           (DWriteEnable),
+    .wByteEnable            (DByteEnable),
+    .wAddress               (DAddress),
+    .wWriteData             (DWriteData),
+    .wReadData              (DReadData),
+    .stall_core             (stall_core)
 );
 
 

@@ -7,7 +7,7 @@ module DataMemory_Interface (
     input  iCLKMem,
     input  wReadEnable,
     input  wWriteEnable,
-    input  [3:0]  wByteEnable,
+    input  [ 3:0] wByteEnable,
     input  [31:0] wAddress,
     input  [31:0] wWriteData,
     output reg [31:0] wReadData

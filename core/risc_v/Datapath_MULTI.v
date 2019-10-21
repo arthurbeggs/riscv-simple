@@ -67,20 +67,19 @@ module Datapath_MULTI (
     output [31:0] DwWriteData
 );
 
+// ******************************************************
+// Instanciação e Inicializacao dos registradores
+reg  [31:0] PC, PCBack, IR, MDR, A, B, ALUOut , CSR; // adicionado registrados CSR na saida do banco
+`ifdef RV32IMF
+reg  [31:0] FA, FB, FPALUOut;
+`endif
+
 // Sinais de monitoramento e Debug
 assign mPC                  = PC;
 assign mInstr               = IR;
 
 `ifndef RV32IMF
 assign fp_reg_debug_data    = ZERO;
-`endif
-
-// ******************************************************
-// Instanciação e Inicializacao dos registradores
-
-reg  [31:0] PC, PCBack, IR, MDR, A, B, ALUOut , CSR; // adicionado registrados CSR na saida do banco
-`ifdef RV32IMF
-reg  [31:0] FA, FB, FPALUOut;
 `endif
 
 assign wInstr = IR;
@@ -116,6 +115,10 @@ wire [ 2:0] wFunct3 = IR[14:12];
 // Unidade de controle de escrita
 wire [31:0] wMemDataWrite;
 wire [ 3:0] wMemEnable;
+reg  [31:0] wMemAddress;
+`ifdef RV32IMF
+reg  [31:0] wWrite2Mem;
+`endif
 
 MemStore MEMSTORE0 (
     .iAlignment     (wMemAddress[1:0]),
@@ -151,7 +154,9 @@ MemLoad MEMLOAD0 (
 
 
 // Banco de Registradores
-wire [31:0] wRead1, wRead2;
+wire [31:0] wRead1;
+wire [31:0] wRead2;
+reg  [31:0] wRegWrite;
 
 Registers REGISTERS0 (
     .iCLK           (iCLK),
@@ -172,6 +177,7 @@ Registers REGISTERS0 (
 `ifdef RV32IMF
 wire [31:0] wFRead1;
 wire [31:0] wFRead2;
+reg  [31:0] wFWriteData;
 
 FRegisters REGISTERS1 (
     .iCLK           (iCLK),
@@ -197,6 +203,7 @@ wire [31:0] wCSRegReadUTVEC;
 wire [31:0] wCSRegReadUEPC;
 wire [31:0] wCSRegReadUTVAL;
 wire [31:0] wCSRead;
+wire wExRegWrite;
 
 CSRegisters CSRegister2 (
     .core_clock             (iCLK),
@@ -224,7 +231,6 @@ CSRegisters CSRegister2 (
 
 // unidade de controle de exceções
 wire wExPcToUtvec;
-wire wExRegWrite;
 
 wire [31:0]ExcInstruction = IR;
 
@@ -267,6 +273,8 @@ ImmGen IMMGEN0 (
 
 // ALU - Unidade Lógica Aritmética
 wire [31:0] wALUresult;
+reg  [31:0] wOrigAULA;
+reg  [31:0] wOrigBULA;
 
 ALU ALU0 (
     .iControl   (wCALUControl),
@@ -280,6 +288,7 @@ ALU ALU0 (
 //FPALU
 //wire wFPALUReady;
 wire [31:0] wFPALUResult;
+reg  [31:0] wOrigAFPALU;
 
 FPALU FPALU0 (
     .iclock     (iCLK),
@@ -295,7 +304,6 @@ FPALU FPALU0 (
 
 // ******************************************************
 // multiplexadores
-wire [31:0] wOrigAULA;
 always @(*) begin
     case(wCOrigAULA)
         3'b000:     wOrigAULA <= A;
@@ -307,7 +315,6 @@ always @(*) begin
     endcase
 end
 
-wire [31:0] wOrigBULA;
 always @(*) begin
     case(wCOrigBULA)
         3'b000:     wOrigBULA <= B;
@@ -319,7 +326,6 @@ always @(*) begin
     endcase
 end
 
-wire [31:0] wRegWrite;
 always @(*) begin
     case(wCMem2Reg)
         3'b000:     wRegWrite <= ALUOut;
@@ -333,7 +339,7 @@ always @(*) begin
     endcase
 end
 
-wire [31:0] wiPC;
+reg  [31:0] wiPC;
 always @(*) begin
     if(wExPcToUtvec) // exception
         wiPC <= wCSRegReadUTVEC;
@@ -348,7 +354,6 @@ always @(*) begin
         endcase
 end
 
-wire [31:0] wMemAddress;
 always @(*) begin
     case(wCIouD)
         1'b0:       wMemAddress <= PC;
@@ -358,7 +363,6 @@ always @(*) begin
 end
 
 `ifdef RV32IMF
-wire [31:0] wOrigAFPALU;
 always @(*) begin
     case(wCOrigAFPALU) // Multiplexador que controla a origem A da FPULA
         1'b0:      wOrigAFPALU <= A;
@@ -367,7 +371,6 @@ always @(*) begin
     endcase
 end
 
-wire [31:0] wFWriteData;
 always @(*) begin
     case(wCFWriteData) // Multiplexador que controla o que vai ser escrito em um registrador de ponto flutuante (origem memoria ou FPALU?)
         1'b0:      wFWriteData <= MDR;      // Registrador de dado de memoria (para o flw)
@@ -376,8 +379,6 @@ always @(*) begin
     endcase
 end
 
-
-wire [31:0] wWrite2Mem;
 always @(*)begin
     case(wCWrite2Mem) // Multiplexador que controla o que vai ser escrito na memoria (vem do Register(0) ou do FRegister(1)?)
         1'b0:      wWrite2Mem <= B;

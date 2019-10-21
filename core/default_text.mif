@@ -4,13 +4,13 @@ ADDRESS_RADIX = HEX;
 DATA_RADIX = HEX;
 CONTENT
 BEGIN
-00000000 : 00000f97;   % 25: <9> la t6,exceptionHandling		# carrega em t6 o endere�o base das rotinas do sistema ECALL %
-00000001 : 4a0f8f93;   % 25:  %
-00000002 : 01f29073;   % 25: <10> csrrw zero,5,t6 	# seta utvec (reg 5) para o endere�o t6 %
-00000003 : 00106073;   % 25: <11> csrrsi zero,0,1 	# seta o bit de habilita��o de interrup��o em ustatus (reg 0) %
-00000004 : 0fc10217;   % 25: <12> la tp,UTVEC		# caso nao tenha csrrw apenas salva o endereco %label em UTVEC %
-00000005 : 03420213;   % 25:  %
-00000006 : 01f22023;   % 25: <13> sw t6,0(tp) %
+00000000 : 00000f97;
+00000001 : 4a0f8f93;
+00000002 : 01f29073;
+00000003 : 00106073;
+00000004 : 0fc10217;
+00000005 : 03420213;
+00000006 : 01f22023;
 00000007 : 00000d93;   % 26: 	li s11, 0	# contador de Loops %
 00000008 : 0fc10317;   % 28: MAIN:	la t1, N	# t1 = N  testa AUIPC e ADDI %
 00000009 : fe030313;   % 28:  %

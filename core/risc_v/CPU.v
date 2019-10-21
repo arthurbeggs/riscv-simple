@@ -237,9 +237,9 @@ wire wCFPALUStart;
 wire wCFWriteData;
 wire wCWrite2Mem;
 `endif
+wire [31:0] wInstr;
 
 assign mControlState    = wCState;
-
 
 Control_MULTI CONTROL0 (
     .iCLK                   (iCLK),
@@ -278,8 +278,6 @@ Control_MULTI CONTROL0 (
 
 
 // Caminho de Dados
-wire [31:0] wInstr;
-
 Datapath_MULTI DATAPATH0 (
     .iCLK                   (iCLK),
     .iCLK50                 (iCLK_50),

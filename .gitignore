@@ -18,7 +18,6 @@ c5_pin_model_dump.txt
 *.pof
 *.rpt
 *.smsg
-*.sof
 *.srf
 *.summary
 *.bak

@@ -1,4 +1,16 @@
-core/memory/cyclone_ii/* linguist-vendored
-core/memory/cyclone_iv/* linguist-vendored
-core/memory/cyclone_v/*  linguist-vendored
+core/clock/cyclone_ii/*             linguist-vendored
+core/clock/cyclone_iv/*             linguist-vendored
+core/clock/cyclone_v/*              linguist-vendored
+core/memory/cyclone_ii/*            linguist-vendored
+core/memory/cyclone_iv/*            linguist-vendored
+core/memory/cyclone_v/*             linguist-vendored
+core/peripherals/adc/submodules/*   linguist-vendored
+core/risc_v/FPULA/cyclone_ii/*      linguist-vendored
+core/risc_v/FPULA/cyclone_iv/*      linguist-vendored
+core/risc_v/FPULA/cyclone_v/*       linguist-vendored
+project/*                           linguist-vendored
+
+doc/*                               linguist-documentation
+
+*.do    linguist-language=Tcl
 

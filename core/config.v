@@ -19,8 +19,17 @@
 //`define RV32IM
 `define RV32IMF
 
+
+// Selecione a FPGA a ser utilizada (lembre de usar o projeto .qsf correto)
+`define DE1_SOC
+
+
+// Descomente para simular o processador
+`define SIMULATION
+
+
 // Selecione os periféricos a serem implementados
-`define USE_ADC
+// `define USE_ADC
 // `define USE_ARM_HPS
 `define USE_AUDIO_CODEC
 // `define USE_DRAM
@@ -34,6 +43,22 @@
 // `define USE_SYNTH
 // `define USE_TV_DECODER
 `define USE_VIDEO
+
+`ifdef SIMULATION
+    `undef USE_ADC
+    `undef USE_ARM_HPS
+    `undef USE_AUDIO_CODEC
+    `undef USE_DRAM
+    `undef USE_GPIO_0
+    `undef USE_GPIO_1
+    `undef USE_I2C
+    `undef USE_INFRARED
+    `undef USE_KEYBOARD
+    `undef USE_MOUSE
+    `undef USE_RS232
+    `undef USE_SYNTH
+    `undef USE_TV_DECODER
+`endif
 
 
 `ifdef USE_SYNTH

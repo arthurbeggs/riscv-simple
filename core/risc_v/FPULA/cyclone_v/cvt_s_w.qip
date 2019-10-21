@@ -69,11 +69,11 @@ set_global_assignment -entity "cvt_s_w_0002" -library "cvt_s_w" -name IP_COMPONE
 set_global_assignment -entity "cvt_s_w_0002" -library "cvt_s_w" -name IP_COMPONENT_PARAMETER "bWFudWFsX2RzcF9wbGFubmluZw==::dHJ1ZQ==::RW5hYmxlIEhhcmQgRmxvYXRpbmcgUG9pbnQ="
 set_global_assignment -entity "cvt_s_w_0002" -library "cvt_s_w" -name IP_COMPONENT_PARAMETER "Zm9yY2VSZWdpc3RlcnM=::MTExMQ==::Zm9yY2VSZWdpc3RlcnM="
 set_global_assignment -entity "cvt_s_w_0002" -library "cvt_s_w" -name IP_COMPONENT_PARAMETER "UkVTX0RTUF9wYXJhbQ==::MA==::TXVsdGlwbGllcw=="
-set_global_assignment -entity "cvt_s_w_0002" -library "cvt_s_w" -name IP_COMPONENT_PARAMETER "UkVTX0xVVF9wYXJhbQ==::Mzc0::TFVUcw=="
+set_global_assignment -entity "cvt_s_w_0002" -library "cvt_s_w" -name IP_COMPONENT_PARAMETER "UkVTX0xVVF9wYXJhbQ==::Mzk4::TFVUcw=="
 set_global_assignment -entity "cvt_s_w_0002" -library "cvt_s_w" -name IP_COMPONENT_PARAMETER "UkVTX01CSVRfcGFyYW0=::MA==::TWVtb3J5IEJpdHM="
 set_global_assignment -entity "cvt_s_w_0002" -library "cvt_s_w" -name IP_COMPONENT_PARAMETER "UkVTX01CTE9DS19wYXJhbQ==::MA==::TWVtb3J5IEJsb2Nrcw=="
 set_global_assignment -entity "cvt_s_w_0002" -library "cvt_s_w" -name IP_COMPONENT_PARAMETER "c2VsZWN0ZWRfZGV2aWNlX2ZhbWlseQ==::Q3ljbG9uZSBW::c2VsZWN0ZWRfZGV2aWNlX2ZhbWlseQ=="
-set_global_assignment -entity "cvt_s_w_0002" -library "cvt_s_w" -name IP_COMPONENT_PARAMETER "c2VsZWN0ZWRfZGV2aWNlX3NwZWVkZ3JhZGU=::VW5rbm93bg==::c2VsZWN0ZWRfZGV2aWNlX3NwZWVkZ3JhZGU="
+set_global_assignment -entity "cvt_s_w_0002" -library "cvt_s_w" -name IP_COMPONENT_PARAMETER "c2VsZWN0ZWRfZGV2aWNlX3NwZWVkZ3JhZGU=::Nw==::c2VsZWN0ZWRfZGV2aWNlX3NwZWVkZ3JhZGU="
 set_global_assignment -entity "cvt_s_w_0002" -library "cvt_s_w" -name IP_COMPONENT_PARAMETER "dmFsaWRhdGlvbl9mYWlsZWQ=::ZmFsc2U=::dmFsaWRhdGlvbl9mYWlsZWQ="
 
 set_global_assignment -library "cvt_s_w" -name VERILOG_FILE [file join $::quartus(qip_path) "cvt_s_w.v"]

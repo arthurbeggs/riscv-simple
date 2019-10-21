@@ -26,7 +26,7 @@ module video_interface (
     input  [31:0] pc,
     input  [31:0] inst,
 
-    output [31:0] bus_data_fetched,
+    output reg [31:0] bus_data_fetched,
     input  [31:0] bus_address,
     input  [31:0] bus_write_data,
     input  [3:0]  bus_byte_enable,

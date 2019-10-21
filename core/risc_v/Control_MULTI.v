@@ -10,39 +10,39 @@ module Control_MULTI (
     input  iCLK,
     input  iRST,
     input  [31:0] iInstr,
-    output oEcall,
-    output oEbreak,
-    output oInvInstruction,
-    output oEscreveIR,
-    output oEscrevePC,
-    output oEscrevePCCond,
-    output oEscrevePCBack,
-    output [ 2:0] oOrigAULA,
-    output [ 2:0] oOrigBULA,
-    output [ 2:0] oMem2Reg,
-    output [ 2:0] oOrigPC,
-    output oIouD,
-    output oRegWrite,
-    output oCSRegWrite, // habilita escrita no CSR
-    output oMemWrite,
-    output oMemRead,
-    output [63:0] instret_counter,
-    output [ 4:0] oALUControl,
+    output reg oEcall,
+    output reg oEbreak,
+    output reg oInvInstruction,
+    output reg oEscreveIR,
+    output reg oEscrevePC,
+    output reg oEscrevePCCond,
+    output reg oEscrevePCBack,
+    output reg [ 2:0] oOrigAULA,
+    output reg [ 2:0] oOrigBULA,
+    output reg [ 2:0] oMem2Reg,
+    output reg [ 2:0] oOrigPC,
+    output reg oIouD,
+    output reg oRegWrite,
+    output reg oCSRegWrite, // habilita escrita no CSR
+    output reg oMemWrite,
+    output reg oMemRead,
+    output reg [63:0] instret_counter,
+    output reg [ 4:0] oALUControl,
     output [ 5:0] oState
 `ifdef RV32IMF
     ,
     input  iFPALUReady,
-    output oFRegWrite,
-    output [ 4:0] oFPALUControl,
-    output oOrigAFPALU,
-    output oFPALUStart,
-    output oFWriteData,
-    output oWrite2Mem
+    output reg oFRegWrite,
+    output reg [ 4:0] oFPALUControl,
+    output reg oOrigAFPALU,
+    output reg oFPALUStart,
+    output reg oFWriteData,
+    output reg oWrite2Mem
 `endif
 );
 
 reg  [ 5:0] pr_state;       // present state
-wire [ 5:0] nx_state;     // next state
+reg  [ 5:0] nx_state;     // next state
 
 wire [ 6:0] Opcode  = iInstr[ 6: 0];
 wire [ 2:0] Funct3  = iInstr[14:12];
