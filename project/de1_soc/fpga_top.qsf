@@ -1015,7 +1015,7 @@ set_global_assignment -name EDA_TEST_BENCH_NAME fpga_top_tb -section_id eda_simu
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME dut -section_id fpga_top_tb
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME fpga_top_tb -section_id fpga_top_tb
 set_global_assignment -name EDA_NATIVELINK_SIMULATION_SETUP_SCRIPT ../../test/simulation_scripts/de1_soc_rtl.do -section_id eda_simulation
-set_global_assignment -name EDA_RUN_TOOL_AUTOMATICALLY ON -section_id eda_simulation
+set_global_assignment -name EDA_RUN_TOOL_AUTOMATICALLY OFF -section_id eda_simulation
 set_global_assignment -name EDA_GENERATE_RTL_SIMULATION_COMMAND_SCRIPT OFF -section_id eda_simulation
 set_global_assignment -name EDA_GENERATE_GATE_LEVEL_SIMULATION_COMMAND_SCRIPT OFF -section_id eda_simulation
 set_global_assignment -name EDA_SIMULATION_RUN_SCRIPT ../../test/simulation_scripts/de1_soc_rtl.do -section_id eda_simulation

@@ -76,6 +76,25 @@ initial begin
     PC         <= BEGINNING_TEXT;
 end
 
+// Banco de Registradores
+wire [31:0] wRead1, wRead2;
+
+// Banco de Registradores de ponto flutuante
+`ifdef RV32IMF
+wire [31:0] wFRead1, wFRead2;
+`endif
+
+// Baco de registradores CSR
+wire [31:0] wCSRegWriteUEPC;
+wire [31:0] wCSRegWriteUCAUSE;
+wire [31:0] wCSRegWriteUTVAL;
+wire [31:0] wCSRegReadUSTATUS;
+wire [31:0] wCSRegReadUTVEC;
+wire [31:0] wCSRegReadUEPC;
+wire [31:0] wCSRegReadUTVAL;
+wire [31:0] wCSRead;
+reg  [63:0] instret_counter;
+
 // Sinais de monitoramento e Debug
 assign mPC                  = PC;
 assign mInstr               = wInstr;
@@ -83,6 +102,56 @@ assign mInstr               = wInstr;
 `ifndef RV32IMF
 assign fp_reg_debug_data    = ZERO;
 `endif
+
+// Controle de Exceções
+wire wExPcToUtvec;
+wire wExRegWrite;
+wire [31:0]ExcInstruction = IwReadData;
+
+// Unidade geradora do imediato
+wire [31:0] wImmediate;
+
+// ALU - Unidade Lógica-Artimética
+wire [31:0] wALUresult;
+
+//FPALU
+`ifdef RV32IMF
+wire [31:0] wFPALUResult;
+`endif
+
+// Unidade de controle de escrita
+wire [31:0] wMemDataWrite;
+wire [ 3:0] wMemEnable;
+
+// Unidade de controle de leitura
+wire [31:0] wMemLoad;
+
+// Barramento da memoria de dados
+wire [31:0] wReadData   = DwReadData;
+assign DwReadEnable     = wCMemRead;
+assign DwWriteEnable    = wCMemWrite;
+assign DwByteEnable     = wMemEnable;
+assign DwWriteData      = wMemDataWrite;
+assign DwAddress        = wALUresult;
+
+// Unidade de controle de Branches
+wire    wBranch;
+
+reg  [31:0] wOrigAULA;
+reg  [31:0] wOrigBULA;
+reg  [31:0] wiPC;
+
+reg  [31:0] wRegWrite;
+
+`ifdef RV32IMF
+reg  [31:0] wMem2Reg;
+reg  [31:0] wOrigAFPALU;
+reg  [31:0] wFWriteData;
+reg  [31:0] wWrite2Mem;
+`else
+reg  [31:0] wWrite2Mem = wRead2;
+`endif
+
 
 // ******************************************************
 // Instanciacao das estruturas
@@ -105,8 +174,6 @@ assign IwAddress        = PC;
 assign IwWriteData      = ZERO;
 assign wInstr           = IwReadData;
 
-// Banco de Registradores
-wire [31:0] wRead1, wRead2;
 
 Registers REGISTERS0 (
     .iCLK           (iCLK),
@@ -124,10 +191,8 @@ Registers REGISTERS0 (
 );
 
 
-`ifdef RV32IMF
 // Banco de Registradores de ponto flutuante
-wire [31:0] wFRead1, wFRead2;
-
+`ifdef RV32IMF
 FRegisters REGISTERS1 (
     .iCLK           (iCLK),
     .iRST           (iRST),
@@ -146,16 +211,6 @@ FRegisters REGISTERS1 (
 
 
 // Baco de registradores CSR
-wire [31:0] wCSRegWriteUEPC;
-wire [31:0] wCSRegWriteUCAUSE;
-wire [31:0] wCSRegWriteUTVAL;
-wire [31:0] wCSRegReadUSTATUS;
-wire [31:0] wCSRegReadUTVEC;
-wire [31:0] wCSRegReadUEPC;
-wire [31:0] wCSRegReadUTVAL;
-wire [31:0] wCSRead;
-reg  [63:0] instret_counter;
-
 CSRegisters CSRegister2 (
     .core_clock             (iCLK),
     .reset                  (iRST),
@@ -182,10 +237,6 @@ CSRegisters CSRegister2 (
 
 
 // Controle de Exceções
-wire wExPcToUtvec;
-wire wExRegWrite;
-wire [31:0]ExcInstruction = IwReadData;
-
 ExceptionControl EXC0(
     .iExceptionEnabled      (wCSRegReadUSTATUS[0]),
     .iExInstrIllegal        (wCInvInstruction),
@@ -202,8 +253,6 @@ ExceptionControl EXC0(
 );
 
 // Unidade geradora do imediato
-wire [31:0] wImmediate;
-
 ImmGen IMMGEN0 (
     .iInstrucao             (wInstr),
     .oImm                   (wImmediate)
@@ -211,8 +260,6 @@ ImmGen IMMGEN0 (
 
 
 // ALU - Unidade Lógica-Artimética
-wire [31:0] wALUresult;
-
 ALU ALU0 (
     .iControl               (wCALUControl),
     .iA                     (wOrigAULA),
@@ -224,8 +271,6 @@ ALU ALU0 (
 
 `ifdef RV32IMF
 //FPALU
-wire [31:0] wFPALUResult;
-
 FPALU FPALU0 (
     .iclock                 (iCLK50),           // clock inserir clock_50
     .icontrol               (wCFPALUControl),   // 5 bits para saber qual eh a operacao a ser realizada (olhar parametros)
@@ -239,9 +284,6 @@ FPALU FPALU0 (
 
 
 // Unidade de controle de escrita
-wire [31:0] wMemDataWrite;
-wire [ 3:0] wMemEnable;
-
 MemStore MEMSTORE0 (
     .iAlignment             (wALUresult[1:0]),
     .iFunct3                (wFunct3),
@@ -251,17 +293,7 @@ MemStore MEMSTORE0 (
 );
 
 
-// Barramento da memoria de dados
-wire [31:0] wReadData   = DwReadData;
-assign DwReadEnable     = wCMemRead;
-assign DwWriteEnable    = wCMemWrite;
-assign DwByteEnable     = wMemEnable;
-assign DwWriteData      = wMemDataWrite;
-assign DwAddress        = wALUresult;
-
 // Unidade de controle de leitura
-wire [31:0] wMemLoad;
-
 MemLoad MEMLOAD0 (
     .iAlignment             (wALUresult[1:0]),
     .iFunct3                (wFunct3),
@@ -271,8 +303,6 @@ MemLoad MEMLOAD0 (
 
 
 // Unidade de controle de Branches
-wire    wBranch;
-
 BranchControl BC0 (
     .iFunct3                (wFunct3),
     .iA                     (wRead1),
@@ -283,7 +313,6 @@ BranchControl BC0 (
 
 // ******************************************************
 // multiplexadores
-wire [31:0] wOrigAULA;
 always @(*) begin
     case(wCOrigAULA)
         2'b00:      wOrigAULA <= wRead1;
@@ -294,7 +323,6 @@ always @(*) begin
     endcase
 end
 
-wire [31:0] wOrigBULA;
 always @(*) begin
     case(wCOrigBULA)
         2'b00:      wOrigBULA <= wRead2;
@@ -305,19 +333,7 @@ always @(*) begin
     endcase
 end
 
-`ifndef RV32IMF
-wire [31:0] wRegWrite;
-always @(*) begin
-    case(wCMem2Reg)
-        3'b000:     wRegWrite <= wALUresult;        // Tipo-R e Tipo-I
-        3'b001:     wRegWrite <= wPC4;              // jalr e jal
-        3'b010:     wRegWrite <= wMemLoad;          // Loads
-        3'b100:     wRegWrite <= wCSRead;           // Load from CSR
-        default:    wRegWrite <= ZERO;
-    endcase
-end
-`else
-wire [31:0] wMem2Reg;
+`ifdef RV32IMF
 always @(*) begin   // Novo fio de saida para fazer os multiplexadores em cascata
     case(wCMem2Reg)
         3'b000:     wMem2Reg <= wALUresult;     // Tipo-R e Tipo-I
@@ -327,9 +343,18 @@ always @(*) begin   // Novo fio de saida para fazer os multiplexadores em cascat
       default:      wMem2Reg <= ZERO;
     endcase
 end
+`else
+always @(*) begin
+    case(wCMem2Reg)
+        3'b000:     wRegWrite <= wALUresult;        // Tipo-R e Tipo-I
+        3'b001:     wRegWrite <= wPC4;              // jalr e jal
+        3'b010:     wRegWrite <= wMemLoad;          // Loads
+        3'b100:     wRegWrite <= wCSRead;           // Load from CSR
+        default:    wRegWrite <= ZERO;
+    endcase
+end
 `endif
 
-wire [31:0] wiPC;
 always @(*) begin
     if(wExPcToUtvec) // exception
         wiPC <= wCSRegReadUTVEC;
@@ -338,7 +363,7 @@ always @(*) begin
             3'b000:     wiPC <= wPC4;                                   // PC+4
             3'b001:     wiPC <= wBranch ? wBranchPC: wPC4;              // Branches
             3'b010:     wiPC <= wBranchPC;                              // jal
-            3'b011:     wiPC <= (wRead1+wImmediate) & ~(32'h000000001); // jalr
+            3'b011:     wiPC <= (wRead1+wImmediate) & ~(32'h00000001);  // jalr
             3'b100:     wiPC <= wCSRegReadUTVEC;                        // UTVEC
             3'b101:     wiPC <= wCSRegReadUEPC;                         // UEPC (para o uret)
             default:    wiPC <= ZERO;
@@ -347,7 +372,6 @@ always @(*) begin
 end
 
 `ifdef RV32IMF
-wire [31:0] wOrigAFPALU;
 always @(*) begin
     case(wCOrigAFPALU) //
         1'b0:      wOrigAFPALU <= wRead1;
@@ -356,7 +380,6 @@ always @(*) begin
     endcase
 end
 
-wire [31:0] wRegWrite;
 always @(*) begin
     case(wCFPALU2Reg) // Multiplexador intermediario para definir se o que entra no RegWrite do banco de registradores vem da FPULA ou do mux original implementado na ISA RV32I
         1'b0:      wRegWrite <= wMem2Reg;
@@ -365,7 +388,6 @@ always @(*) begin
     endcase
 end
 
-wire [31:0] wFWriteData;
 always @(*) begin
     case(wCFWriteData) // Multiplexador que controla o que vai ser escrito em um registrador de ponto flutuante (origem memoria ou FPALU?)
         1'b0:      wFWriteData <= wFPALUResult;
@@ -374,7 +396,6 @@ always @(*) begin
     endcase
 end
 
-wire [31:0] wWrite2Mem;
 always @(*) begin
     case(wCWrite2Mem) // Multiplexador que controla o que vai ser escrito na memoria (vem do Register(0) ou do FRegister(1)?)
         1'b0:      wWrite2Mem <= wRead2;
@@ -382,8 +403,6 @@ always @(*) begin
         default:   wWrite2Mem <= ZERO;
     endcase
 end
-`else
-wire [31:0] wWrite2Mem = wRead2;
 `endif
 
 

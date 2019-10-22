@@ -9,10 +9,10 @@
     `include "config.v"
 `endif
 
-`timescale 10 ns / 10 ns
+`timescale 1 ns / 1 ns
 
 // Duração da simulação, em nanosegundos/10
-`define SIMULATION_DURATION 1000000
+`define SIMULATION_DURATION 100000
 
 module fpga_top_tb;
 
@@ -42,25 +42,25 @@ initial begin
     clock   <= 1'b0;
     key     <= 4'b1111;
     switch  <= 10'b0000000111;
-    #4;
+    #100;
     key     <= 4'b1110;
-    #8;
+    #200;
     key     <= 4'b1101;
-    #4;
+    #100;
     key     <= 4'b1111;
-    #4;
+    #100;
     key     <= 4'b1011;
-    #4;
+    #100;
     key     <= 4'b1111;
 end
 
 always begin
-    #1 clock <= ~clock;
+    #10 clock <= ~clock;
 end
 
 always begin
     #`SIMULATION_DURATION;
-    $finish;
+    $stop;
 end
 
 endmodule

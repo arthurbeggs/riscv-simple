@@ -8,31 +8,31 @@
 
  module Control_UNI(
     input  [31:0] iInstr,
-    output [ 1:0] oOrigAULA,
-    output [ 1:0] oOrigBULA,
-    output oRegWrite,
-    output oCSRegWrite,
-    output oMemWrite,
-    output oMemRead,
-    output oInvInstruction,
-    output oEcall,
-    output oEbreak,
-    output [ 2:0] oMem2Reg,
-    output [ 2:0] oOrigPC,
-    output [ 4:0] oALUControl
+    output reg [ 1:0] oOrigAULA,
+    output reg [ 1:0] oOrigBULA,
+    output reg oRegWrite,
+    output reg oCSRegWrite,
+    output reg oMemWrite,
+    output reg oMemRead,
+    output reg oInvInstruction,
+    output reg oEcall,
+    output reg oEbreak,
+    output reg [ 2:0] oMem2Reg,
+    output reg [ 2:0] oOrigPC,
+    output reg [ 4:0] oALUControl
 `ifdef RV32IMF
     ,
-    output oFRegWrite,    // Controla a escrita no FReg
-    output [ 4:0] oFPALUControl, // Controla a operacao a ser realizda pela FPULA
-    output oOrigAFPALU,   // Controla se a entrada A da FPULA  float ou int
-    output oFPALU2Reg,    // Controla a escrita no registrador de inteiros (origem FPULA ou nao?)
-    output oFWriteData,   // Controla a escrita nos FRegisters (origem FPALU(0) : origem memoria(1)?)
-    output oWrite2Mem,     // Controla a escrita na memoria (origem Register(0) : FRegister(1))
-    output oFPstart          // controla/liga a FPULA
+    output reg oFRegWrite,    // Controla a escrita no FReg
+    output reg [ 4:0] oFPALUControl, // Controla a operacao a ser realizda pela FPULA
+    output reg oOrigAFPALU,   // Controla se a entrada A da FPULA  float ou int
+    output reg oFPALU2Reg,    // Controla a escrita no registrador de inteiros (origem FPULA ou nao?)
+    output reg oFWriteData,   // Controla a escrita nos FRegisters (origem FPALU(0) : origem memoria(1)?)
+    output reg oWrite2Mem,     // Controla a escrita na memoria (origem Register(0) : FRegister(1))
+    output reg oFPstart          // controla/liga a FPULA
 `endif
 );
 
-wire wEbreak;
+reg  wEbreak;
 wire [ 6:0] Opcode  = iInstr[ 6: 0];
 wire [ 2:0] Funct3  = iInstr[14:12];
 wire [ 6:0] Funct7  = iInstr[31:25];

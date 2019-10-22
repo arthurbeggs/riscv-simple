@@ -12,24 +12,24 @@
     input  iFPALUReady,
 `endif
 
-    output oEcall,
-    output oEbreak,
-    output oInvInstr,
-    output [ 1:0] oOrigAULA,
-    output [ 1:0] oOrigBULA,
-    output oRegWrite,
-    output oCSRegWrite,
-    output oMemWrite,
-    output oMemRead,
-    output [ 2:0] oMem2Reg,
-    output [ 2:0] oOrigPC,
-    output [ 4:0] oALUControl,
+    output reg oEcall,
+    output reg oEbreak,
+    output reg oInvInstr,
+    output reg [ 1:0] oOrigAULA,
+    output reg [ 1:0] oOrigBULA,
+    output reg oRegWrite,
+    output reg oCSRegWrite,
+    output reg oMemWrite,
+    output reg oMemRead,
+    output reg [ 2:0] oMem2Reg,
+    output reg [ 2:0] oOrigPC,
+    output reg [ 4:0] oALUControl,
  `ifdef RV32IMF
-    output oFRegWrite,
-    output [ 4:0] oFPALUControl,
-    output oFPALUStart,
+    output reg oFRegWrite,
+    output reg [ 4:0] oFPALUControl,
+    output reg oFPALUStart,
  `endif
-    output [NTYPE-1:0] oInstrType  //{CSR,FPULA2Reg,FAIsInt,FAisFloat,FStore,FLoad,DivRem,Load,Store,TipoR,TipoI,Jal,Jalr,Branch} // Identifica o tipo da instrucao que esta sendo decodificada pelo controle
+    output reg [NTYPE-1:0] oInstrType  //{CSR,FPULA2Reg,FAIsInt,FAisFloat,FStore,FLoad,DivRem,Load,Store,TipoR,TipoI,Jal,Jalr,Branch} // Identifica o tipo da instrucao que esta sendo decodificada pelo controle
 );
 
 

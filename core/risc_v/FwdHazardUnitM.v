@@ -38,23 +38,23 @@ module FwdHazardUnitM (
     input  iEX_FPALUReady,
 `endif
 
-    output oIF_Stall,
-    output oID_Stall,
-    output oEX_Stall,
-    output oMEM_Stall,
-    output oWB_Stall,
-    output oIFID_Flush,
-    output oIDEX_Flush,
-    output oEXMEM_Flush,
-    output oMEMWB_Flush,
+    output reg oIF_Stall,
+    output reg oID_Stall,
+    output reg oEX_Stall,
+    output reg oMEM_Stall,
+    output reg oWB_Stall,
+    output reg oIFID_Flush,
+    output reg oIDEX_Flush,
+    output reg oEXMEM_Flush,
+    output reg oMEMWB_Flush,
 
-    output [ 2:0] oFwdRs1,
-    output [ 2:0] oFwdRs2,
-    output [ 2:0] oFwdA,
-    output [ 2:0] oFwdB,
-    output [ 1:0] oFwdCSR,
-    output [ 1:0] oFwdUEPC,
-    output [ 1:0] oFwdUTVEC
+    output reg [ 2:0] oFwdRs1,
+    output reg [ 2:0] oFwdRs2,
+    output reg [ 2:0] oFwdA,
+    output reg [ 2:0] oFwdB,
+    output reg [ 1:0] oFwdCSR,
+    output reg [ 1:0] oFwdUEPC,
+    output reg [ 1:0] oFwdUTVEC
 );
 
 // Aqui deve ter todos os sinais possíveis para detectar qualquer hazard

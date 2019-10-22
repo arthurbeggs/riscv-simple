@@ -92,6 +92,8 @@ CodeMemory_Interface MEMCODE(
 
 assign mControlState    = 6'b000000;
 
+wire [31:0]  wInstr;
+
 // Unidade de Controle
 wire [ 1:0] wCOrigAULA;
 wire [ 1:0] wCOrigBULA;
@@ -142,7 +144,6 @@ wire wCFPstart;
 );
 
 // Caminho de Dados
-wire [31:0]  wInstr;
 
 Datapath_UNI DATAPATH0 (
     .iCLK                   (iCLK),
@@ -362,6 +363,12 @@ wire [4:0] wID_CFPALUControl;
 wire wID_CFPALUStart;
 `endif
 
+wire [31:0] wID_Instr;
+`ifdef RV32IMF
+wire wEX_FPALUReady;
+`endif
+
+
 Control_PIPEM CONTROL0 (
     .iInstr                 (wID_Instr),
 `ifdef RV32IMF
@@ -388,12 +395,6 @@ Control_PIPEM CONTROL0 (
 `endif
 );
 
-
-// Caminho de Dados
-wire [31:0] wID_Instr;
-`ifdef RV32IMF
-wire wEX_FPALUReady;
-`endif
 
 Datapath_PIPEM DATAPATH0 (
     .iCLK                   (iCLK),

@@ -9,8 +9,8 @@
 `define CONFIG_AND_CONSTANTS
 
 // Selecione a microarquitetura a ser sintetizada [ative somente uma]
-// `define UNICICLO
-`define MULTICICLO
+`define UNICICLO
+// `define MULTICICLO
 // `define PIPELINE
 
 
@@ -22,10 +22,6 @@
 
 // Selecione a FPGA a ser utilizada (lembre de usar o projeto .qsf correto)
 `define DE1_SOC
-
-
-// Descomente para simular o processador
-`define SIMULATION
 
 
 // Selecione os periféricos a serem implementados

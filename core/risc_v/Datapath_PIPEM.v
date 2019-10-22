@@ -66,12 +66,6 @@ module Datapath_PIPEM (
     output [31:0] IwWriteData
 );
 
-// Sinais de monitoramento e Debug
-assign mPC                  = PC;
-assign mInstr               = wIF_Instr;
-
-// Registradores do Pipeline
-
 // Quando fizer alguma modificação basta modificar esses parâmetros no Parametros.v
 //parameter NIFID  = 96,
 //          NIDEX  = 198,
@@ -83,6 +77,198 @@ reg  [ NIDEX-1:0] RegIDEX;
 reg  [NEXMEM-1:0] RegEXMEM;
 reg  [NMEMWB-1:0] RegMEMWB;
 reg  [63:0] instret_counter;
+
+
+////////////////////// Sinais do estágio IF //////////////////////
+// Definicao dos registradores
+reg  [31:0] PC;        // registrador PC
+reg  [31:0] wIF_iPC;
+wire [31:0] wIF_PC4 = PC + 32'h00000004;        // Calculo PC+4 // PC+4 do estagio IF
+
+// Barramento da Memoria de Instrucoes          // Aqui eh so o barramento porque a memoria esta fora do datapath
+wire [31:0] wIF_Instr         = IwReadData;     // Dado lido da memoria de instrucoes IF na variavel significa que o sinal esta sendo gerado na etapa IF
+assign      IwReadEnable      = ON;
+assign      IwWriteEnable     = OFF;
+assign      IwByteEnable      = 4'b1111;
+assign      IwAddress         = PC;
+assign      IwWriteData       = ZERO;
+
+// Sinais de monitoramento e Debug
+assign mPC                  = PC;
+assign mInstr               = wIF_Instr;
+
+
+////////////////////// Sinais do estágio ID //////////////////////
+wire [31:0] wID_Read1;
+wire [31:0] wID_Read2;
+
+wire [31:0] wID_CSRegReadUTVEC;
+wire [31:0] wID_CSRegReadUEPC;
+wire [31:0] wID_CSRegReadUSTATUS;
+wire [31:0] wID_CSRegReadUTVAL;
+wire [31:0] wID_CSRead;
+
+wire [31:0] wID_Immediate;
+
+wire wID_BranchResult;
+
+reg  [31:0] wID_ForwardUEPC;
+reg  [31:0] wID_ForwardUTVEC;
+
+reg  [31:0] wID_ForwardRs1;
+reg  [31:0] wID_ForwardRs2;
+
+wire wIF_Stall, wID_Stall, wEX_Stall, wMEM_Stall, wWB_Stall;
+wire wIFID_Flush, wIDEX_Flush, wEXMEM_Flush, wMEMWB_Flush;
+wire [ 2:0] wFwdA;
+wire [ 2:0] wFwdB;
+wire [ 2:0] wFwdRs1;
+wire [ 2:0] wFwdRs2;
+wire [ 1:0] wFwdCSR;
+wire [ 1:0] wFwdUEPC;
+wire [ 1:0] wFwdUTVEC;
+
+wire [31:0] wID_PC      = RegIFID[31: 0]; // ID_PC eh o PC que esta no estagio ID
+assign      wID_Instr   = RegIFID[63:32]; // Instrucao que estiver no estagio ID
+wire [31:0] wID_PC4     = RegIFID[95:64];
+
+wire [ 2:0] wID_Funct3  = wID_Instr[14:12]; // Decomposicao da instrucao
+wire [ 4:0] wID_Rs1     = wID_Instr[19:15];
+wire [ 4:0] wID_Rs2     = wID_Instr[24:20];
+wire [ 4:0] wID_Rd      = wID_Instr[11: 7];
+wire [11:0] wID_CSR     = wID_Instr[31:20];
+
+wire [31:0] wID_BranchPC    = wID_PC + wID_Immediate;                             // Somador para calcular o branch
+wire [31:0] wID_JalrPC      = (wID_ForwardRs1 + wID_Immediate) & ~(32'h00000001); // Somador para calcular jalr
+
+
+////////////////////// Sinais do estágio EX //////////////////////
+wire [31:0] wEX_PC              = RegIDEX[ 31:  0];
+wire [31:0] wEX_Read1           = RegIDEX[ 63: 32];
+wire [31:0] wEX_Read2           = RegIDEX[ 95: 64];
+wire [ 4:0] wEX_Rs1             = RegIDEX[100: 96];
+wire [ 4:0] wEX_Rs2             = RegIDEX[105:101];
+wire [ 4:0] wEX_Rd              = RegIDEX[110:106];
+wire [ 2:0] wEX_Funct3          = RegIDEX[113:111];
+wire [ 4:0] wEX_CALUControl     = RegIDEX[118:114];
+wire [ 1:0] wEX_COrigAULA       = RegIDEX[120:119];
+wire [ 1:0] wEX_COrigBULA       = RegIDEX[122:121];
+wire wEX_CMemRead               = RegIDEX[123];
+wire wEX_CMemWrite              = RegIDEX[124];
+wire wEX_CRegWrite              = RegIDEX[125];
+wire [ 2:0] wEX_CMem2Reg        = RegIDEX[128:126];
+wire [31:0] wEX_Immediate       = RegIDEX[160:129];
+wire [31:0] wEX_PC4             = RegIDEX[192:161];
+wire [31:0] wEX_CSRead          = RegIDEX[224:193];
+wire wEX_CEcall                 = RegIDEX[225];
+wire wEX_CInvInstr              = RegIDEX[226];
+wire wEX_CSRegWrite             = RegIDEX[227];
+wire [11:0] wEX_CSR             = RegIDEX[239:228];
+wire [31:0] wEX_Instr           = RegIDEX[271:240];
+// wire [ 2:0] wEX_COrigPC         = RegIDEX[274:272];
+wire [NTYPE-1:0] wEX_InstrType  = RegIDEX[NTYPE+275-1:275];
+`ifdef RV32IMF
+wire wEX_CFRegWrite             = RegIDEX[289];
+wire [31:0] wEX_FRead1          = RegIDEX[321:290];
+wire [31:0] wEX_FRead2          = RegIDEX[353:322];
+wire [ 4:0] wEX_CFPALUControl   = RegIDEX[358:354];
+wire wEX_CFPALUStart            = RegIDEX[359];
+`endif
+
+wire [31:0] wEX_ALUresult;
+
+`ifdef RV32IMF
+//FPALU
+wire wEX_FPALUReady;
+wire [31:0] wEX_FPALUResult;
+`endif
+
+reg  [31:0] wEX_CSRForward;
+reg  [31:0] wEX_ForwardA;
+reg  [31:0] wEX_ForwardB;
+reg  [31:0] wEX_OrigAULA;
+reg  [31:0] wEX_OrigBULA;
+
+
+////////////////////// Sinais do estágio MEM //////////////////////
+wire [31:0] wMEM_PC             = RegEXMEM[ 31:  0];
+wire [31:0] wMEM_ALUresult      = RegEXMEM[ 63: 32];
+wire [31:0] wMEM_ForwardB       = RegEXMEM[ 95: 64];
+wire wMEM_CMemRead              = RegEXMEM[     96];
+wire wMEM_CMemWrite             = RegEXMEM[     97];
+wire wMEM_CRegWrite             = RegEXMEM[     98];
+wire [ 4:0] wMEM_Rd             = RegEXMEM[103: 99];
+wire [ 2:0] wMEM_Funct3         = RegEXMEM[106:104];
+wire [ 2:0] wMEM_CMem2Reg       = RegEXMEM[109:107];
+wire [31:0] wMEM_PC4            = RegEXMEM[141:110];
+wire wMEM_CSRegWrite            = RegEXMEM[    142];
+wire [11:0] wMEM_CSR            = RegEXMEM[154:143];
+wire [31:0] wMEM_CSRead         = RegEXMEM[186:155];
+wire [31:0] wMEM_Instr          = RegEXMEM[218:187];
+wire wMEM_CInvInstr             = RegEXMEM[    219];
+wire wMEM_CEcall                = RegEXMEM[    220];
+// wire [ 2:0] wMEM_COrigPC        = RegEXMEM[223:221];
+wire [NTYPE-1:0] wMEM_InstrType = RegEXMEM[NTYPE+224-1:224];
+`ifdef RV32IMF
+wire wMEM_CFRegWrite            = RegEXMEM[    238];
+wire [31:0] wMEM_FPALUResult    = RegEXMEM[270:239];
+`endif
+
+// Exception Controler
+wire wMEM_ExceptionRegWrite;
+wire wMEM_ExceptionPcToUTVEC;
+
+wire [31:0] wMEM_CSRegWriteUEPC;
+wire [31:0] wMEM_CSRegWriteUCAUSE;
+wire [31:0] wMEM_CSRegWriteUTVAL;
+
+// Unidade de controle de escrita
+wire [31:0] wMEM_MemDataWrite;
+wire [ 3:0] wMEM_MemEnable;
+
+// Barramento da memoria de dados
+wire [31:0] wMEM_ReadData   = DwReadData;
+assign DwReadEnable         = wMEM_CMemRead;
+assign DwWriteEnable        = wMEM_CMemWrite;
+assign DwByteEnable         = wMEM_MemEnable;
+assign DwWriteData          = wMEM_MemDataWrite;
+assign DwAddress            = wMEM_ALUresult;
+
+// Unidade de controle de leitura
+wire [31:0] wMEM_MemLoad;
+
+reg  [31:0] wMEM_CSRForward;
+
+
+////////////////////// Sinais do estágio WB //////////////////////
+// wire [31:0] wWB_PC                  = RegMEMWB[ 31:  0];
+wire [31:0] wWB_MemLoad             = RegMEMWB[ 63: 32];
+wire [31:0] wWB_ALUresult           = RegMEMWB[ 95: 64];
+wire [ 4:0] wWB_Rd                  = RegMEMWB[100: 96];
+wire wWB_CRegWrite                  = !wWB_Stall && RegMEMWB[101];  // Stall em WB
+wire [ 2:0] wWB_CMem2Reg            = RegMEMWB[104:102];
+wire [31:0] wWB_PC4                 = RegMEMWB[136:105];
+wire wWB_CSRegWrite                 = !wWB_Stall && RegMEMWB[137];
+wire [11:0] wWB_CSR                 = RegMEMWB[149:138];
+wire [31:0] wWB_CSRead              = RegMEMWB[181:150];
+wire [31:0] wWB_CSRegWriteUEPC      = RegMEMWB[213:182];    //32
+wire [31:0] wWB_CSRegWriteUCAUSE    = RegMEMWB[245:214];    //32
+wire [31:0] wWB_CSRegWriteUTVAL     = RegMEMWB[277:246];    //32
+wire wWB_ExceptionRegWrite          = RegMEMWB[    278];    //1
+
+wire [NTYPE-1:0] wWB_InstrType      = RegMEMWB[NTYPE+279-1:279];
+`ifdef RV32IMF
+wire wWB_CFRegWrite                 = !wWB_Stall && RegMEMWB[    293];
+wire [31:0] wWB_FPALUResult         = RegMEMWB[325:294];
+`endif
+
+reg  [31:0] wWB_RegWrite;
+
+reg  [63:0] instret_delay;
+
+
+//////////////////////////////////////////////////////////////////
+initial PC <= BEGINNING_TEXT;
 
 initial begin
     RegIFID         <= {NIFID {1'b0}};
@@ -96,29 +282,6 @@ end
 //=====================================================================//
 //======================== Estagio IF =================================//
 //=====================================================================//
-
-// Definicao dos registradores
-reg  [31:0] PC;        // registrador PC
-
-initial PC <= BEGINNING_TEXT;
-
-// ******************************************************
-// Instanciacao das estruturas
-wire [31:0] wIF_PC4 = PC + 32'h00000004;        // Calculo PC+4 // PC+4 do estagio IF
-
-// Barramento da Memoria de Instrucoes          // Aqui eh so o barramento porque a memoria esta fora do datapath
-wire [31:0] wIF_Instr         = IwReadData;     // Dado lido da memoria de instrucoes IF na variavel significa que o sinal esta sendo gerado na etapa IF
-assign      IwReadEnable      = ON;
-assign      IwWriteEnable     = OFF;
-assign      IwByteEnable      = 4'b1111;
-assign      IwAddress         = PC;
-assign      IwWriteData       = ZERO;
-
-
-// ******************************************************
-// multiplexadores
-wire [31:0] wIF_iPC;
-
 always @(*) begin
     if(!wMEM_ExceptionPcToUTVEC)
         case(wID_COrigPC)
@@ -133,9 +296,9 @@ always @(*) begin
     else
         wIF_iPC <= wID_CSRegReadUTVEC;                                          // exception
 end
+
 // ******************************************************
 // A cada ciclo de clock
-
 always @(posedge iCLK or posedge iRST) begin
     if(iRST) begin
         PC          <= iInitialPC;
@@ -161,32 +324,6 @@ end
 //=====================================================================//
 //======================== Estagio ID =================================//
 //=====================================================================//
-
-
-// ******************************************************
-// Definicao dos fios e registradores
-
-// IF/ID register wires
-wire [31:0] wID_PC      = RegIFID[31: 0]; // ID_PC eh o PC que esta no estagio ID
-assign      wID_Instr   = RegIFID[63:32]; // Instrucao que estiver no estagio ID
-wire [31:0] wID_PC4     = RegIFID[95:64];
-
-// Instruction decode wires
-wire [ 2:0] wID_Funct3  = wID_Instr[14:12]; // Decomposicao da instrucao
-wire [ 4:0] wID_Rs1     = wID_Instr[19:15];
-wire [ 4:0] wID_Rs2     = wID_Instr[24:20];
-wire [ 4:0] wID_Rd      = wID_Instr[11: 7];
-wire [11:0] wID_CSR     = wID_Instr[31:20];
-
-// ******************************************************
-// Instanciacao das estruturas
-wire [31:0] wID_BranchPC    = wID_PC + wID_Immediate;                             // Somador para calcular o branch
-wire [31:0] wID_JalrPC      = (wID_ForwardRs1 + wID_Immediate) & ~(32'h00000001); // Somador para calcular jalr
-
-// Banco de Registradores
-wire [31:0] wID_Read1;    // Fios de saida do banco de registradores
-wire [31:0] wID_Read2;
-
 Registers REGISTERS0 (
     .iCLK           (iCLK),
     .iRST           (iRST),
@@ -223,11 +360,6 @@ FRegisters REGISTERS1 (
 );
 `endif
 
-wire [31:0] wID_CSRegReadUTVEC;
-wire [31:0] wID_CSRegReadUEPC;
-wire [31:0] wID_CSRegReadUSTATUS;
-wire [31:0] wID_CSRegReadUTVAL;
-wire [31:0] wID_CSRead;
 
 CSRegisters REGISTERS2 (
     .core_clock             (iCLK),
@@ -254,16 +386,11 @@ CSRegisters REGISTERS2 (
 );
 
 
-// Unidade geradora do imediato
-wire [31:0] wID_Immediate;
-
 ImmGen IMMGEN0 (
     .iInstrucao     (wID_Instr),
     .oImm           (wID_Immediate)
 );
 
-// Unidade de controle de Branches
-wire wID_BranchResult;
 
 BranchControl BC0 (
     .iFunct3        (wID_Funct3),
@@ -272,17 +399,6 @@ BranchControl BC0 (
     .oBranch        (wID_BranchResult)
 );
 
-
-// Unidade de Forward e Harzard
-wire wIF_Stall, wID_Stall, wEX_Stall, wMEM_Stall, wWB_Stall;
-wire wIFID_Flush, wIDEX_Flush, wEXMEM_Flush, wMEMWB_Flush;
-wire [ 2:0] wFwdA;
-wire [ 2:0] wFwdB;
-wire [ 2:0] wFwdRs1;
-wire [ 2:0] wFwdRs2;
-wire [ 1:0] wFwdCSR;
-wire [ 1:0] wFwdUEPC;
-wire [ 1:0] wFwdUTVEC;
 
 FwdHazardUnitM FHU0 (
     .iCLK                   (iCLK),
@@ -338,8 +454,6 @@ FwdHazardUnitM FHU0 (
 
 // ******************************************************
 // multiplexadores
-wire [31:0] wID_ForwardUEPC;
-wire [31:0] wID_ForwardUTVEC;
 
 always @(*) begin
     case(wFwdUEPC)
@@ -356,8 +470,6 @@ always @(*) begin
         default:    wID_ForwardUTVEC <= 2'b00;
     endcase
 end
-
-wire [31:0] wID_ForwardRs1;
 
 always @(*) begin
     case(wFwdRs1)
@@ -379,9 +491,6 @@ always @(*) begin
     endcase
 end
 
-
-wire [31:0] wID_ForwardRs2;
-
 always @(*) begin
     case(wFwdRs2)
         3'b000:   wID_ForwardRs2 <= wID_Read2;
@@ -402,10 +511,8 @@ always @(*) begin
     endcase
 end
 
-
 // ******************************************************
 // A cada ciclo de clock
-
 always @(posedge iCLK or posedge iRST) begin
     if (iRST)
         RegIDEX <= {NIDEX{1'b0}};
@@ -453,50 +560,6 @@ end
 //=====================================================================//
 //======================== Estagio EX =================================//
 //=====================================================================//
-
-
-// ******************************************************
-// Definicao dos fios e registradores
-
-// ID/EX register wires
-wire [31:0] wEX_PC              = RegIDEX[ 31:  0];
-wire [31:0] wEX_Read1           = RegIDEX[ 63: 32];
-wire [31:0] wEX_Read2           = RegIDEX[ 95: 64];
-wire [ 4:0] wEX_Rs1             = RegIDEX[100: 96];
-wire [ 4:0] wEX_Rs2             = RegIDEX[105:101];
-wire [ 4:0] wEX_Rd              = RegIDEX[110:106];
-wire [ 2:0] wEX_Funct3          = RegIDEX[113:111];
-wire [ 4:0] wEX_CALUControl     = RegIDEX[118:114];
-wire [ 1:0] wEX_COrigAULA       = RegIDEX[120:119];
-wire [ 1:0] wEX_COrigBULA       = RegIDEX[122:121];
-wire wEX_CMemRead               = RegIDEX[123];
-wire wEX_CMemWrite              = RegIDEX[124];
-wire wEX_CRegWrite              = RegIDEX[125];
-wire [ 2:0] wEX_CMem2Reg        = RegIDEX[128:126];
-wire [31:0] wEX_Immediate       = RegIDEX[160:129];
-wire [31:0] wEX_PC4             = RegIDEX[192:161];
-wire [31:0] wEX_CSRead          = RegIDEX[224:193];
-wire wEX_CEcall                 = RegIDEX[225];
-wire wEX_CInvInstr              = RegIDEX[226];
-wire wEX_CSRegWrite             = RegIDEX[227];
-wire [11:0] wEX_CSR             = RegIDEX[239:228];
-wire [31:0] wEX_Instr           = RegIDEX[271:240];
-// wire [ 2:0] wEX_COrigPC         = RegIDEX[274:272];
-wire [NTYPE-1:0] wEX_InstrType  = RegIDEX[NTYPE+275-1:275];
-`ifdef RV32IMF
-wire wEX_CFRegWrite             = RegIDEX[289];
-wire [31:0] wEX_FRead1          = RegIDEX[321:290];
-wire [31:0] wEX_FRead2          = RegIDEX[353:322];
-wire [ 4:0] wEX_CFPALUControl   = RegIDEX[358:354];
-wire wEX_CFPALUStart            = RegIDEX[359];
-`endif
-
-
-// ******************************************************
-// Instanciacao das estruturas
-// ALU
-wire [31:0] wEX_ALUresult;
-
 ALU ALU0 (
     .iControl       (wEX_CALUControl),
     .iA             (wEX_OrigAULA),
@@ -505,11 +568,8 @@ ALU ALU0 (
     .oZero          ()
 );
 
-`ifdef RV32IMF
-//FPALU
-wire wEX_FPALUReady;
-wire [31:0] wEX_FPALUResult;
 
+`ifdef RV32IMF
 FPALU FPALU0 (
     .iclock         (iCLK),
     .icontrol       (wEX_CFPALUControl),
@@ -524,8 +584,6 @@ FPALU FPALU0 (
 
 // ******************************************************
 // multiplexadores
-wire [31:0] wEX_CSRForward;
-
 always @(*) begin
     case(wFwdCSR[0])
         1'b0:       wEX_CSRForward <= wEX_CSRead;
@@ -533,9 +591,6 @@ always @(*) begin
         default     wEX_CSRForward <= ZERO;
     endcase
 end
-
-
-wire [31:0] wEX_ForwardA;
 
 always @(*) begin
     case(wFwdA)
@@ -555,9 +610,6 @@ always @(*) begin
         default:  wEX_ForwardA <= ZERO;
     endcase
 end
-
-
-wire [31:0] wEX_ForwardB;
 
 always @(*) begin
     case(wFwdB)
@@ -579,9 +631,6 @@ always @(*) begin
     endcase
 end
 
-
-wire [31:0] wEX_OrigAULA;
-
 always @(*) begin
     case(wEX_COrigAULA)
         2'b00:      wEX_OrigAULA <= wEX_ForwardA;
@@ -592,9 +641,6 @@ always @(*) begin
     endcase
 end
 
-
-wire [31:0] wEX_OrigBULA;
-
 always @(*) begin
     case(wEX_COrigBULA)
         2'b00:      wEX_OrigBULA <= wEX_ForwardB;
@@ -603,7 +649,6 @@ always @(*) begin
         default:    wEX_OrigBULA <= ZERO;
     endcase
 end
-
 
 // ******************************************************
 // A cada ciclo de clock
@@ -644,42 +689,6 @@ end
 //=====================================================================//
 //======================== Estagio MEM ================================//
 //=====================================================================//
-// EX/MEM register wires
-wire [31:0] wMEM_PC             = RegEXMEM[ 31:  0];
-wire [31:0] wMEM_ALUresult      = RegEXMEM[ 63: 32];
-wire [31:0] wMEM_ForwardB       = RegEXMEM[ 95: 64];
-wire wMEM_CMemRead              = RegEXMEM[     96];
-wire wMEM_CMemWrite             = RegEXMEM[     97];
-wire wMEM_CRegWrite             = RegEXMEM[     98];
-wire [ 4:0] wMEM_Rd             = RegEXMEM[103: 99];
-wire [ 2:0] wMEM_Funct3         = RegEXMEM[106:104];
-wire [ 2:0] wMEM_CMem2Reg       = RegEXMEM[109:107];
-wire [31:0] wMEM_PC4            = RegEXMEM[141:110];
-wire wMEM_CSRegWrite            = RegEXMEM[    142];
-wire [11:0] wMEM_CSR            = RegEXMEM[154:143];
-wire [31:0] wMEM_CSRead         = RegEXMEM[186:155];
-wire [31:0] wMEM_Instr          = RegEXMEM[218:187];
-wire wMEM_CInvInstr             = RegEXMEM[    219];
-wire wMEM_CEcall                = RegEXMEM[    220];
-// wire [ 2:0] wMEM_COrigPC        = RegEXMEM[223:221];
-wire [NTYPE-1:0] wMEM_InstrType = RegEXMEM[NTYPE+224-1:224];
-`ifdef RV32IMF
-wire wMEM_CFRegWrite            = RegEXMEM[    238];
-wire [31:0] wMEM_FPALUResult    = RegEXMEM[270:239];
-`endif
-
-// ******************************************************
-// Instanciacao das estruturas
-
-// Exception Controler
-
-wire wMEM_ExceptionRegWrite;
-wire wMEM_ExceptionPcToUTVEC;
-
-wire [31:0] wMEM_CSRegWriteUEPC;
-wire [31:0] wMEM_CSRegWriteUCAUSE;
-wire [31:0] wMEM_CSRegWriteUTVAL;
-
 ExceptionControl EXC0(
     .iExceptionEnabled      (wID_CSRegReadUSTATUS[0]),
     .iExInstrIllegal        (wMEM_CInvInstr),
@@ -696,10 +705,6 @@ ExceptionControl EXC0(
 );
 
 
-// Unidade de controle de escrita
-wire [31:0] wMEM_MemDataWrite;
-wire [ 3:0] wMEM_MemEnable;
-
 MemStore MEMSTORE0 (
     .iAlignment     (wMEM_ALUresult[1:0]),
     .iFunct3        (wMEM_Funct3),
@@ -708,17 +713,6 @@ MemStore MEMSTORE0 (
     .oByteEnable    (wMEM_MemEnable)
 );
 
-
-// Barramento da memoria de dados
-wire [31:0] wMEM_ReadData   = DwReadData;
-assign DwReadEnable         = wMEM_CMemRead;
-assign DwWriteEnable        = wMEM_CMemWrite;
-assign DwByteEnable         = wMEM_MemEnable;
-assign DwWriteData          = wMEM_MemDataWrite;
-assign DwAddress            = wMEM_ALUresult;
-
-// Unidade de controle de leitura
-wire [31:0] wMEM_MemLoad;
 
 MemLoad MEMLOAD0 (
     .iAlignment     (wMEM_ALUresult[1:0]),
@@ -730,8 +724,6 @@ MemLoad MEMLOAD0 (
 
 // ******************************************************
 // multiplexadores
-wire [31:0] wMEM_CSRForward;
-
 always @(*)begin
     case(wFwdCSR[1])
         1'b0:       wMEM_CSRForward <= wMEM_CSRead;
@@ -778,32 +770,7 @@ end
 //======================== Estagio WB =================================//
 //=====================================================================//
 // ******************************************************
-// Definicao dos fios e registradores
-// wire [31:0] wWB_PC                  = RegMEMWB[ 31:  0];
-wire [31:0] wWB_MemLoad             = RegMEMWB[ 63: 32];
-wire [31:0] wWB_ALUresult           = RegMEMWB[ 95: 64];
-wire [ 4:0] wWB_Rd                  = RegMEMWB[100: 96];
-wire wWB_CRegWrite                  = !wWB_Stall && RegMEMWB[101];  // Stall em WB
-wire [ 2:0] wWB_CMem2Reg            = RegMEMWB[104:102];
-wire [31:0] wWB_PC4                 = RegMEMWB[136:105];
-wire wWB_CSRegWrite                 = !wWB_Stall && RegMEMWB[137];
-wire [11:0] wWB_CSR                 = RegMEMWB[149:138];
-wire [31:0] wWB_CSRead              = RegMEMWB[181:150];
-wire [31:0] wWB_CSRegWriteUEPC      = RegMEMWB[213:182];    //32
-wire [31:0] wWB_CSRegWriteUCAUSE    = RegMEMWB[245:214];    //32
-wire [31:0] wWB_CSRegWriteUTVAL     = RegMEMWB[277:246];    //32
-wire wWB_ExceptionRegWrite          = RegMEMWB[    278];    //1
-
-wire [NTYPE-1:0] wWB_InstrType      = RegMEMWB[NTYPE+279-1:279];
-`ifdef RV32IMF
-wire wWB_CFRegWrite                 = !wWB_Stall && RegMEMWB[    293];
-wire [31:0] wWB_FPALUResult         = RegMEMWB[325:294];
-`endif
-
-
-// ******************************************************
 // multiplexadores
-wire [31:0] wWB_RegWrite;
 
 always @(*) begin
     case(wWB_CMem2Reg)
@@ -821,8 +788,6 @@ end
 
 // ******************************************************
 // A cada ciclo de clock
-reg  [63:0] instret_delay;
-
 always @ (posedge iCLK or posedge iRST) begin
     if (iRST) begin
         instret_counter     <= 64'b0;
