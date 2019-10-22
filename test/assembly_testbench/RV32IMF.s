@@ -30,10 +30,12 @@ FSGNJN:   .float -3.0
 MSG:	.string "Endereco do erro : "
 MSG2:	.string "RV32IMF - Nao ha erros :)"
 
-.include "../macros2.s"
 
 .text
-	M_SetEcall(exceptionHandling)
+	la t6,exceptionHandling		# carrega em t6 o endereço base das rotinas do sistema ECALL
+	csrrsi zero,0,1 		# seta o bit de habilitação de interrupção em ustatus (reg 0)
+	csrrw zero,5,t6 		# seta utvec (reg 5) para o endereço t6
+	
 	li s11, 0	# contador de Loops
 	
 MAIN:	la t1, F0
@@ -125,7 +127,6 @@ PULAERRO14: flw ft2, 0(t1) # testes flw e fsw
 	    jal t0, ERRO
 	    	    
 PULAERRO15: fsgnj.s ft10, ft0, ft1 # teste fsgnj
-		nop
 	    feq.s t0, ft10, ft0
 	    bne t0, zero, PULAERRO16
 	    jal t0, ERRO
@@ -137,19 +138,16 @@ PULAERRO16: fsgnjn.s ft10, ft0, ft1 # teste fsgnjn
 	    jal t0, ERRO
 	    
 PULAERRO17: fsgnjx.s ft10, ft0, ft1 # teste fsgnjx
-		nop
 	    feq.s t0, ft10, ft0
 	    bne t0, zero, PULAERRO18
 	    jal t0, ERRO
 	    
 PULAERRO18: fmax.s ft10, ft0, ft1 # teste fmax
-		nop
 	    feq.s t0, ft10, ft1
 	    bne t0, zero, PULAERRO19
 	    jal t0, ERRO
 
 PULAERRO19: fmin.s ft10, ft0, ft1 # teste fmin
-		nop
 	    feq.s t0, ft10, ft0
 	    bne t0, zero, SUCESSO
 	    jal t0, ERRO
@@ -159,7 +157,7 @@ SUCESSO: bgt s11,zero,PULA1
    	li a0, 0x38
    	li a1, 0
 	li a7, 148
-	M_Ecall
+	ecall
 	
 	#print string sucesso
 	li a3,0x3800
@@ -168,7 +166,7 @@ SUCESSO: bgt s11,zero,PULA1
 	li a1, 64
 	li a2, 0
 	li a4, 0
-	M_Ecall
+	ecall
 
 PULA1:	mv a0, s11
 	li a7, 101
@@ -176,7 +174,7 @@ PULA1:	mv a0, s11
 	li a2, 120
 	li a3, 0x3800
 	li a4, 0
-	M_Ecall
+	ecall
 
 	addi s11, s11, 1
 	j MAIN
@@ -184,7 +182,7 @@ PULA1:	mv a0, s11
 ERRO:	li a0, 0x07
 	li a7, 148
 	li a1, 0
-	M_Ecall
+	ecall
 		
 	#Print string erro
 	li a7, 104
@@ -193,7 +191,7 @@ ERRO:	li a0, 0x07
 	li a2, 0
 	li a3, 0x0700
 	li a4, 0
-	M_Ecall
+	ecall
 	
 	#print endereco erro
 	addi a0, t0, -12 #Endereco onde ocorreu o erro
@@ -202,11 +200,11 @@ ERRO:	li a0, 0x07
 	li a2, 0
 	li a3, 0x0700
 	li a4, 0
-	M_Ecall
+	ecall
 	
 	#end
 END: 	addi a7, zero, 10
-	M_Ecall
+	ecall
 	
-.include "../SYSTEMv13.s"
+.include "..\SYSTEMv14.s"
 	

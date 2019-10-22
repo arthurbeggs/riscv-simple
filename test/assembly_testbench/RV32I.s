@@ -19,10 +19,13 @@ NB1:	.byte 0
 MSG:	.string "Endereco do erro : "
 MSG2:	.string "RV32I - Nao ha erros :)"
 
-.include "../macros2.s"
 
 .text
-	M_SetEcall(exceptionHandling)
+	la t6,exceptionHandling		# carrega em t6 o endereço base das rotinas do sistema ECALL
+	csrrsi zero,0,1 		# seta o bit de habilitação de interrupção em ustatus (reg 0)
+	csrrw zero,5,t6 		# seta utvec (reg 5) para o endereço t6
+	
+	
 	li s11, 0	# contador de Loops
 	
 MAIN:	la t1, N	# t1 = N  testa AUIPC e ADDI
@@ -212,7 +215,7 @@ SUCESSO: bgt s11,zero,PULA1
    	li a0, 0x38
    	li a1, 0
 	li a7, 148
-	M_Ecall
+	ecall
 	
 	#print string sucesso
 	li a3,0x3800
@@ -221,7 +224,7 @@ SUCESSO: bgt s11,zero,PULA1
 	li a1, 64
 	li a2, 0
 	li a4, 0
-	M_Ecall
+	ecall
 
 PULA1:	mv a0, s11
 	li a7, 101
@@ -229,7 +232,7 @@ PULA1:	mv a0, s11
 	li a2, 0 #120
 	li a3, 0x3800
 	li a4, 0
-	M_Ecall
+	ecall
 
 	addi s11, s11, 1
 	j MAIN
@@ -237,7 +240,7 @@ PULA1:	mv a0, s11
 ERRO:	li a0, 0x07
 	li a7, 148
 	li a1, 0
-	M_Ecall
+	ecall
 		
 	#Print string erro
 	li a7, 104
@@ -246,7 +249,7 @@ ERRO:	li a0, 0x07
 	li a2, 0
 	li a3, 0x0700
 	li a4, 0
-	M_Ecall
+	ecall
 	
 	#print endereco erro
 	addi a0, t0, -12 #Endereco onde ocorreu o erro
@@ -255,11 +258,11 @@ ERRO:	li a0, 0x07
 	li a2, 0
 	li a3, 0x0700
 	li a4, 0
-	M_Ecall
+	ecall
 	
 	#end
 END: 	addi a7, zero, 10
-	M_Ecall
+	ecall
 	
-.include "../SYSTEMv13.s"
+.include "..\SYSTEMv14.s"
 	

@@ -11,7 +11,7 @@
 
 `timescale 1 ns / 1 ns
 
-// Duração da simulação, em nanosegundos/10
+// Duração da simulação, em nanosegundos
 `define SIMULATION_DURATION 100000
 
 module fpga_top_tb;

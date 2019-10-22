@@ -1021,6 +1021,9 @@ set_global_assignment -name EDA_GENERATE_GATE_LEVEL_SIMULATION_COMMAND_SCRIPT OF
 set_global_assignment -name EDA_SIMULATION_RUN_SCRIPT ../../test/simulation_scripts/de1_soc_rtl.do -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_FILE ../../test/verilog_testbench/fpga_top_tb.v -section_id fpga_top_tb
 
+
+
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name VERILOG_FILE ../../core/config.v
 set_global_assignment -name VERILOG_FILE ../../core/fpga_top.v
 set_global_assignment -name SDC_FILE ../../core/fpga_top.sdc
@@ -1068,6 +1071,8 @@ set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/cyclone_v/fmax_s.qi
 set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/cyclone_v/fmin_s.qip
 set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/cyclone_v/mul_s.qip
 set_global_assignment -name QIP_FILE ../../core/risc_v/FPULA/cyclone_v/sqrt_s.qip
+set_global_assignment -name QIP_FILE ../../core/peripherals/adc/ADC_Controller.qip
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/adc/ADC_Interface.v
 set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/AudioCODEC_Interface.v
 set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/audio_clock.v
 set_global_assignment -name VERILOG_FILE ../../core/peripherals/audio_codec/audio_converter.v
@@ -1089,10 +1094,20 @@ set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/Altera_UP_PS
 set_global_assignment -name VERILOG_FILE ../../core/peripherals/ps2/Altera_UP_PS2_Command_Out.v
 set_global_assignment -name VERILOG_FILE ../../core/peripherals/rs232/RS232_Interface.v
 set_global_assignment -name VERILOG_FILE ../../core/peripherals/rs232/async.v
+set_global_assignment -name SYSTEMVERILOG_FILE ../../core/peripherals/synth/Channel.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../core/peripherals/synth/Envelope.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../core/peripherals/synth/Filter.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../core/peripherals/synth/Note.sv
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/synth/NoteTable.v
+set_global_assignment -name SYSTEMVERILOG_FILE ../../core/peripherals/synth/Oscillator.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../core/peripherals/synth/SineCalculator.sv
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/synth/SineTable.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/synth/Sintetizador.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/synth/Sintetizador_Interface.v
+set_global_assignment -name VERILOG_FILE ../../core/peripherals/synth/SynthControl.v
+set_global_assignment -name SYSTEMVERILOG_FILE ../../core/peripherals/synth/Synthesizer.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../core/peripherals/synth/SyscallSynthControl.sv
 set_global_assignment -name VERILOG_FILE ../../core/peripherals/video/video_interface.v
 set_global_assignment -name VERILOG_FILE ../../core/peripherals/video/video_compositor.v
 set_global_assignment -name VERILOG_FILE ../../core/peripherals/video/vga_driver.v
 set_global_assignment -name VERILOG_FILE ../../core/peripherals/video/font.v
-
-
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
