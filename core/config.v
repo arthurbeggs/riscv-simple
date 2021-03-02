@@ -9,15 +9,15 @@
 `define CONFIG_AND_CONSTANTS
 
 // Selecione a microarquitetura a ser sintetizada [ative somente uma]
-`define UNICICLO
+// `define UNICICLO
 // `define MULTICICLO
 // `define PIPELINE
 
 
 // Selecione a ISA a ser implementada [ative somente uma]
-//`define RV32I
-//`define RV32IM
-`define RV32IMF
+// `define RV32I
+// `define RV32IM
+// `define RV32IMF
 
 
 // Selecione a FPGA a ser utilizada (lembre de usar o projeto .qsf correto)
