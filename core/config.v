@@ -9,15 +9,15 @@
 `define CONFIG_AND_CONSTANTS
 
 // Selecione a microarquitetura a ser sintetizada [ative somente uma]
-// `define UNICICLO
+`define UNICICLO
 // `define MULTICICLO
-`define PIPELINE
+// `define PIPELINE
 
 
 // Selecione a ISA a ser implementada [ative somente uma]
-// `define RV32I
+`define RV32I
 // `define RV32IM
-`define RV32IMF
+// `define RV32IMF
 
 
 // Selecione a FPGA a ser utilizada (lembre de usar o projeto .qsf correto)
@@ -277,10 +277,10 @@ parameter
     BEGINNING_IODEVICES     = 32'hFF00_0000,
 
     BEGINNING_VGA0          = 32'hFF00_0000,
-    END_VGA0                = 32'hFF01_2C00,  // 320 x 240 = 76800 bytes
+    END_VGA0                = 32'hFF01_2BFC,  // 320 x 240 = 76800 bytes
 
     BEGINNING_VGA1          = 32'hFF10_0000,
-    END_VGA1                = 32'hFF11_2C00,  // 320 x 240 = 76800 bytes
+    END_VGA1                = 32'hFF11_2BFC,  // 320 x 240 = 76800 bytes
 
     FRAMESELECT             = 32'hFF20_0604,  // Frame Select register 0 ou 1
 
