@@ -67,26 +67,37 @@ clock_counters clock_counters (
     .miliseconds            (miliseconds)
 );
 
-`ifdef DE2_115
-pll pll (
-    .inclk0         (clock_reference),
-    .c0             (clock_100mhz),
-    .c1             (clock_50mhz),
-    .c2             (clock_25mhz),
-    .c3             (clock_18mhz),
-    .locked         (pll_locked)
-);
-`endif
-`ifdef DE1_SOC
-pll pll (
-    .refclk         (clock_reference),
-    .rst            (1'b0),
-    .outclk_0       (clock_100mhz),
-    .outclk_1       (clock_50mhz),
-    .outclk_2       (clock_25mhz),
-    .outclk_3       (clock_18mhz),
-    .locked         (pll_locked)
-);
+`ifdef SIMULATION
+    pll_sim pll_sim (
+        .clock_reference(clock_reference),
+        .clock_100mhz   (clock_100mhz),
+        .clock_50mhz    (clock_50mhz),
+        .clock_25mhz    (clock_25mhz),
+        .clock_18mhz    (clock_18mhz),
+        .locked         (pll_locked)
+    );
+`else
+    `ifdef DE2_115
+    pll pll (
+        .inclk0         (clock_reference),
+        .c0             (clock_100mhz),
+        .c1             (clock_50mhz),
+        .c2             (clock_25mhz),
+        .c3             (clock_18mhz),
+        .locked         (pll_locked)
+    );
+    `endif
+    `ifdef DE1_SOC
+    pll pll (
+        .refclk         (clock_reference),
+        .rst            (1'b0),
+        .outclk_0       (clock_100mhz),
+        .outclk_1       (clock_50mhz),
+        .outclk_2       (clock_25mhz),
+        .outclk_3       (clock_18mhz),
+        .locked         (pll_locked)
+    );
+    `endif
 `endif
 
 endmodule

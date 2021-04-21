@@ -11,8 +11,7 @@
 
 `timescale 1 ns / 1 ns
 
-// Duração da simulação, em nanosegundos
-`define SIMULATION_DURATION 100000
+`define SIMULATION_DURATION 1000000
 
 module fpga_top_tb;
 
@@ -41,7 +40,7 @@ fpga_top dut(
 initial begin
     clock   <= 1'b0;
     key     <= 4'b1111;
-    switch  <= 10'b0000000111;
+    switch  <= 10'b0000001000;
     #100;
     key     <= 4'b1110;
     #200;

@@ -19,7 +19,7 @@ file copy -force -- ../../core/risc_v/FPULA/cyclone_v/sqrt_s_sim/sqrt_s_memoryC0
 file copy -force -- ../../core/risc_v/FPULA/cyclone_v/sqrt_s_sim/sqrt_s_memoryC1_uid65_sqrtTables_lutmem.hex  ./
 file copy -force -- ../../core/risc_v/FPULA/cyclone_v/sqrt_s_sim/sqrt_s_memoryC2_uid68_sqrtTables_lutmem.hex  ./
 
-vlog -sv -work real_work +incdir+../../core/clock/cyclone_v          {../../core/clock/cyclone_v/pll_sim/pll.vo}
+# vlog -sv -work real_work +incdir+../../core/clock/cyclone_v          {../../core/clock/cyclone_v/pll_sim/pll.vo}
 vlog -sv -work real_work +incdir+../../core/risc_v/FPULA/cyclone_v   {../../core/risc_v/FPULA/cyclone_v/cvt_s_w_sim/cvt_s_w.vo}
 vlog -sv -work real_work +incdir+../../core/risc_v/FPULA/cyclone_v   {../../core/risc_v/FPULA/cyclone_v/add_sub_sim/add_sub.vo}
 vlog -sv -work real_work +incdir+../../core/risc_v/FPULA/cyclone_v   {../../core/risc_v/FPULA/cyclone_v/cvt_s_wu_sim/cvt_s_wu.vo}
@@ -33,6 +33,7 @@ vlog -sv -work real_work +incdir+../../core/risc_v/FPULA/cyclone_v   {../../core
 
 vlog -sv -work real_work +define+SIMULATION +incdir+../../core {../../core/config.v}
 vlog -sv -work real_work +define+SIMULATION +incdir+../../core {../../core/fpga_top.v}
+vlog -sv -work real_work +define+SIMULATION +incdir+../../core +incdir+../../core/clock/simulation {../../core/clock/simulation/pll_sim.v}
 vlog -sv -work real_work +define+SIMULATION +incdir+../../core +incdir+../../core/clock {../../core/clock/breakpoint_interface.v}
 vlog -sv -work real_work +define+SIMULATION +incdir+../../core +incdir+../../core/clock {../../core/clock/clock_control.v}
 vlog -sv -work real_work +define+SIMULATION +incdir+../../core +incdir+../../core/clock {../../core/clock/clock_counters.v}
@@ -78,7 +79,11 @@ vlog -sv -work work +incdir+../../core +incdir+../../test/verilog_testbench {../
 vsim -t 1ns -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L real_work -voptargs="+acc"  -suppress 3016,3017,3722 fpga_top_tb
 
 vcd file simulation_output.vcd
-vcd add -r /fpga_top_tb/dut/*
+# vcd add -r /fpga_top_tb/dut/CPU/*
+vcd add /fpga_top_tb/dut/CPU/*
+vcd add /fpga_top_tb/dut/CPU/CONTROL/*
+vcd add /fpga_top_tb/dut/CPU/DATAPATH/*
+vcd add /fpga_top_tb/dut/breakpoint_interface/*
 run -all
 
 exit -f

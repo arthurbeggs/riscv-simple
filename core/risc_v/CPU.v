@@ -117,7 +117,7 @@ wire wCWrite2Mem;
 wire wCFPstart;
 `endif
 
- Control_UNI CONTROL0 (
+ Control_UNI CONTROL (
     .iInstr                 (wInstr),
     .oOrigAULA              (wCOrigAULA),
     .oOrigBULA              (wCOrigBULA),
@@ -145,7 +145,7 @@ wire wCFPstart;
 
 // Caminho de Dados
 
-Datapath_UNI DATAPATH0 (
+Datapath_UNI DATAPATH (
     .iCLK                   (iCLK),
     .iCLK50                 (iCLK_50),
     .iRST                   (iRST),
@@ -242,7 +242,7 @@ wire [31:0] wInstr;
 
 assign mControlState    = wCState;
 
-Control_MULTI CONTROL0 (
+Control_MULTI CONTROL (
     .iCLK                   (iCLK),
     .iRST                   (iRST), // reseta a máquina de estados quando ocorrer exceção
     .iInstr                 (wInstr),
@@ -279,7 +279,7 @@ Control_MULTI CONTROL0 (
 
 
 // Caminho de Dados
-Datapath_MULTI DATAPATH0 (
+Datapath_MULTI DATAPATH (
     .iCLK                   (iCLK),
     .iCLK50                 (iCLK_50),
     .iRST                   (iRST),
@@ -369,7 +369,7 @@ wire wEX_FPALUReady;
 `endif
 
 
-Control_PIPEM CONTROL0 (
+Control_PIPEM CONTROL (
     .iInstr                 (wID_Instr),
 `ifdef RV32IMF
      .iFPALUReady           (wEX_FPALUReady),
@@ -396,7 +396,7 @@ Control_PIPEM CONTROL0 (
 );
 
 
-Datapath_PIPEM DATAPATH0 (
+Datapath_PIPEM DATAPATH (
     .iCLK                   (iCLK),
     .iCLK50                 (iCLK_50),
     .iRST                   (iRST),

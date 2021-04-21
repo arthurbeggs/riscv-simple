@@ -198,7 +198,7 @@ wire [31:0] fp_reg_debug_data;
 wire [31:0] csr_debug_data;
 wire ebreak_syscall;
 
-CPU CPU0 (
+CPU CPU (
     .iCLK                   (core_clock),      // Clock real do Processador
     .iCLK_50                (clock_50mhz),  // Clock 50MHz fixo, usado so na FPU Uniciclo
     .iRST                   (reset),

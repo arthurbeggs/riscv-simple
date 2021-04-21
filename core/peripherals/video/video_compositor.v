@@ -70,6 +70,20 @@ always @ (*) begin
     end
 end
 
+
+`ifdef SIMULATION
+    initial begin
+        reg_debug_address   <= 5'b0;
+        csr_debug_address   <= 12'b0;
+    end
+
+    always @ (*) begin
+        pixel_red   = mem_data_red;
+        pixel_green = mem_data_green;
+        pixel_blue  = mem_data_blue;
+    end
+
+`else
 // OSD de depuração
 always @ (*) begin
     if (~osd_enable) begin
@@ -407,6 +421,7 @@ always @ (*) begin
         };
     end
 end
+`endif
 
 endmodule
 
