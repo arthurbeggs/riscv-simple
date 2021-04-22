@@ -44,7 +44,7 @@ module Datapath_PIPEM (
     input  [ 4:0] wID_CALUControl,
     input  [NTYPE-1:0] wID_InstrType,
 `ifdef RV32IMF
-    input  wID_CFRegWrite, // Fio que vem da controladora e habilita escrita no FReg
+    input  wID_CFRegWrite,
     input  [ 4:0] wID_CFPALUControl,
     input  wID_CFPALUStart,
 `endif
@@ -66,11 +66,8 @@ module Datapath_PIPEM (
     output [31:0] IwWriteData
 );
 
-// Quando fizer alguma modificação basta modificar esses parâmetros no Parametros.v
-//parameter NIFID  = 96,
-//          NIDEX  = 198,
-//          NEXMEM = 149,
-//          NMEMWB = 144;
+// Quando fizer alguma modificação basta modificar esses parâmetros no config.v
+//parameter NIFID, NIDEX, NEXMEM, NMEMWB;
 
 reg  [ NIFID-1:0] RegIFID;
 reg  [ NIDEX-1:0] RegIDEX;
@@ -394,7 +391,7 @@ ImmGen IMMGEN0 (
 
 BranchControl BC0 (
     .iFunct3        (wID_Funct3),
-    .iA             (wID_ForwardRs1), // Esta sendo feito o forward aqui!
+    .iA             (wID_ForwardRs1),
     .iB             (wID_ForwardRs2),
     .oBranch        (wID_BranchResult)
 );
@@ -543,7 +540,7 @@ always @(posedge iCLK or posedge iRST) begin
             RegIDEX[239:228] <= wID_CSR;            // 12
             RegIDEX[271:240] <= wID_Instr;          // 32
             // RegIDEX[274:272] <= wID_COrigPC;        // 3
-            RegIDEX[NTYPE+275-1:275] <= wID_InstrType;  // 8 ou 14
+            RegIDEX[NTYPE+275-1:275] <= wID_InstrType;  // 9 ou 14
 
 `ifdef RV32IMF
             RegIDEX[    289] <= wID_CFRegWrite;     // 1

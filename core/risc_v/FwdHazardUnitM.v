@@ -26,7 +26,7 @@ module FwdHazardUnitM (
     input  [ 4:0] iWB_Rd,
     input  [11:0] iWB_CSR,
 
-    input  [NTYPE-1:0] iID_InstrType, //{CSR,FPULA2Reg,FAIsInt,FAisFloat,FStore,FLoad,DivRem,Load,Store,TipoR,TipoI,Jal,Jalr,Branch} // Identifica o tipo da instrucao que esta sendo decodificada pelo controle
+    input  [NTYPE-1:0] iID_InstrType, //{FPULA2Reg,FAIsInt,FAisFloat,FStore,FLoad,CSR,DivRem,Load,Store,TipoR,TipoI,Jal,Jalr,Branch} // Identifica o tipo da instrucao que esta sendo decodificada pelo controle
     input  [NTYPE-1:0] iEX_InstrType,
     input  [NTYPE-1:0] iMEM_InstrType,
     input  [NTYPE-1:0] iWB_InstrType,
@@ -58,15 +58,15 @@ module FwdHazardUnitM (
 );
 
 // Aqui deve ter todos os sinais possíveis para detectar qualquer hazard
-wire wID_TipoCSR         = iID_InstrType[13]; // É uma intrução do tipo I, mas é melhor tartar como um tipo a parte, para evitar modificar muito o FWdHazardUnit
 `ifdef RV32IMF
-wire wID_FPULA2Reg  = iID_InstrType[12];
-wire wID_FAIsInt    = iID_InstrType[11];
-wire wID_FAIsFloat  = iID_InstrType[10];
-wire wID_FStore     = iID_InstrType[ 9];
-wire wID_FLoad      = iID_InstrType[ 8];
+wire wID_FPULA2Reg  = iID_InstrType[13];
+wire wID_FAIsInt    = iID_InstrType[12];
+wire wID_FAIsFloat  = iID_InstrType[11];
+wire wID_FStore     = iID_InstrType[10];
+wire wID_FLoad      = iID_InstrType[ 9];
 // wire wID_FPULA      = wID_FAIsInt || wID_FAIsFloat;// || wID_FLoad; // Tipos de instrucao que utilizam a FPULA e escrevem em registrador de ponto flutuante
 `endif
+wire wID_TipoCSR    = iID_InstrType[8];
 // wire wID_DivRem     = iID_InstrType[7];
 wire wID_Load       = iID_InstrType[6];
 wire wID_Store      = iID_InstrType[5];
@@ -79,15 +79,15 @@ wire wID_Branch     = iID_InstrType[0];
 // wire wID_PC4        = wID_Jal   || wID_Jalr;  // forward do PC+4
 
 
-wire wEX_TipoCSR    = iEX_InstrType[13];
 `ifdef RV32IMF
-wire wEX_FPULA2Reg  = iEX_InstrType[12];
-wire wEX_FAIsInt    = iEX_InstrType[11];
-wire wEX_FAIsFloat  = iEX_InstrType[10];
-// wire wEX_FStore     = iEX_InstrType[ 9];
-wire wEX_FLoad      = iEX_InstrType[ 8];
+wire wEX_FPULA2Reg  = iEX_InstrType[13];
+wire wEX_FAIsInt    = iEX_InstrType[12];
+wire wEX_FAIsFloat  = iEX_InstrType[11];
+// wire wEX_FStore     = iEX_InstrType[10];
+wire wEX_FLoad      = iEX_InstrType[ 9];
 wire wEX_FPULA      = wEX_FAIsInt || wEX_FAIsFloat;// || wEX_FLoad; // || wEX_FStore; // Tipos de instrucao que utilizam a FPULA e escrevem em registrador de ponto flutuante
 `endif
+wire wEX_TipoCSR    = iEX_InstrType[8];
 wire wEX_DivRem     = iEX_InstrType[7];
 wire wEX_Load       = iEX_InstrType[6];
 // wire wEX_Store      = iEX_InstrType[5];
@@ -100,15 +100,15 @@ wire wEX_ULA        = wEX_TipoR || wEX_TipoI || wEX_DivRem;
 wire wEX_PC4        = wEX_Jal   || wEX_Jalr;
 
 
-wire wMEM_TipoCSR   = iMEM_InstrType[13];
 `ifdef RV32IMF
-wire wMEM_FPULA2Reg = iMEM_InstrType[12];
-wire wMEM_FAIsInt   = iMEM_InstrType[11];
-wire wMEM_FAIsFloat = iMEM_InstrType[10];
-// wire wMEM_FStore    = iMEM_InstrType[ 9];
-// wire wMEM_FLoad     = iMEM_InstrType[ 8];
+wire wMEM_FPULA2Reg = iMEM_InstrType[13];
+wire wMEM_FAIsInt   = iMEM_InstrType[12];
+wire wMEM_FAIsFloat = iMEM_InstrType[11];
+// wire wMEM_FStore    = iMEM_InstrType[10];
+// wire wMEM_FLoad     = iMEM_InstrType[ 9];
 wire wMEM_FPULA     = wMEM_FAIsInt || wMEM_FAIsFloat;// || wMEM_FLoad; // Tipos de instrucao que utilizam a FPULA e escrevem em registrador de ponto flutuante
 `endif
+wire wMEM_TipoCSR   = iMEM_InstrType[8];
 wire wMEM_DivRem    = iMEM_InstrType[7];
 wire wMEM_Load      = iMEM_InstrType[6];
 // wire wMEM_Store     = iMEM_InstrType[5];
@@ -121,15 +121,15 @@ wire wMEM_ULA       = wMEM_TipoR || wMEM_TipoI || wMEM_DivRem;
 wire wMEM_PC4       = wMEM_Jal   || wMEM_Jalr;
 
 
-wire wWB_TipoCSR    = iWB_InstrType[13];
 `ifdef RV32IMF
-wire wWB_FPULA2Reg  = iWB_InstrType[12];
-wire wWB_FAIsInt    = iWB_InstrType[11];
-wire wWB_FAIsFloat  = iWB_InstrType[10];
-// wire wWB_FStore     = iWB_InstrType[ 9];
-wire wWB_FLoad      = iWB_InstrType[ 8];
+wire wWB_FPULA2Reg  = iWB_InstrType[13];
+wire wWB_FAIsInt    = iWB_InstrType[12];
+wire wWB_FAIsFloat  = iWB_InstrType[11];
+// wire wWB_FStore     = iWB_InstrType[10];
+wire wWB_FLoad      = iWB_InstrType[ 9];
 wire wWB_FPULA      = wWB_FAIsInt || wWB_FAIsFloat;// || wWB_FLoad; // Tipos de instrucao que utilizam a FPULA e escrevem em registrador de ponto flutuante
 `endif
+wire wWB_TipoCSR    = iWB_InstrType[8];
 wire wWB_DivRem     = iWB_InstrType[7];
 wire wWB_Load       = iWB_InstrType[6];
 // wire wWB_Store      = iWB_InstrType[5];
@@ -210,7 +210,8 @@ always @(*) begin // Análise de Stalls e Flushes
     else if (wID_Jal || wID_Jalr || (wID_Branch))
             oIFID_Flush  <= 1'b1;
 
-`ifdef RV32IMF // Lembrar do caso do FDIV SE SOBRAR TEMPO!
+// TODO: FDIV?
+`ifdef RV32IMF
     else if (wEX_FLoad && (
          (wID_FAIsFloat && (iEX_Rd == iID_Rs1 || iEX_Rd == iID_Rs2)) ||
          (wID_FPULA2Reg && (iEX_Rd == iID_Rs1))                      ||

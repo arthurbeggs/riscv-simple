@@ -9,15 +9,15 @@
 `define CONFIG_AND_CONSTANTS
 
 // Selecione a microarquitetura a ser sintetizada [ative somente uma]
-`define UNICICLO
+//`define UNICICLO
 // `define MULTICICLO
-// `define PIPELINE
+`define PIPELINE
 
 
 // Selecione a ISA a ser implementada [ative somente uma]
-`define RV32I
+// `define RV32I
 // `define RV32IM
-// `define RV32IMF
+`define RV32IMF
 
 
 // Selecione a FPGA a ser utilizada (lembre de usar o projeto .qsf correto)
@@ -388,9 +388,9 @@ parameter
 
 `ifndef RV32IMF
     NIFID   = 96,
-    NIDEX   = 282, // adicionardo 32 CSreg Write, 1 ecall , 1 invIntrc, 1 CSRegWrite , 2 expadir orig(a\b)ALU, 1 expandir men2reg
-    NEXMEM  = 232,
-    NMEMWB  = 287,
+    NIDEX   = 284,
+    NEXMEM  = 233,
+    NMEMWB  = 288,
 `else
     NIFID   = 96,
     NIDEX   = 360,
@@ -400,7 +400,7 @@ parameter
 
 /* Tamanho em bits do Instruction Type */
 `ifndef RV32IMF
-    NTYPE   = 8;
+    NTYPE   = 9;
 `else
     NTYPE   = 14;
 `endif
