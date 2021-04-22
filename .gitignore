@@ -24,10 +24,14 @@ c5_pin_model_dump.txt
 *.temp
 *.qar
 *.qarlog
+*.ver
 
 # Compiled files
 **/bin
 **/obj
 **/dep
 **/lib
+
+# Vim session file
+session.vim
 
