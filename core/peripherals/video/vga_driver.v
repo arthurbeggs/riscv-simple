@@ -69,18 +69,6 @@ assign is_y_sync        = ((y_counter >= Y_START_SYNC_PULSE) &&
 assign pixel_x_pos      = is_x_active_area ? x_counter : 10'b0;
 assign pixel_y_pos      = is_y_active_area ? y_counter : 10'b0;
 
-// always @ (posedge clock or posedge reset) begin
-//     if (reset) begin
-//         x_counter   <= 10'b0;
-//     end
-//     else if (x_counter == X_END_LINE) begin
-//         x_counter   <= 10'b0;
-//     end
-//     else begin
-//         x_counter   <= x_counter + 1'b1;
-//     end
-// end
-
 always @ (posedge clock) begin
     if (x_counter == X_END_LINE) begin
         x_counter   <= 10'b0;
@@ -89,18 +77,6 @@ always @ (posedge clock) begin
         x_counter   <= x_counter + 1'b1;
     end
 end
-
-// always @ (posedge clock or posedge reset) begin
-//     if (reset) begin
-//         y_counter   <= 10'b0;
-//     end
-//     else if (x_counter == X_END_LINE && y_counter == Y_END_FRAME) begin
-//         y_counter   <= 10'b0;
-//     end
-//     else if (x_counter == X_END_LINE) begin
-//         y_counter   <= y_counter + 1'b1;
-//     end
-// end
 
 always @ (posedge clock) begin
     if (x_counter == X_END_LINE && y_counter == Y_END_FRAME) begin
