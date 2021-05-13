@@ -265,9 +265,8 @@ reg  [63:0] instret_delay;
 
 
 //////////////////////////////////////////////////////////////////
-initial PC <= BEGINNING_TEXT;
-
 initial begin
+    PC              <= BEGINNING_TEXT;
     RegIFID         <= {NIFID {1'b0}};
     RegIDEX         <= {NIDEX {1'b0}};
     RegEXMEM        <= {NEXMEM{1'b0}};

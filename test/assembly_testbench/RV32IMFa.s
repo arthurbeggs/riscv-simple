@@ -13,7 +13,8 @@
 # 2020/1
 #################################################
 
-# Versão que usa os contadores do CSR
+# Include macros
+.include "../../system/MACROSv21.s"
 
 .data
 F0:         .float 3.0
@@ -30,9 +31,7 @@ FSGNJN:     .float -3.0
 MSG:        .string "Endereco do erro : "
 MSG2:       .string "RV32IMF - Nao ha erros :)"
 
-# Include macros (.text inside macros file)
-.include "../../system/MACROSv21.s"
-
+.text
     li a0, 0x38
     li a1, 0
     li a7, 148

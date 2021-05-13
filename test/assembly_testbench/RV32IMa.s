@@ -7,15 +7,14 @@
 # 2020/1
 #################################################
 
-# Versão que usa os contadores do CSR
+# Include macros
+.include "../../system/MACROSv21.s"
 
 .data
 MSG:    .string "Endereco do erro : "
 MSG2:   .string "RV32IM - Nao ha erros :)"
 
-# Include macros (.text inside macros file)
-.include "../../system/MACROSv21.s"
-
+.text
     li a0, 0x38
     li a1, 0
     li a7, 148

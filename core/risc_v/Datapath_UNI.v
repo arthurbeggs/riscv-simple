@@ -149,7 +149,7 @@ reg  [31:0] wOrigAFPALU;
 reg  [31:0] wFWriteData;
 reg  [31:0] wWrite2Mem;
 `else
-reg  [31:0] wWrite2Mem = wRead2;
+reg  [31:0] wWrite2Mem;
 `endif
 
 
@@ -315,42 +315,43 @@ BranchControl BC0 (
 // multiplexadores
 always @(*) begin
     case(wCOrigAULA)
-        2'b00:      wOrigAULA <= wRead1;
-        2'b01:      wOrigAULA <= PC;
-        2'b10:      wOrigAULA <= wImmediate;
-        2'b11:      wOrigAULA <= ~wRead1; // valor do conteudo de rs1 negado para csrrc
-        default:    wOrigAULA <= ZERO;
+        2'b00:      wOrigAULA = wRead1;
+        2'b01:      wOrigAULA = PC;
+        2'b10:      wOrigAULA = wImmediate;
+        2'b11:      wOrigAULA = ~wRead1; // valor do conteudo de rs1 negado para csrrc
+        default:    wOrigAULA = ZERO;
     endcase
 end
 
 always @(*) begin
     case(wCOrigBULA)
-        2'b00:      wOrigBULA <= wRead2;
-        2'b01:      wOrigBULA <= wImmediate;
-        2'b10:      wOrigBULA <= wCSRead;
-        2'b11:      wOrigBULA <= ZERO;
-        default:    wOrigBULA <= ZERO;
+        2'b00:      wOrigBULA = wRead2;
+        2'b01:      wOrigBULA = wImmediate;
+        2'b10:      wOrigBULA = wCSRead;
+        2'b11:      wOrigBULA = ZERO;
+        default:    wOrigBULA = ZERO;
     endcase
 end
 
+// NOTE: Seletor de 3 bits para 4 entradas???
 `ifdef RV32IMF
 always @(*) begin   // Novo fio de saida para fazer os multiplexadores em cascata
     case(wCMem2Reg)
-        3'b000:     wMem2Reg <= wALUresult;     // Tipo-R e Tipo-I
-        3'b001:     wMem2Reg <= wPC4;               // jalr e jal
-        3'b010:     wMem2Reg <= wMemLoad;           // Loads
-        3'b100:     wMem2Reg <= wCSRead;            // Load from CSR
-      default:      wMem2Reg <= ZERO;
+        3'b000:     wMem2Reg = wALUresult;     // Tipo-R e Tipo-I
+        3'b001:     wMem2Reg = wPC4;               // jalr e jal
+        3'b010:     wMem2Reg = wMemLoad;           // Loads
+        3'b100:     wMem2Reg = wCSRead;            // Load from CSR
+      default:      wMem2Reg = ZERO;
     endcase
 end
 `else
 always @(*) begin
     case(wCMem2Reg)
-        3'b000:     wRegWrite <= wALUresult;        // Tipo-R e Tipo-I
-        3'b001:     wRegWrite <= wPC4;              // jalr e jal
-        3'b010:     wRegWrite <= wMemLoad;          // Loads
-        3'b100:     wRegWrite <= wCSRead;           // Load from CSR
-        default:    wRegWrite <= ZERO;
+        3'b000:     wRegWrite = wALUresult;        // Tipo-R e Tipo-I
+        3'b001:     wRegWrite = wPC4;              // jalr e jal
+        3'b010:     wRegWrite = wMemLoad;          // Loads
+        3'b100:     wRegWrite = wCSRead;           // Load from CSR
+        default:    wRegWrite = ZERO;
     endcase
 end
 `endif
@@ -360,13 +361,13 @@ always @(*) begin
         wiPC <= wCSRegReadUTVEC;
     else begin
         case(wCOrigPC)
-            3'b000:     wiPC <= wPC4;                                   // PC+4
-            3'b001:     wiPC <= wBranch ? wBranchPC: wPC4;              // Branches
-            3'b010:     wiPC <= wBranchPC;                              // jal
-            3'b011:     wiPC <= (wRead1+wImmediate) & ~(32'h00000001);  // jalr
-            3'b100:     wiPC <= wCSRegReadUTVEC;                        // UTVEC
-            3'b101:     wiPC <= wCSRegReadUEPC;                         // UEPC (para o uret)
-            default:    wiPC <= ZERO;
+            3'b000:     wiPC = wPC4;                                   // PC+4
+            3'b001:     wiPC = wBranch ? wBranchPC: wPC4;              // Branches
+            3'b010:     wiPC = wBranchPC;                              // jal
+            3'b011:     wiPC = (wRead1+wImmediate) & ~(32'h00000001);  // jalr
+            3'b100:     wiPC = wCSRegReadUTVEC;                        // UTVEC
+            3'b101:     wiPC = wCSRegReadUEPC;                         // UEPC (para o uret)
+            default:    wiPC = ZERO;
         endcase
     end
 end
@@ -374,34 +375,38 @@ end
 `ifdef RV32IMF
 always @(*) begin
     case(wCOrigAFPALU) //
-        1'b0:      wOrigAFPALU <= wRead1;
-        1'b1:      wOrigAFPALU <= wFRead1;
-        default:   wOrigAFPALU <= ZERO;
+        1'b0:      wOrigAFPALU = wRead1;
+        1'b1:      wOrigAFPALU = wFRead1;
+        default:   wOrigAFPALU = ZERO;
     endcase
 end
 
 always @(*) begin
     case(wCFPALU2Reg) // Multiplexador intermediario para definir se o que entra no RegWrite do banco de registradores vem da FPULA ou do mux original implementado na ISA RV32I
-        1'b0:      wRegWrite <= wMem2Reg;
-        1'b1:      wRegWrite <= wFPALUResult;
-        default:   wRegWrite <= ZERO;
+        1'b0:      wRegWrite = wMem2Reg;
+        1'b1:      wRegWrite = wFPALUResult;
+        default:   wRegWrite = ZERO;
     endcase
 end
 
 always @(*) begin
     case(wCFWriteData) // Multiplexador que controla o que vai ser escrito em um registrador de ponto flutuante (origem memoria ou FPALU?)
-        1'b0:      wFWriteData <= wFPALUResult;
-        1'b1:      wFWriteData <= wMemLoad;
-        default:   wFWriteData <= ZERO;
+        1'b0:      wFWriteData = wFPALUResult;
+        1'b1:      wFWriteData = wMemLoad;
+        default:   wFWriteData = ZERO;
     endcase
 end
 
 always @(*) begin
     case(wCWrite2Mem) // Multiplexador que controla o que vai ser escrito na memoria (vem do Register(0) ou do FRegister(1)?)
-        1'b0:      wWrite2Mem <= wRead2;
-        1'b1:      wWrite2Mem <= wFRead2;
-        default:   wWrite2Mem <= ZERO;
+        1'b0:      wWrite2Mem = wRead2;
+        1'b1:      wWrite2Mem = wFRead2;
+        default:   wWrite2Mem = ZERO;
     endcase
+end
+`else
+always @(*) begin
+    wWrite2Mem = wRead2;
 end
 `endif
 

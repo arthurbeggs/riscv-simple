@@ -8,6 +8,8 @@
 # 2020/1
 #################################################
 
+# Include macros
+.include "../../system/MACROSv21.s"
 
 .data
 N:      .word 5
@@ -20,9 +22,7 @@ NB1:    .byte 0
 MSG:    .string "Endereco do erro : "
 MSG2:   .string "RV32I - Nao ha erros :)"
 
-# Include macros (.text inside macros file)
-.include "../../system/MACROSv21.s"
-
+.text
     li a0, 0x38
     li a1, 0
     li a7, 148

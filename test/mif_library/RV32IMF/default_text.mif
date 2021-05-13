@@ -8,160 +8,160 @@ BEGIN
 00000001 : 27c20213;   % 224:  %
 00000002 : 00521073;   % 225:     csrw    tp, utvec       # seta utvec para o endere�o tp %
 00000003 : 0000e073;   % 226:     csrsi   ustatus, 1      # seta o bit de habilita��o de interrup��o em ustatus (reg 0) %
-00000004 : 03800513;   % 36:     li a0, 0x38 %
-00000005 : 00000593;   % 37:     li a1, 0 %
-00000006 : 09400893;   % 38:     li a7, 148 %
-00000007 : 00000073;   % 39:     ecall %
-00000008 : 000046b7;   % 41:     li a3,0x3800        #print string sucesso %
-00000009 : 80068693;   % 41:  %
-0000000a : 06800893;   % 42:     li a7, 104 %
-0000000b : 0fc10517;   % 43:     la a0, MSG2 %
-0000000c : 01450513;   % 43:  %
-0000000d : 04000593;   % 44:     li a1, 64 %
-0000000e : 00000613;   % 45:     li a2, 0 %
-0000000f : 00000713;   % 46:     li a4, 0 %
-00000010 : 00000073;   % 47:     ecall %
-00000011 : 7d000d93;   % 49:     li s11, 2000    # contador de Loops %
-00000012 : c0102d73;   % 50:     rdtime s10  # le o tempo inicial %
-00000013 : c0202c73;   % 51:     rdinstret s8    # le o numero de instru��es inicial %
-00000014 : 0fc10317;   % 53: MAIN:   la t1, F0 %
-00000015 : fb030313;   % 53:  %
-00000016 : 00032007;   % 54:     flw ft0, 0(t1) %
-00000017 : 00432087;   % 55:     flw ft1, 4(t1) %
-00000018 : 00107f53;   % 57:     fadd.s ft10, ft0, ft1 # resultado da soma %
-00000019 : 00832f87;   % 58:     flw ft11, 8(t1) %
-0000001a : a1ff22d3;   % 59:     feq.s t0, ft10, ft11 %
-0000001b : 00029463;   % 60:     bne t0, zero, PULAERRO1 %
-0000001c : 1b4002ef;   % 61:     jal t0, ERRO %
-0000001d : 0800ff53;   % 63: PULAERRO1: fsub.s ft10, ft1, ft0 # teste subtracao %
-0000001e : 00c32f87;   % 64:        flw ft11, 12(t1) %
-0000001f : a1ff22d3;   % 65:        feq.s t0, ft10, ft11 %
-00000020 : 00029463;   % 66:        bne t0, zero, PULAERRO2 %
-00000021 : 1a0002ef;   % 67:        jal t0, ERRO %
-00000022 : 10107f53;   % 69: PULAERRO2: fmul.s ft10, ft0, ft1 # teste multiplicacao %
-00000023 : 01032f87;   % 70:        flw ft11, 16(t1) %
-00000024 : a1ff22d3;   % 71:        feq.s t0, ft10, ft11 %
-00000025 : 00029463;   % 72:        bne t0, zero, PULAERRO3 %
-00000026 : 18c002ef;   % 73:        jal t0, ERRO %
-00000027 : 18107f53;   % 75: PULAERRO3: fdiv.s ft10, ft0, ft1 # teste divisao %
-00000028 : 01432f87;   % 76:        flw ft11, 20(t1) %
-00000029 : a1ff22d3;   % 77:        feq.s t0, ft10, ft11 %
-0000002a : 00029463;   % 78:        bne t0, zero, PULAERRO4 %
-0000002b : 178002ef;   % 79:        jal t0, ERRO %
-0000002c : 5800ff53;   % 81: PULAERRO4: fsqrt.s ft10, ft1 # teste sqrt %
-0000002d : 01832f87;   % 82:        flw ft11, 24(t1) %
-0000002e : a1ff22d3;   % 83:        feq.s t0, ft10, ft11 %
-0000002f : 00029463;   % 84:        bne t0, zero, PULAERRO5 %
-00000030 : 164002ef;   % 85:        jal t0, ERRO %
-00000031 : c000f3d3;   % 87: PULAERRO5: fcvt.w.s t2, ft1  # teste cvt w s %
-00000032 : 01c32e03;   % 88:        lw t3, 28(t1) %
-00000033 : 01c38463;   % 89:        beq t2, t3, PULAERRO6 %
-00000034 : 154002ef;   % 90:        jal t0, ERRO %
-00000035 : c010f3d3;   % 92: PULAERRO6: fcvt.wu.s t2, ft1 # teste cvt wu s %
-00000036 : 02032e03;   % 93:        lw t3, 32(t1) %
-00000037 : 01c38463;   % 94:        beq t2, t3, PULAERRO7 %
-00000038 : 144002ef;   % 95:        jal t0, ERRO %
-00000039 : 00400393;   % 97: PULAERRO7: li t2, 4        # teste cvt s w %
-0000003a : d003ff53;   % 98:        fcvt.s.w ft10, t2 %
-0000003b : 00000013;   % 99:        nop              # Bug na unidade Forward %
-0000003c : a01f22d3;   % 100:        feq.s t0, ft10, ft1 %
-0000003d : 00029463;   % 101:        bne t0, zero, PULAERRO8 %
-0000003e : 12c002ef;   % 102:        jal t0, ERRO %
-0000003f : 00400393;   % 104: PULAERRO8: li t2, 4      # teste cvt s wu %
-00000040 : d013ff53;   % 105:        fcvt.s.wu ft10, t2 %
-00000041 : 00000013;   % 106:        nop              # Bug na unidade Forward %
-00000042 : a01f22d3;   % 107:        feq.s t0, ft10, ft1 %
-00000043 : 00029463;   % 108:        bne t0, zero, PULAERRO9 %
-00000044 : 114002ef;   % 109:        jal t0, ERRO %
-00000045 : 404003b7;   % 111: PULAERRO9: li t2, 0x40400000 # teste mv s x %
-00000046 : 00038393;   % 111:  %
-00000047 : f0038f53;   % 112:        fmv.s.x ft10, t2 %
-00000048 : a1e022d3;   % 113:        feq.s t0, ft0, ft10 %
-00000049 : 00029463;   % 114:        bne t0, zero, PULAERRO10 %
-0000004a : 0fc002ef;   % 115:        jal t0, ERRO %
-0000004b : 408003b7;   % 117: PULAERRO10: li t2, 0x40800000 # teste mv x s %
-0000004c : 00038393;   % 117:  %
-0000004d : e0008e53;   % 118:         fmv.x.s t3, ft1 %
-0000004e : 01c38463;   % 119:         beq t2, t3, PULAERRO11 %
-0000004f : 0e8002ef;   % 120:         jal t0, ERRO %
-00000050 : a00022d3;   % 122: PULAERRO11: feq.s t0, ft0, ft0 # teste feq %
-00000051 : 00029463;   % 123:         bne t0, zero, PULAERRO12 %
-00000052 : 0dc002ef;   % 124:         jal t0, ERRO %
-00000053 : a01002d3;   % 126: PULAERRO12: fle.s t0, ft0, ft1 # teste fle %
-00000054 : 00029463;   % 127:         bne t0, zero, PULAERRO13 %
-00000055 : 0d0002ef;   % 128:         jal t0, ERRO %
-00000056 : a01012d3;   % 130: PULAERRO13: flt.s t0, ft0, ft1 # teste flt %
-00000057 : 00029463;   % 131:         bne t0, zero, PULAERRO14 %
-00000058 : 0c4002ef;   % 132:         jal t0, ERRO %
-00000059 : 00032107;   % 134: PULAERRO14: flw ft2, 0(t1) # testes flw e fsw %
-0000005a : 02232227;   % 135:         fsw ft2, 36(t1) %
-0000005b : 02432107;   % 136:         flw ft2, 36(t1) %
-0000005c : e00102d3;   % 137:         fmv.x.s t0, ft2 %
-0000005d : 00029463;   % 138:         bne t0, zero, PULAERRO15 %
-0000005e : 0ac002ef;   % 139:         jal t0, ERRO %
-0000005f : 20100f53;   % 141: PULAERRO15: fsgnj.s ft10, ft0, ft1 # teste fsgnj %
-00000060 : a00f22d3;   % 142:         feq.s t0, ft10, ft0 %
-00000061 : 00029463;   % 143:         bne t0, zero, PULAERRO16 %
-00000062 : 09c002ef;   % 144:         jal t0, ERRO %
-00000063 : 20101f53;   % 146: PULAERRO16: fsgnjn.s ft10, ft0, ft1 # teste fsgnjn %
-00000064 : 02832f87;   % 147:         flw ft11, 40(t1) %
-00000065 : a1efa2d3;   % 148:         feq.s t0, ft11, ft10 %
-00000066 : 00029463;   % 149:         bne t0, zero, PULAERRO17 %
-00000067 : 088002ef;   % 150:         jal t0, ERRO %
-00000068 : 20102f53;   % 152: PULAERRO17: fsgnjx.s ft10, ft0, ft1 # teste fsgnjx %
-00000069 : a00f22d3;   % 153:         feq.s t0, ft10, ft0 %
-0000006a : 00029463;   % 154:         bne t0, zero, PULAERRO18 %
-0000006b : 078002ef;   % 155:         jal t0, ERRO %
-0000006c : 28101f53;   % 157: PULAERRO18: fmax.s ft10, ft0, ft1 # teste fmax %
-0000006d : a01f22d3;   % 158:         feq.s t0, ft10, ft1 %
-0000006e : 00029463;   % 159:         bne t0, zero, PULAERRO19 %
-0000006f : 068002ef;   % 160:         jal t0, ERRO %
-00000070 : 28100f53;   % 162: PULAERRO19: fmin.s ft10, ft0, ft1 # teste fmin %
-00000071 : a00f22d3;   % 163:         feq.s t0, ft10, ft0 %
-00000072 : 00029463;   % 164:         bne t0, zero, SUCESSO %
-00000073 : 058002ef;   % 165:         jal t0, ERRO %
-00000074 : fffd8d93;   % 168: SUCESSO: addi s11,s11,-1 %
-00000075 : e60d9ee3;   % 169:      bne s11,zero,MAIN %
-00000076 : c0102cf3;   % 170:      rdtime s9 %
-00000077 : c0202bf3;   % 171:      rdinstret s7 %
-00000078 : 418b8533;   % 173:     sub a0,s7,s8 %
-00000079 : 06500893;   % 174:     li a7, 101 %
-0000007a : 00000593;   % 175:     li a1, 0 %
-0000007b : 00000613;   % 176:     li a2, 0 %
-0000007c : 000046b7;   % 177:     li a3, 0x3800 %
-0000007d : 80068693;   % 177:  %
-0000007e : 00000713;   % 178:     li a4, 0 %
-0000007f : 00000073;   % 179:     ecall %
-00000080 : 41ac8533;   % 181:     sub a0,s9,s10 %
-00000081 : 06500893;   % 182:     li a7, 101 %
-00000082 : 11000593;   % 183:     li a1, 272 %
-00000083 : 00000613;   % 184:     li a2, 0 %
-00000084 : 000046b7;   % 185:     li a3, 0x3800 %
-00000085 : 80068693;   % 185:  %
-00000086 : 00000713;   % 186:     li a4, 0 %
-00000087 : 00000073;   % 187:     ecall %
-00000088 : 0500006f;   % 189:     j END %
-00000089 : 00700513;   % 191: ERRO:   li a0, 0x07 %
-0000008a : 09400893;   % 192:     li a7, 148 %
-0000008b : 00000593;   % 193:     li a1, 0 %
-0000008c : 00000073;   % 194:     ecall %
-0000008d : 06800893;   % 197:     li a7, 104 %
-0000008e : 0fc10517;   % 198:     la a0, MSG %
-0000008f : df450513;   % 198:  %
-00000090 : 00000593;   % 199:     li a1, 0 %
-00000091 : 00000613;   % 200:     li a2, 0 %
-00000092 : 70000693;   % 201:     li a3, 0x0700 %
-00000093 : 00000713;   % 202:     li a4, 0 %
-00000094 : 00000073;   % 203:     ecall %
-00000095 : ff428513;   % 206:     addi a0, t0, -12 #Endereco onde ocorreu o erro %
-00000096 : 08600893;   % 207:     li a7, 134 %
-00000097 : 09400593;   % 208:     li a1, 148 %
-00000098 : 00000613;   % 209:     li a2, 0 %
-00000099 : 70000693;   % 210:     li a3, 0x0700 %
-0000009a : 00000713;   % 211:     li a4, 0 %
-0000009b : 00000073;   % 212:     ecall %
-0000009c : 00a00893;   % 215: END:    addi a7, zero, 10 %
-0000009d : 00000073;   % 216:     ecall %
+00000004 : 03800513;   % 35:     li a0, 0x38 %
+00000005 : 00000593;   % 36:     li a1, 0 %
+00000006 : 09400893;   % 37:     li a7, 148 %
+00000007 : 00000073;   % 38:     ecall %
+00000008 : 000046b7;   % 40:     li a3,0x3800        #print string sucesso %
+00000009 : 80068693;   % 40:  %
+0000000a : 06800893;   % 41:     li a7, 104 %
+0000000b : 0fc10517;   % 42:     la a0, MSG2 %
+0000000c : 01450513;   % 42:  %
+0000000d : 04000593;   % 43:     li a1, 64 %
+0000000e : 00000613;   % 44:     li a2, 0 %
+0000000f : 00000713;   % 45:     li a4, 0 %
+00000010 : 00000073;   % 46:     ecall %
+00000011 : 7d000d93;   % 48:     li s11, 2000    # contador de Loops %
+00000012 : c0102d73;   % 49:     rdtime s10  # le o tempo inicial %
+00000013 : c0202c73;   % 50:     rdinstret s8    # le o numero de instru��es inicial %
+00000014 : 0fc10317;   % 52: MAIN:   la t1, F0 %
+00000015 : fb030313;   % 52:  %
+00000016 : 00032007;   % 53:     flw ft0, 0(t1) %
+00000017 : 00432087;   % 54:     flw ft1, 4(t1) %
+00000018 : 00107f53;   % 56:     fadd.s ft10, ft0, ft1 # resultado da soma %
+00000019 : 00832f87;   % 57:     flw ft11, 8(t1) %
+0000001a : a1ff22d3;   % 58:     feq.s t0, ft10, ft11 %
+0000001b : 00029463;   % 59:     bne t0, zero, PULAERRO1 %
+0000001c : 1b4002ef;   % 60:     jal t0, ERRO %
+0000001d : 0800ff53;   % 62: PULAERRO1: fsub.s ft10, ft1, ft0 # teste subtracao %
+0000001e : 00c32f87;   % 63:        flw ft11, 12(t1) %
+0000001f : a1ff22d3;   % 64:        feq.s t0, ft10, ft11 %
+00000020 : 00029463;   % 65:        bne t0, zero, PULAERRO2 %
+00000021 : 1a0002ef;   % 66:        jal t0, ERRO %
+00000022 : 10107f53;   % 68: PULAERRO2: fmul.s ft10, ft0, ft1 # teste multiplicacao %
+00000023 : 01032f87;   % 69:        flw ft11, 16(t1) %
+00000024 : a1ff22d3;   % 70:        feq.s t0, ft10, ft11 %
+00000025 : 00029463;   % 71:        bne t0, zero, PULAERRO3 %
+00000026 : 18c002ef;   % 72:        jal t0, ERRO %
+00000027 : 18107f53;   % 74: PULAERRO3: fdiv.s ft10, ft0, ft1 # teste divisao %
+00000028 : 01432f87;   % 75:        flw ft11, 20(t1) %
+00000029 : a1ff22d3;   % 76:        feq.s t0, ft10, ft11 %
+0000002a : 00029463;   % 77:        bne t0, zero, PULAERRO4 %
+0000002b : 178002ef;   % 78:        jal t0, ERRO %
+0000002c : 5800ff53;   % 80: PULAERRO4: fsqrt.s ft10, ft1 # teste sqrt %
+0000002d : 01832f87;   % 81:        flw ft11, 24(t1) %
+0000002e : a1ff22d3;   % 82:        feq.s t0, ft10, ft11 %
+0000002f : 00029463;   % 83:        bne t0, zero, PULAERRO5 %
+00000030 : 164002ef;   % 84:        jal t0, ERRO %
+00000031 : c000f3d3;   % 86: PULAERRO5: fcvt.w.s t2, ft1  # teste cvt w s %
+00000032 : 01c32e03;   % 87:        lw t3, 28(t1) %
+00000033 : 01c38463;   % 88:        beq t2, t3, PULAERRO6 %
+00000034 : 154002ef;   % 89:        jal t0, ERRO %
+00000035 : c010f3d3;   % 91: PULAERRO6: fcvt.wu.s t2, ft1 # teste cvt wu s %
+00000036 : 02032e03;   % 92:        lw t3, 32(t1) %
+00000037 : 01c38463;   % 93:        beq t2, t3, PULAERRO7 %
+00000038 : 144002ef;   % 94:        jal t0, ERRO %
+00000039 : 00400393;   % 96: PULAERRO7: li t2, 4        # teste cvt s w %
+0000003a : d003ff53;   % 97:        fcvt.s.w ft10, t2 %
+0000003b : 00000013;   % 98:        nop              # Bug na unidade Forward %
+0000003c : a01f22d3;   % 99:        feq.s t0, ft10, ft1 %
+0000003d : 00029463;   % 100:        bne t0, zero, PULAERRO8 %
+0000003e : 12c002ef;   % 101:        jal t0, ERRO %
+0000003f : 00400393;   % 103: PULAERRO8: li t2, 4      # teste cvt s wu %
+00000040 : d013ff53;   % 104:        fcvt.s.wu ft10, t2 %
+00000041 : 00000013;   % 105:        nop              # Bug na unidade Forward %
+00000042 : a01f22d3;   % 106:        feq.s t0, ft10, ft1 %
+00000043 : 00029463;   % 107:        bne t0, zero, PULAERRO9 %
+00000044 : 114002ef;   % 108:        jal t0, ERRO %
+00000045 : 404003b7;   % 110: PULAERRO9: li t2, 0x40400000 # teste mv s x %
+00000046 : 00038393;   % 110:  %
+00000047 : f0038f53;   % 111:        fmv.s.x ft10, t2 %
+00000048 : a1e022d3;   % 112:        feq.s t0, ft0, ft10 %
+00000049 : 00029463;   % 113:        bne t0, zero, PULAERRO10 %
+0000004a : 0fc002ef;   % 114:        jal t0, ERRO %
+0000004b : 408003b7;   % 116: PULAERRO10: li t2, 0x40800000 # teste mv x s %
+0000004c : 00038393;   % 116:  %
+0000004d : e0008e53;   % 117:         fmv.x.s t3, ft1 %
+0000004e : 01c38463;   % 118:         beq t2, t3, PULAERRO11 %
+0000004f : 0e8002ef;   % 119:         jal t0, ERRO %
+00000050 : a00022d3;   % 121: PULAERRO11: feq.s t0, ft0, ft0 # teste feq %
+00000051 : 00029463;   % 122:         bne t0, zero, PULAERRO12 %
+00000052 : 0dc002ef;   % 123:         jal t0, ERRO %
+00000053 : a01002d3;   % 125: PULAERRO12: fle.s t0, ft0, ft1 # teste fle %
+00000054 : 00029463;   % 126:         bne t0, zero, PULAERRO13 %
+00000055 : 0d0002ef;   % 127:         jal t0, ERRO %
+00000056 : a01012d3;   % 129: PULAERRO13: flt.s t0, ft0, ft1 # teste flt %
+00000057 : 00029463;   % 130:         bne t0, zero, PULAERRO14 %
+00000058 : 0c4002ef;   % 131:         jal t0, ERRO %
+00000059 : 00032107;   % 133: PULAERRO14: flw ft2, 0(t1) # testes flw e fsw %
+0000005a : 02232227;   % 134:         fsw ft2, 36(t1) %
+0000005b : 02432107;   % 135:         flw ft2, 36(t1) %
+0000005c : e00102d3;   % 136:         fmv.x.s t0, ft2 %
+0000005d : 00029463;   % 137:         bne t0, zero, PULAERRO15 %
+0000005e : 0ac002ef;   % 138:         jal t0, ERRO %
+0000005f : 20100f53;   % 140: PULAERRO15: fsgnj.s ft10, ft0, ft1 # teste fsgnj %
+00000060 : a00f22d3;   % 141:         feq.s t0, ft10, ft0 %
+00000061 : 00029463;   % 142:         bne t0, zero, PULAERRO16 %
+00000062 : 09c002ef;   % 143:         jal t0, ERRO %
+00000063 : 20101f53;   % 145: PULAERRO16: fsgnjn.s ft10, ft0, ft1 # teste fsgnjn %
+00000064 : 02832f87;   % 146:         flw ft11, 40(t1) %
+00000065 : a1efa2d3;   % 147:         feq.s t0, ft11, ft10 %
+00000066 : 00029463;   % 148:         bne t0, zero, PULAERRO17 %
+00000067 : 088002ef;   % 149:         jal t0, ERRO %
+00000068 : 20102f53;   % 151: PULAERRO17: fsgnjx.s ft10, ft0, ft1 # teste fsgnjx %
+00000069 : a00f22d3;   % 152:         feq.s t0, ft10, ft0 %
+0000006a : 00029463;   % 153:         bne t0, zero, PULAERRO18 %
+0000006b : 078002ef;   % 154:         jal t0, ERRO %
+0000006c : 28101f53;   % 156: PULAERRO18: fmax.s ft10, ft0, ft1 # teste fmax %
+0000006d : a01f22d3;   % 157:         feq.s t0, ft10, ft1 %
+0000006e : 00029463;   % 158:         bne t0, zero, PULAERRO19 %
+0000006f : 068002ef;   % 159:         jal t0, ERRO %
+00000070 : 28100f53;   % 161: PULAERRO19: fmin.s ft10, ft0, ft1 # teste fmin %
+00000071 : a00f22d3;   % 162:         feq.s t0, ft10, ft0 %
+00000072 : 00029463;   % 163:         bne t0, zero, SUCESSO %
+00000073 : 058002ef;   % 164:         jal t0, ERRO %
+00000074 : fffd8d93;   % 167: SUCESSO: addi s11,s11,-1 %
+00000075 : e60d9ee3;   % 168:      bne s11,zero,MAIN %
+00000076 : c0102cf3;   % 169:      rdtime s9 %
+00000077 : c0202bf3;   % 170:      rdinstret s7 %
+00000078 : 418b8533;   % 172:     sub a0,s7,s8 %
+00000079 : 06500893;   % 173:     li a7, 101 %
+0000007a : 00000593;   % 174:     li a1, 0 %
+0000007b : 00000613;   % 175:     li a2, 0 %
+0000007c : 000046b7;   % 176:     li a3, 0x3800 %
+0000007d : 80068693;   % 176:  %
+0000007e : 00000713;   % 177:     li a4, 0 %
+0000007f : 00000073;   % 178:     ecall %
+00000080 : 41ac8533;   % 180:     sub a0,s9,s10 %
+00000081 : 06500893;   % 181:     li a7, 101 %
+00000082 : 11000593;   % 182:     li a1, 272 %
+00000083 : 00000613;   % 183:     li a2, 0 %
+00000084 : 000046b7;   % 184:     li a3, 0x3800 %
+00000085 : 80068693;   % 184:  %
+00000086 : 00000713;   % 185:     li a4, 0 %
+00000087 : 00000073;   % 186:     ecall %
+00000088 : 0500006f;   % 188:     j END %
+00000089 : 00700513;   % 190: ERRO:   li a0, 0x07 %
+0000008a : 09400893;   % 191:     li a7, 148 %
+0000008b : 00000593;   % 192:     li a1, 0 %
+0000008c : 00000073;   % 193:     ecall %
+0000008d : 06800893;   % 196:     li a7, 104 %
+0000008e : 0fc10517;   % 197:     la a0, MSG %
+0000008f : df450513;   % 197:  %
+00000090 : 00000593;   % 198:     li a1, 0 %
+00000091 : 00000613;   % 199:     li a2, 0 %
+00000092 : 70000693;   % 200:     li a3, 0x0700 %
+00000093 : 00000713;   % 201:     li a4, 0 %
+00000094 : 00000073;   % 202:     ecall %
+00000095 : ff428513;   % 205:     addi a0, t0, -12 #Endereco onde ocorreu o erro %
+00000096 : 08600893;   % 206:     li a7, 134 %
+00000097 : 09400593;   % 207:     li a1, 148 %
+00000098 : 00000613;   % 208:     li a2, 0 %
+00000099 : 70000693;   % 209:     li a3, 0x0700 %
+0000009a : 00000713;   % 210:     li a4, 0 %
+0000009b : 00000073;   % 211:     ecall %
+0000009c : 00a00893;   % 214: END:    addi a7, zero, 10 %
+0000009d : 00000073;   % 215:     ecall %
 0000009e : 0420d073;   % 107:     csrwi ucause,1      # caso ocorra dropdown vai gerar exce��o de instru��o inv�lida %
 0000009f : ff810113;   % 109: ExceptionHandling:  addi    sp, sp, -8  # salva 2 registradores utilizados para comparar ucause %
 000000a0 : 00512023;   % 110:     sw  t0, 0(sp) %

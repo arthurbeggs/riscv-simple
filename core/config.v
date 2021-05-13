@@ -9,7 +9,7 @@
 `define CONFIG_AND_CONSTANTS
 
 // Selecione a microarquitetura a ser sintetizada [ative somente uma]
-//`define UNICICLO
+// `define UNICICLO
 // `define MULTICICLO
 `define PIPELINE
 
