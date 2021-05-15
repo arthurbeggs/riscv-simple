@@ -40,7 +40,7 @@ fpga_top dut(
 initial begin
     clock   <= 1'b0;
     key     <= 4'b1111;
-    switch  <= 10'b0000000010
+    switch  <= 10'b0000000011;
     #100;
     key     <= 4'b1110;
     #100;

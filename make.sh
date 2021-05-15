@@ -34,9 +34,10 @@ analysis_and_synthesis (){
     printf "${GRN}Analisando versão ${1}:${NOC}\n...\n"
     quartus_map fpga_top > output_files/partial_logs/rv"$1".log
     if [[ $? -eq 0 ]]; then
-        printf "$[SUCESSO]${NOC}\n\n"
+        printf "${GRN}[SUCESSO]${NOC}\n\n"
     else
         printf "$[FALHA]${NOC}\n\n"
+        return 1
     fi
 }
 
@@ -46,29 +47,39 @@ simulate (){
     [[ -d ../../test/simulation/output/logs ]] || mkdir -p ../../test/simulation/output/logs
     [[ -f ../../test/simulation/output/waveforms/rv"$1".vcd ]] && rm ../../test/simulation/output/waveforms/rv"$1".vcd
     [[ -f ../../test/simulation/output/logs/rv"$1"_sim.log ]] && rm ../../test/simulation/output/logs/rv"$1"_sim.log
-    printf "${GRN}Simulando versão ${1}:${NOC}\n"
-    quartus_sh -t "$QUARTUS_PATH/common/tcl/internal/nativelink/qnativesim.tcl" "fpga_top" "fpga_top"\
-        && cp ../../test/simulation/simulation_output.vcd ../../test/simulation/output/waveforms/rv"$1".vcd\
-        && cp ../../test/simulation/msim_transcript ../../test/simulation/output/logs/rv"$1"_sim.log
+    printf "${GRN}Simulando versão ${1}:${NOC}\n...\n"
+    quartus_sh --flow compile fpga_top > ../../test/simulation/output/logs/rv"$1"_sim.log \
+        && quartus_fit --read_settings_files=off --write_settings_files=off fpga_top -c fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log \
+        && quartus_asm --read_settings_files=off --write_settings_files=off fpga_top -c fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log \
+        && quartus_sta fpga_top -c fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log \
+        && quartus_eda --read_settings_files=off --write_settings_files=off fpga_top -c fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log \
+        && quartus_sh -t "$QUARTUS_PATH/common/tcl/internal/nativelink/qnativesim.tcl" fpga_top fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log
+    if [[ $? -eq 0 ]]; then
+        printf "${GRN}[SUCESSO]${NOC}\n\n"
+        cp ../../test/simulation/simulation_output.vcd ../../test/simulation/output/waveforms/rv"$1".vcd
+        cat ../../test/simulation/msim_transcript >> ../../test/simulation/output/logs/rv"$1"_sim.log
+    else
+        printf "${RED}[FALHA]${NOC}\n\n"
+    fi
 }
 
 select_uarch (){
     # Comment out all microarchitectures defines
-    sed -i 's/^\s*+`define UNICICLO$/\/\/ `define UNICICLO/' ../../core/config.v
-    sed -i 's/^\s*+`define MULTICICLO$/\/\/ `define MULTICICLO/' ../../core/config.v
-    sed -i 's/^\s*+`define PIPELINE$/\/\/ `define PIPELINE/' ../../core/config.v
+    sed -i 's/^\s*`define UNICICLO$/\/\/ `define UNICICLO/' ../../core/config.v
+    sed -i 's/^\s*`define MULTICICLO$/\/\/ `define MULTICICLO/' ../../core/config.v
+    sed -i 's/^\s*`define PIPELINE$/\/\/ `define PIPELINE/' ../../core/config.v
 
     if [[ "$1" == "uni" ]]; then
-        sed -i 's/^\/\/ `define UNICICLO$/`define UNICICLO/' ../../core/config.v
-        sed -i "s/switch\s*<=.*$/switch  <= 10\'b0000011111/" ../../test/verilog_testbench/fpga_top_tb.v
+        sed -i 's/^\/\/\s*`define UNICICLO$/`define UNICICLO/' ../../core/config.v
+        sed -i "s/switch\s*<=.*$/switch  <= 10\'b0000011111;/" ../../test/verilog_testbench/fpga_top_tb.v
 
     elif [[ "$1" == "multi" ]]; then
-        sed -i 's/^\/\/ `define MULTICICLO$/`define MULTICICLO/' ../../core/config.v
-        sed -i "s/switch\s*<=.*$/switch  <= 10\'b0000000011/" ../../test/verilog_testbench/fpga_top_tb.v
+        sed -i 's/^\/\/\s*`define MULTICICLO$/`define MULTICICLO/' ../../core/config.v
+        sed -i "s/switch\s*<=.*$/switch  <= 10\'b0000000111;/" ../../test/verilog_testbench/fpga_top_tb.v
 
     elif [[ "$1" == "pipe" ]]; then
-        sed -i 's/^\/\/ `define PIPELINE$/`define PIPELINE/' ../../core/config.v
-        sed -i "s/switch\s*<=.*$/switch  <= 10\'b0000000010/" ../../test/verilog_testbench/fpga_top_tb.v
+        sed -i 's/^\/\/\s*`define PIPELINE$/`define PIPELINE/' ../../core/config.v
+        sed -i "s/switch\s*<=.*$/switch  <= 10\'b0000000011;/" ../../test/verilog_testbench/fpga_top_tb.v
     fi
 }
 

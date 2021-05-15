@@ -1024,7 +1024,7 @@ set_global_assignment -name EDA_TEST_BENCH_FILE ../../test/verilog_testbench/fpg
 
 
 
-set_global_assignment -name EDA_LAUNCH_CMD_LINE_TOOL OFF -section_id eda_simulation
+set_global_assignment -name EDA_LAUNCH_CMD_LINE_TOOL ON -section_id eda_simulation
 set_global_assignment -name EDA_NATIVELINK_PORTABLE_FILE_PATHS ON -section_id eda_simulation
 set_global_assignment -name VERILOG_FILE ../../core/config.v
 set_global_assignment -name VERILOG_FILE ../../core/fpga_top.v
