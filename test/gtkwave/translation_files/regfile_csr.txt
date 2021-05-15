@@ -1,0 +1,19 @@
+0 ustatus
+1 fflags
+2 frm
+3 fcsr
+4 uie
+5 utvec
+64 uscratch
+65 uepc
+66 ucause
+67 utval
+68 uip
+769 misa
+3072 cycle
+3073 time
+3074 instret
+3200 cycleh
+3201 timeh
+3202 instreth
+
