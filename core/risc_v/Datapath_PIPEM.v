@@ -531,6 +531,7 @@ always @(posedge iCLK or posedge iRST) begin
             RegIDEX[128:126] <= wID_CMem2Reg;       // 3
             RegIDEX[160:129] <= wID_Immediate;      // 32
             RegIDEX[192:161] <= wID_PC4;            // 32
+            // RegIDEX[224:193] <= wID_CSRead;         // 32 // XXX: Passando 32'b0
             RegIDEX[    225] <= wID_CEcall;         // 1
             RegIDEX[    226] <= wID_CInvInstr;      // 1
             RegIDEX[    227] <= wID_CSRegWrite;     // 1
@@ -598,7 +599,6 @@ always @(*) begin
 `ifdef RV32IMF
         3'b100:   wEX_ForwardA <= wMEM_FPALUResult;
 `endif
-        // 3'b101:   wEX_ForwardB <= wWB_ALUresult;
         3'b110:   wEX_ForwardA <= wMEM_PC4;
         // 3'b111:   wEX_ForwardA <= wWB_PC4;
         default:  wEX_ForwardA <= ZERO;

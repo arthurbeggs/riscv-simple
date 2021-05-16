@@ -161,7 +161,7 @@ always @(*) begin
                     oMem2Reg      <= 3'b100;
                     oOrigPC       <= 3'b000;
                 `ifdef RV32IMF
-                    oInstrType    <= 14'b10000000000000;
+                    oInstrType    <= 14'b00000100000000;
                 `else
                     oInstrType    <= 9'b100000000;
                 `endif
@@ -179,7 +179,7 @@ always @(*) begin
                     oMem2Reg      <= 3'b100;
                     oOrigPC       <= 3'b000;
                 `ifdef RV32IMF
-                    oInstrType    <= 14'b10000000000000;
+                    oInstrType    <= 14'b00000100000000;
                 `else
                     oInstrType    <= 9'b100000000;
                 `endif
@@ -197,7 +197,7 @@ always @(*) begin
                     oMem2Reg      <= 3'b100;
                     oOrigPC       <= 3'b000;
                 `ifdef RV32IMF
-                    oInstrType    <= 14'b10000000000000;
+                    oInstrType    <= 14'b00000100000000;
                 `else
                     oInstrType    <= 9'b100000000;
                 `endif
@@ -215,7 +215,7 @@ always @(*) begin
                     oMem2Reg      <= 3'b100;
                     oOrigPC       <= 3'b000;
                 `ifdef RV32IMF
-                    oInstrType    <= 14'b10000000000000;
+                    oInstrType    <= 14'b00000100000000;
                 `else
                     oInstrType    <= 9'b100000000;
                 `endif
@@ -233,7 +233,7 @@ always @(*) begin
                     oMem2Reg      <= 3'b100;
                     oOrigPC       <= 3'b000;
                 `ifdef RV32IMF
-                    oInstrType    <= 14'b10000000000000;
+                    oInstrType    <= 14'b00000100000000;
                 `else
                     oInstrType    <= 9'b100000000;
                 `endif
@@ -251,7 +251,7 @@ always @(*) begin
                     oMem2Reg      <= 3'b100;
                     oOrigPC       <= 3'b000;
                 `ifdef RV32IMF
-                    oInstrType    <= 14'b10000000000000;
+                    oInstrType    <= 14'b00000100000000;
                 `else
                     oInstrType    <= 9'b100000000;
                 `endif
