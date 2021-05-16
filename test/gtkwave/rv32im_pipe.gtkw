@@ -1,0 +1,211 @@
+[*]
+[*] GTKWave Analyzer v3.3.108 (w)1999-2020 BSI
+[*] Sun May 16 06:03:44 2021
+[*]
+[dumpfile] "./test/simulation/output/waveforms/rv32im_pipe.vcd"
+[dumpfile_mtime] "Sun May 16 03:55:14 2021"
+[dumpfile_size] 164477921
+[savefile] "./test/gtkwave/rv32im_pipe.gtkw"
+[timestart] 583
+[size] 949 1074
+[pos] -1 -1
+*-6.000000 719 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] fpga_top_tb.
+[treeopen] fpga_top_tb.dut.
+[treeopen] fpga_top_tb.dut.CPU.
+[sst_width] 284
+[signals_width] 382
+[sst_expanded] 1
+[sst_vpaned_height] 316
+@28
+fpga_top_tb.dut.CPU.iCLK_50
+fpga_top_tb.dut.CPU.iCLK
+@200
+-
+-IF
+@22
+fpga_top_tb.dut.CPU.DATAPATH.PC[31:0]
+@4022
+[color] 3
+^>1 ./tools/riscv-disassembler/build/riscv-decode
+#{fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[31] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[30] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[29] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[28] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[27] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[26] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[25] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[24] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[23] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[22] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[21] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[20] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[19] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[18] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[17] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[16] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[15] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[14] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[13] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[12] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[11] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[10] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[9] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[8] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[7] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[6] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[5] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[4] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[3] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[2] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[1] fpga_top_tb.dut.CPU.DATAPATH.wIF_Instr[0]
+@200
+-
+-ID
+@22
+#{fpga_top_tb.dut.CPU.DATAPATH.wID_PC[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wID_PC[31] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[30] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[29] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[28] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[27] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[26] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[25] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[24] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[23] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[22] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[21] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[20] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[19] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[18] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[17] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[16] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[15] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[14] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[13] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[12] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[11] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[10] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[9] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[8] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[7] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[6] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[5] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[4] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[3] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[2] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[1] fpga_top_tb.dut.CPU.DATAPATH.wID_PC[0]
+@4022
+[color] 3
+^>1 ./tools/riscv-disassembler/build/riscv-decode
+#{fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[31] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[30] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[29] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[28] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[27] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[26] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[25] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[24] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[23] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[22] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[21] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[20] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[19] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[18] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[17] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[16] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[15] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[14] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[13] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[12] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[11] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[10] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[9] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[8] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[7] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[6] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[5] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[4] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[3] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[2] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[1] fpga_top_tb.dut.CPU.DATAPATH.wID_Instr[0]
+@2022
+^1 ./test/gtkwave/translation_files/regfile.txt
+#{fpga_top_tb.dut.CPU.DATAPATH.wID_Rs1[4:0]} fpga_top_tb.dut.CPU.DATAPATH.wID_Rs1[4] fpga_top_tb.dut.CPU.DATAPATH.wID_Rs1[3] fpga_top_tb.dut.CPU.DATAPATH.wID_Rs1[2] fpga_top_tb.dut.CPU.DATAPATH.wID_Rs1[1] fpga_top_tb.dut.CPU.DATAPATH.wID_Rs1[0]
+@22
+[color] 3
+#{fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[31] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[30] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[29] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[28] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[27] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[26] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[25] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[24] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[23] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[22] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[21] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[20] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[19] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[18] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[17] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[16] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[15] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[14] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[13] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[12] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[11] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[10] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[9] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[8] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[7] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[6] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[5] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[4] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[3] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[2] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[1] fpga_top_tb.dut.CPU.DATAPATH.wID_Read1[0]
+@2022
+^1 ./test/gtkwave/translation_files/regfile.txt
+#{fpga_top_tb.dut.CPU.DATAPATH.wID_Rs2[4:0]} fpga_top_tb.dut.CPU.DATAPATH.wID_Rs2[4] fpga_top_tb.dut.CPU.DATAPATH.wID_Rs2[3] fpga_top_tb.dut.CPU.DATAPATH.wID_Rs2[2] fpga_top_tb.dut.CPU.DATAPATH.wID_Rs2[1] fpga_top_tb.dut.CPU.DATAPATH.wID_Rs2[0]
+@22
+[color] 3
+#{fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[31] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[30] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[29] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[28] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[27] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[26] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[25] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[24] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[23] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[22] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[21] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[20] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[19] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[18] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[17] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[16] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[15] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[14] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[13] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[12] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[11] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[10] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[9] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[8] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[7] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[6] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[5] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[4] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[3] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[2] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[1] fpga_top_tb.dut.CPU.DATAPATH.wID_Read2[0]
+@2022
+^1 ./test/gtkwave/translation_files/regfile.txt
+#{fpga_top_tb.dut.CPU.DATAPATH.wID_Rd[4:0]} fpga_top_tb.dut.CPU.DATAPATH.wID_Rd[4] fpga_top_tb.dut.CPU.DATAPATH.wID_Rd[3] fpga_top_tb.dut.CPU.DATAPATH.wID_Rd[2] fpga_top_tb.dut.CPU.DATAPATH.wID_Rd[1] fpga_top_tb.dut.CPU.DATAPATH.wID_Rd[0]
+^2 ./test/gtkwave/translation_files/regfile_csr.txt
+#{fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[11:0]} fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[11] fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[10] fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[9] fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[8] fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[7] fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[6] fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[5] fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[4] fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[3] fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[2] fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[1] fpga_top_tb.dut.CPU.DATAPATH.wID_CSR[0]
+@200
+-
+-EX
+@22
+#{fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[31] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[30] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[29] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[28] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[27] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[26] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[25] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[24] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[23] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[22] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[21] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[20] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[19] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[18] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[17] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[16] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[15] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[14] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[13] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[12] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[11] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[10] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[9] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[8] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[7] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[6] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[5] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[4] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[3] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[2] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[1] fpga_top_tb.dut.CPU.DATAPATH.wEX_PC[0]
+@c04022
+[color] 3
+^>1 ./tools/riscv-disassembler/build/riscv-decode
+#{fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[31] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[30] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[29] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[28] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[27] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[26] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[25] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[24] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[23] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[22] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[21] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[20] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[19] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[18] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[17] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[16] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[15] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[14] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[13] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[12] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[11] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[10] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[9] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[8] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[7] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[6] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[5] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[4] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[3] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[2] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[1] fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[0]
+@28
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[31]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[30]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[29]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[28]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[27]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[26]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[25]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[24]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[23]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[22]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[21]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[20]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[19]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[18]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[17]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[16]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[15]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[14]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[13]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[12]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[11]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[10]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[9]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[8]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[7]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[6]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[5]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[4]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[3]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[2]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[1]
+[color] 3
+fpga_top_tb.dut.CPU.DATAPATH.wEX_Instr[0]
+@1401200
+-group_end
+@2022
+^1 ./test/gtkwave/translation_files/regfile.txt
+#{fpga_top_tb.dut.CPU.DATAPATH.wEX_Rs1[4:0]} fpga_top_tb.dut.CPU.DATAPATH.wEX_Rs1[4] fpga_top_tb.dut.CPU.DATAPATH.wEX_Rs1[3] fpga_top_tb.dut.CPU.DATAPATH.wEX_Rs1[2] fpga_top_tb.dut.CPU.DATAPATH.wEX_Rs1[1] fpga_top_tb.dut.CPU.DATAPATH.wEX_Rs1[0]
+@22
+[color] 3
+#{fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[31] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[30] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[29] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[28] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[27] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[26] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[25] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[24] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[23] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[22] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[21] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[20] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[19] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[18] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[17] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[16] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[15] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[14] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[13] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[12] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[11] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[10] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[9] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[8] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[7] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[6] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[5] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[4] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[3] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[2] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[1] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read1[0]
+@2022
+^1 ./test/gtkwave/translation_files/regfile.txt
+#{fpga_top_tb.dut.CPU.DATAPATH.wEX_Rs2[4:0]} fpga_top_tb.dut.CPU.DATAPATH.wEX_Rs2[4] fpga_top_tb.dut.CPU.DATAPATH.wEX_Rs2[3] fpga_top_tb.dut.CPU.DATAPATH.wEX_Rs2[2] fpga_top_tb.dut.CPU.DATAPATH.wEX_Rs2[1] fpga_top_tb.dut.CPU.DATAPATH.wEX_Rs2[0]
+@22
+[color] 3
+#{fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[31] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[30] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[29] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[28] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[27] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[26] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[25] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[24] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[23] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[22] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[21] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[20] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[19] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[18] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[17] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[16] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[15] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[14] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[13] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[12] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[11] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[10] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[9] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[8] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[7] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[6] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[5] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[4] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[3] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[2] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[1] fpga_top_tb.dut.CPU.DATAPATH.wEX_Read2[0]
+#{fpga_top_tb.dut.CPU.DATAPATH.wEX_Rd[4:0]} fpga_top_tb.dut.CPU.DATAPATH.wEX_Rd[4] fpga_top_tb.dut.CPU.DATAPATH.wEX_Rd[3] fpga_top_tb.dut.CPU.DATAPATH.wEX_Rd[2] fpga_top_tb.dut.CPU.DATAPATH.wEX_Rd[1] fpga_top_tb.dut.CPU.DATAPATH.wEX_Rd[0]
+[color] 1
+#{fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[31] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[30] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[29] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[28] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[27] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[26] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[25] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[24] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[23] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[22] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[21] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[20] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[19] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[18] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[17] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[16] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[15] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[14] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[13] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[12] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[11] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[10] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[9] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[8] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[7] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[6] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[5] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[4] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[3] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[2] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[1] fpga_top_tb.dut.CPU.DATAPATH.wEX_ALUresult[0]
+@2022
+^2 ./test/gtkwave/translation_files/regfile_csr.txt
+#{fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[11:0]} fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[11] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[10] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[9] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[8] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[7] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[6] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[5] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[4] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[3] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[2] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[1] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSR[0]
+@28
+[color] 2
+fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRegWrite
+@22
+[color] 3
+#{fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[31] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[30] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[29] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[28] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[27] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[26] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[25] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[24] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[23] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[22] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[21] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[20] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[19] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[18] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[17] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[16] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[15] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[14] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[13] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[12] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[11] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[10] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[9] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[8] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[7] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[6] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[5] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[4] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[3] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[2] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[1] fpga_top_tb.dut.CPU.DATAPATH.wEX_CSRead[0]
+@200
+-
+-MEM
+@22
+#{fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[31] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[30] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[29] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[28] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[27] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[26] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[25] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[24] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[23] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[22] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[21] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[20] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[19] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[18] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[17] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[16] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[15] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[14] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[13] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[12] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[11] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[10] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[9] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[8] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[7] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[6] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[5] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[4] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[3] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[2] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[1] fpga_top_tb.dut.CPU.DATAPATH.wMEM_PC[0]
+@4022
+[color] 3
+^>1 ./tools/riscv-disassembler/build/riscv-decode
+#{fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[31] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[30] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[29] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[28] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[27] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[26] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[25] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[24] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[23] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[22] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[21] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[20] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[19] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[18] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[17] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[16] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[15] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[14] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[13] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[12] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[11] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[10] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[9] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[8] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[7] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[6] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[5] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[4] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[3] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[2] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[1] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Instr[0]
+@2022
+^1 ./test/gtkwave/translation_files/regfile.txt
+#{fpga_top_tb.dut.CPU.DATAPATH.wMEM_Rd[4:0]} fpga_top_tb.dut.CPU.DATAPATH.wMEM_Rd[4] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Rd[3] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Rd[2] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Rd[1] fpga_top_tb.dut.CPU.DATAPATH.wMEM_Rd[0]
+@22
+[color] 1
+#{fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[31] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[30] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[29] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[28] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[27] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[26] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[25] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[24] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[23] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[22] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[21] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[20] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[19] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[18] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[17] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[16] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[15] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[14] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[13] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[12] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[11] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[10] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[9] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[8] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[7] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[6] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[5] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[4] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[3] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[2] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[1] fpga_top_tb.dut.CPU.DATAPATH.wMEM_ALUresult[0]
+@2022
+^2 ./test/gtkwave/translation_files/regfile_csr.txt
+#{fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[11:0]} fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[11] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[10] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[9] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[8] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[7] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[6] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[5] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[4] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[3] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[2] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[1] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSR[0]
+@22
+[color] 3
+#{fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[31] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[30] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[29] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[28] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[27] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[26] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[25] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[24] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[23] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[22] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[21] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[20] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[19] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[18] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[17] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[16] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[15] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[14] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[13] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[12] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[11] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[10] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[9] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[8] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[7] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[6] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[5] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[4] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[3] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[2] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[1] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRead[0]
+@28
+[color] 2
+fpga_top_tb.dut.CPU.DATAPATH.wMEM_ExceptionRegWrite
+@23
+[color] 5
+#{fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[31] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[30] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[29] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[28] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[27] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[26] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[25] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[24] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[23] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[22] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[21] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[20] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[19] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[18] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[17] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[16] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[15] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[14] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[13] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[12] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[11] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[10] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[9] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[8] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[7] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[6] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[5] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[4] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[3] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[2] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[1] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUEPC[0]
+@22
+[color] 5
+#{fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[31] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[30] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[29] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[28] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[27] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[26] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[25] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[24] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[23] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[22] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[21] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[20] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[19] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[18] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[17] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[16] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[15] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[14] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[13] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[12] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[11] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[10] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[9] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[8] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[7] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[6] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[5] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[4] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[3] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[2] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[1] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUCAUSE[0]
+[color] 5
+#{fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[31] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[30] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[29] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[28] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[27] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[26] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[25] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[24] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[23] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[22] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[21] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[20] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[19] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[18] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[17] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[16] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[15] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[14] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[13] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[12] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[11] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[10] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[9] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[8] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[7] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[6] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[5] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[4] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[3] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[2] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[1] fpga_top_tb.dut.CPU.DATAPATH.wMEM_CSRegWriteUTVAL[0]
+@200
+-
+-WB
+@2022
+^1 ./test/gtkwave/translation_files/regfile.txt
+#{fpga_top_tb.dut.CPU.DATAPATH.wWB_Rd[4:0]} fpga_top_tb.dut.CPU.DATAPATH.wWB_Rd[4] fpga_top_tb.dut.CPU.DATAPATH.wWB_Rd[3] fpga_top_tb.dut.CPU.DATAPATH.wWB_Rd[2] fpga_top_tb.dut.CPU.DATAPATH.wWB_Rd[1] fpga_top_tb.dut.CPU.DATAPATH.wWB_Rd[0]
+@22
+[color] 5
+fpga_top_tb.dut.CPU.DATAPATH.wWB_RegWrite[31:0]
+@28
+[color] 2
+fpga_top_tb.dut.CPU.DATAPATH.wWB_CRegWrite
+fpga_top_tb.dut.CPU.DATAPATH.wWB_ExceptionRegWrite
+@22
+[color] 5
+#{fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[31] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[30] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[29] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[28] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[27] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[26] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[25] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[24] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[23] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[22] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[21] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[20] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[19] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[18] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[17] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[16] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[15] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[14] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[13] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[12] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[11] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[10] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[9] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[8] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[7] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[6] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[5] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[4] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[3] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[2] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[1] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUEPC[0]
+[color] 5
+#{fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[31] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[30] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[29] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[28] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[27] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[26] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[25] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[24] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[23] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[22] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[21] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[20] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[19] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[18] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[17] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[16] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[15] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[14] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[13] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[12] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[11] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[10] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[9] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[8] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[7] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[6] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[5] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[4] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[3] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[2] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[1] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUCAUSE[0]
+[color] 5
+#{fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[31:0]} fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[31] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[30] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[29] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[28] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[27] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[26] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[25] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[24] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[23] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[22] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[21] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[20] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[19] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[18] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[17] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[16] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[15] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[14] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[13] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[12] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[11] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[10] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[9] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[8] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[7] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[6] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[5] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[4] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[3] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[2] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[1] fpga_top_tb.dut.CPU.DATAPATH.wWB_CSRegWriteUTVAL[0]
+[pattern_trace] 1
+[pattern_trace] 0

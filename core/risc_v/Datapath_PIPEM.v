@@ -103,7 +103,6 @@ wire [31:0] wID_CSRegReadUTVEC;
 wire [31:0] wID_CSRegReadUEPC;
 wire [31:0] wID_CSRegReadUSTATUS;
 wire [31:0] wID_CSRegReadUTVAL;
-wire [31:0] wID_CSRead;
 
 wire [31:0] wID_Immediate;
 
@@ -156,7 +155,6 @@ wire wEX_CRegWrite              = RegIDEX[125];
 wire [ 2:0] wEX_CMem2Reg        = RegIDEX[128:126];
 wire [31:0] wEX_Immediate       = RegIDEX[160:129];
 wire [31:0] wEX_PC4             = RegIDEX[192:161];
-wire [31:0] wEX_CSRead          = RegIDEX[224:193];
 wire wEX_CEcall                 = RegIDEX[225];
 wire wEX_CInvInstr              = RegIDEX[226];
 wire wEX_CSRegWrite             = RegIDEX[227];
@@ -172,6 +170,7 @@ wire [ 4:0] wEX_CFPALUControl   = RegIDEX[358:354];
 wire wEX_CFPALUStart            = RegIDEX[359];
 `endif
 
+wire [31:0] wEX_CSRead;
 wire [31:0] wEX_ALUresult;
 
 `ifdef RV32IMF
@@ -360,12 +359,12 @@ FRegisters REGISTERS1 (
 CSRegisters REGISTERS2 (
     .core_clock             (iCLK),
     .reset                  (iRST),
-    .iRegWrite              (wWB_CSRegWrite),           // escrita pelo codigo csr
+    .iRegWrite              (wEX_CSRegWrite),           // escrita pelo codigo csr
     .iRegWriteSimu          (wWB_ExceptionRegWrite),    // esctita simultanea em uepc ucause e utval usado pelo exception control
-    .register_read_address  (wID_CSR),
-    .register_write_address (wID_CSR),
-    .iWriteData             (wWB_ALUresult),            // escreve no csr o valor que sai de da ula
-    .oReadData              (wID_CSRead),               // le do csr o valor e escreve no rd
+    .register_read_address  (wEX_CSR),
+    .register_write_address (wEX_CSR),
+    .iWriteData             (wEX_ALUresult),            // escreve no csr o valor que sai de da ula
+    .oReadData              (wEX_CSRead),               // le do csr o valor e escreve no rd
     .iWriteDataUEPC         (wWB_CSRegWriteUEPC),
     .iWriteDataUCAUSE       (wWB_CSRegWriteUCAUSE),
     .iWriteDataUTVAL        (wWB_CSRegWriteUTVAL),      // escrita registradores especiais precisam de acesso simultaneo
@@ -532,7 +531,6 @@ always @(posedge iCLK or posedge iRST) begin
             RegIDEX[128:126] <= wID_CMem2Reg;       // 3
             RegIDEX[160:129] <= wID_Immediate;      // 32
             RegIDEX[192:161] <= wID_PC4;            // 32
-            RegIDEX[224:193] <= wID_CSRead;         // 32
             RegIDEX[    225] <= wID_CEcall;         // 1
             RegIDEX[    226] <= wID_CInvInstr;      // 1
             RegIDEX[    227] <= wID_CSRegWrite;     // 1
