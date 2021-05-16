@@ -1,0 +1,21 @@
+00 add
+01 sub
+02 mul
+03 div
+04 sqrt
+05 abs
+06 ceq
+07 clt
+08 cle
+09 cvt.s.w
+0a cvt.w.s
+0b mv
+0c sgnj
+0d sgnjn
+0e sgnjx
+0f max
+10 min
+11 cvt.s.wu
+12 cvt.s.w
+1f NULL
+

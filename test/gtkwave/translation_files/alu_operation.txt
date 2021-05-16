@@ -1,0 +1,21 @@
+00 and
+01 or
+02 xor
+03 add
+04 sub
+05 slt
+06 sltu
+07 sll
+08 srl
+09 sra
+0a lui
+0b mul
+0c mulh
+0d mulhu
+0e mulhsu
+0f div
+10 divu
+11 rem
+12 remu
+1f NULL
+
