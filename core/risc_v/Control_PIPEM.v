@@ -668,35 +668,35 @@ always @(*) begin
 
             case(Funct7)
                 FUNCT7_FADD_S: begin
-                    oInstrType    <= 14'b00100000000000; //FAIsFloat
+                    oInstrType    <= 14'b10100000000000; //FAIsFloat
                     oRegWrite     <= 1'b0;
                     oFRegWrite    <= 1'b1;
                     oFPALUControl <= FOPADD;
                 end
 
                 FUNCT7_FSUB_S: begin
-                    oInstrType    <= 14'b00100000000000; //FAIsFloat
+                    oInstrType    <= 14'b10100000000000; //FAIsFloat
                     oRegWrite     <= 1'b0;
                     oFRegWrite    <= 1'b1;
                     oFPALUControl <= FOPSUB;
                 end
 
                 FUNCT7_FMUL_S: begin
-                    oInstrType    <= 14'b00100000000000; //FAIsFloat
+                    oInstrType    <= 14'b10100000000000; //FAIsFloat
                     oRegWrite     <= 1'b0;
                     oFRegWrite    <= 1'b1;
                     oFPALUControl <= FOPMUL;
                 end
 
                 FUNCT7_FDIV_S: begin
-                    oInstrType    <= 14'b00100000000000; //FAIsFloat
+                    oInstrType    <= 14'b10100000000000; //FAIsFloat
                     oRegWrite     <= 1'b0;
                     oFRegWrite    <= 1'b1;
                     oFPALUControl <= FOPDIV;
                 end
 
                 FUNCT7_FSQRT_S: begin
-                    oInstrType    <= 14'b00100000000000; //FAIsFloat
+                    oInstrType    <= 14'b10100000000000; //FAIsFloat
                     oRegWrite     <= 1'b0;
                     oFRegWrite    <= 1'b1;
                     oFPALUControl <= FOPSQRT;
@@ -710,14 +710,14 @@ always @(*) begin
                 end
 
                 FUNCT7_FMV_X_S: begin
-                    oInstrType    <= 14'b10100000000000; //FPULA2Reg && FAIsFloat
+                    oInstrType    <= 14'b00100000000000; //FPULA2Reg && FAIsFloat // NOTE: possivelmente errado;
                     oRegWrite     <= 1'b1;
                     oFRegWrite    <= 1'b0;
                     oFPALUControl <= FOPMV;
                 end
 
                 FUNCT7_FSIGN_INJECT: begin
-                    oInstrType    <= 14'b00100000000000; //FAIsFloat
+                    oInstrType    <= 14'b10100000000000; //FAIsFloat
                     oRegWrite     <= 1'b0;
                     oFRegWrite    <= 1'b1;
 
@@ -750,7 +750,7 @@ always @(*) begin
                 end
 
                 FUNCT7_MAX_MIN_S: begin
-                    oInstrType <= 14'b00100000000000; //FAIsFloat
+                    oInstrType <= 14'b10100000000000; //FAIsFloat
                     oRegWrite  <= 1'b0;
                     oFRegWrite <= 1'b1;
 
@@ -811,7 +811,7 @@ always @(*) begin
                 end
 
                 FUNCT7_FCVT_S_W_WU: begin
-                    oInstrType <= 14'b01000000000000; //FAIsInt
+                    oInstrType <= 14'b11000000000000; //FAIsInt
                     oRegWrite  <= 1'b0;
                     oFRegWrite <= 1'b1;
 
@@ -906,7 +906,7 @@ always @(*) begin
             oALUControl   <= OPADD;
             oMem2Reg      <= 3'b010;
             oOrigPC       <= 3'b000;
-            oInstrType    <= 14'b00000100000000; // FLoad
+            oInstrType    <= 14'b00001000000000; // FLoad
 
             oFRegWrite    <= 1'b1;
             oFPALUControl <= FOPNULL;
@@ -926,7 +926,7 @@ always @(*) begin
             oALUControl   <= OPADD;
             oMem2Reg      <= 3'b000;
             oOrigPC       <= 3'b000;
-            oInstrType    <= 14'b00001000000000; // FStore
+            oInstrType    <= 14'b00010000000000; // FStore
 
             oFRegWrite    <= 1'b0;
             oFPALUControl <= FOPNULL;

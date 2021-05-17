@@ -237,7 +237,7 @@ reg  [31:0] wMEM_CSRForward;
 
 
 ////////////////////// Sinais do estágio WB //////////////////////
-// wire [31:0] wWB_PC                  = RegMEMWB[ 31:  0];
+wire [31:0] wWB_PC                  = RegMEMWB[ 31:  0];
 wire [31:0] wWB_MemLoad             = RegMEMWB[ 63: 32];
 wire [31:0] wWB_ALUresult           = RegMEMWB[ 95: 64];
 wire [ 4:0] wWB_Rd                  = RegMEMWB[100: 96];
@@ -363,7 +363,7 @@ CSRegisters REGISTERS2 (
     .iRegWriteSimu          (wWB_ExceptionRegWrite),    // esctita simultanea em uepc ucause e utval usado pelo exception control
     .register_read_address  (wEX_CSR),
     .register_write_address (wEX_CSR),
-    .iWriteData             (wEX_ALUresult),            // escreve no csr o valor que sai de da ula
+    .iWriteData             (wEX_ALUresult),            // escreve no csr o valor que sai de da ula // NOTE: Não seria o CSRForward?
     .oReadData              (wEX_CSRead),               // le do csr o valor e escreve no rd
     .iWriteDataUEPC         (wWB_CSRegWriteUEPC),
     .iWriteDataUCAUSE       (wWB_CSRegWriteUCAUSE),

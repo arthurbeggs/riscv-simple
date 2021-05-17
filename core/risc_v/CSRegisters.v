@@ -126,11 +126,11 @@ always @(posedge core_clock or posedge reset) begin
     if (reset) begin // reseta o banco de registradores e pilha
         for (i = 0; i <= 18; i = i + 1) registers[i] <= 32'h00000000;
     `ifdef RV32IM
-        registers[12] = 32'h40001100; // misa
+        registers[12] <= 32'h40001100; // misa
     `elsif RV32IMF
-        registers[12] = 32'h40001120; // misa
+        registers[12] <= 32'h40001120; // misa
     `else
-        registers[12] = 32'h40000100; // misa
+        registers[12] <= 32'h40000100; // misa
     `endif
     end
     else begin

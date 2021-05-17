@@ -39,7 +39,7 @@ MSG3:       .string "RV32IMF - Teste em progresso..."
     li a1, 36
     li a2, 4
     li a4, 0
-    ecall
+    # ecall     # XXX: Atrapalha visualização das waveforms simuladas
 
     li s11, 1000    # contador de Loops
     rdtime s10  # le o tempo inicial

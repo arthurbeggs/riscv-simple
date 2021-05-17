@@ -85,7 +85,7 @@ wire wEX_FAIsInt    = iEX_InstrType[12];
 wire wEX_FAIsFloat  = iEX_InstrType[11];
 // wire wEX_FStore     = iEX_InstrType[10];
 wire wEX_FLoad      = iEX_InstrType[ 9];
-wire wEX_FPULA      = wEX_FAIsInt || wEX_FAIsFloat;// || wEX_FLoad; // || wEX_FStore; // Tipos de instrucao que utilizam a FPULA e escrevem em registrador de ponto flutuante
+wire wEX_FPULA      = wEX_FAIsInt || wEX_FAIsFloat || wEX_FLoad; // || wEX_FStore; // Tipos de instrucao que utilizam a FPULA e escrevem em registrador de ponto flutuante
 `endif
 wire wEX_TipoCSR    = iEX_InstrType[8];
 wire wEX_DivRem     = iEX_InstrType[7];
@@ -105,7 +105,7 @@ wire wMEM_FPULA2Reg = iMEM_InstrType[13];
 wire wMEM_FAIsInt   = iMEM_InstrType[12];
 wire wMEM_FAIsFloat = iMEM_InstrType[11];
 // wire wMEM_FStore    = iMEM_InstrType[10];
-// wire wMEM_FLoad     = iMEM_InstrType[ 9];
+wire wMEM_FLoad     = iMEM_InstrType[ 9];
 wire wMEM_FPULA     = wMEM_FAIsInt || wMEM_FAIsFloat;// || wMEM_FLoad; // Tipos de instrucao que utilizam a FPULA e escrevem em registrador de ponto flutuante
 `endif
 wire wMEM_TipoCSR   = iMEM_InstrType[8];
@@ -283,7 +283,9 @@ always @(*) begin  // Forward da ULA
 
         // fwd FB
         if (wMEM_FPULA && (iMEM_Rd==iEX_Rs2))              // Faz o forward do resultado da FPULA no estagio MEM para o Rs1 do EX
-                oFwdB <= 3'b100;
+            oFwdB <= 3'b100;
+        else if (wMEM_FLoad && (iMEM_Rd==iID_Rs2))
+            oFwdB <= 3'b010;
         else if ((wWB_FPULA || wWB_FLoad) && (iWB_Rd==iEX_Rs2)) // Faz o forward do ultimo multiplexador do datapath para o FA nos casos de FLOAD e operacoes que usam a FPULA e escrevem no FReg
             oFwdB <= 3'b011;
         else
@@ -298,6 +300,8 @@ always @(*) begin  // Forward da ULA
             else
                 oFwdA <= 3'b001; // Sem forward
         end
+        else if (wMEM_FLoad && (iMEM_Rd==iID_Rs1))
+            oFwdA <= 3'b010;
         else begin   // Quando FRs1 for INT
             oFwdA <= 3'b000; // Sem forward - recebe Read1
 
@@ -313,6 +317,7 @@ always @(*) begin  // Forward da ULA
                 oFwdA <= 3'b000;
         end
     end
+
     else begin  // Quando EX nao utiliza a FPULA
 `endif
         oFwdA       <= 3'b000;
@@ -325,6 +330,8 @@ always @(*) begin  // Forward da ULA
             oFwdA <= 3'b110;
         else if ((iWB_Rd!=5'b0)  && (wWB_ULA || wWB_PC4 || wWB_Load ||  wWB_TipoCSR)  && (iWB_Rd==iEX_Rs1))      // WB -> EX
             oFwdA <= 3'b011;
+//        else if (wMEM_Load && (iMEM_Rd==iID_Rs1))
+//            oFwdA <= 3'b100;
 
 `ifdef RV32IMF
         else if ((iMEM_Rd!=5'b0) && wMEM_FPULA2Reg && (iMEM_Rd==iEX_Rs1)) // Caso a FPULA tenha como Rd o mesmo int necessario no estagio EX
@@ -342,6 +349,8 @@ always @(*) begin  // Forward da ULA
                 oFwdB <= 3'b110;
             else if ((iWB_Rd!=5'b0)  && (wWB_ULA || wWB_PC4 || wWB_Load || wWB_TipoCSR) && (iWB_Rd==iEX_Rs2))
                 oFwdB <= 3'b011;
+    //        else if (wMEM_Load && (iMEM_Rd==iID_Rs2))
+    //            oFwdB <= 3'b100;
 
 `ifdef RV32IMF
             else if ((iMEM_Rd!=5'b0) && wMEM_FPULA2Reg && (iMEM_Rd==iEX_Rs2)) // Caso a FPULA tenha como Rd o mesmo int necessario no estagio EX
