@@ -1,19 +1,19 @@
 [*]
 [*] GTKWave Analyzer v3.3.108 (w)1999-2020 BSI
-[*] Mon May 17 13:49:16 2021
+[*] Mon May 17 15:01:19 2021
 [*]
 [dumpfile] "/home/arthur/projects/riscv-simple/test/simulation/output/waveforms/rv32imf_pipe.vcd"
-[dumpfile_mtime] "Mon May 17 12:05:46 2021"
-[dumpfile_size] 205616337
+[dumpfile_mtime] "Mon May 17 14:21:28 2021"
+[dumpfile_size] 204467729
 [savefile] "/home/arthur/projects/riscv-simple/test/gtkwave/rv32imf_pipe.gtkw"
-[timestart] 1202
+[timestart] 9752
 [size] 1914 1074
 [pos] 1919 0
-*-7.000000 1692 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-7.000000 9885 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] fpga_top_tb.
 [treeopen] fpga_top_tb.dut.
 [treeopen] fpga_top_tb.dut.CPU.
-[sst_width] 284
+[sst_width] 230
 [signals_width] 445
 [sst_expanded] 1
 [sst_vpaned_height] 182
