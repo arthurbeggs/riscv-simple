@@ -425,7 +425,8 @@ ecallException:   addi    sp, sp, -264              # Salva todos os registrador
     goToExit:       DE1(s8,goToExitDE2)     # se for a DE1 pula
             li  a7, 10          # chama o ecall normal do Rars
             ecall               # exit ecall
-    goToExitDE2:    j   goToExitDE2     # trava o processador : Não tem sistema operacional!
+    goToExitDE2:    ebreak     # trava o processador : Não tem sistema operacional!
+            j       goToExitDE2
 
     goToPrintInt:   jal     printInt                # chama printInt
             j       endEcall
@@ -694,9 +695,9 @@ loopprintString:lb  a0, 0(s0)                   # le em a0 o caracter a ser impr
 
             jal     printChar               # imprime char
 
-        addi    a1, a1, 8                   # incrementa a coluna
-        li  t6, 313
-        blt a1, t6, NaoPulaLinha            # se ainda tiver lugar na linha
+            addi    a1, a1, 8                   # incrementa a coluna
+            li  t6, 313
+            blt a1, t6, NaoPulaLinha            # se ainda tiver lugar na linha
             addi    a2, a2, 8                   # incrementa a linha
             mv      a1, zero            # volta a coluna zero
 
@@ -748,7 +749,7 @@ printChar.IMPRIMIVEL:   li  tp, NUMCOLUNAS      # Num colunas 320
             j printChar.mul1d
 printChar.mul1:     mul     t4, tp, a2          # multiplica a2x320  t4 = coordenada y
 printChar.mul1d:    add     t4, t4, a1                  # t4 = 320*y + x
-            addi    t4, t4, 7                   # t4 = 320*y + (x+7)
+            addi    t4, t4, 8   # Largura em pixels do caracter
             li      tp, VGAADDRESSINI0              # Endereco de inicio da memoria VGA0
             beq     a4, zero, printChar.PULAFRAME       # Verifica qual o frame a ser usado em a4
             li      tp, VGAADDRESSINI1              # Endereco de inicio da memoria VGA1

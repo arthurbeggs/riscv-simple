@@ -8,27 +8,23 @@
 #################################################
 
 # Include macros
-.include "../../system/MACROSv21.s"
+.include "../../system/MACROS.s"
 
 .data
 MSG:    .string "Endereco do erro : "
 MSG2:   .string "RV32IM - Nao ha erros :)"
+MSG3:   .string "RV32IM - Teste em progresso..."
 
 .text
-    li a0, 0x38
-    li a1, 0
-    li a7, 148
-    ecall
-
-    li a3,0x3800        #print string sucesso
+    li a3,0xC7FF        # print string de teste
     li a7, 104
-    la a0, MSG2
-    li a1, 64
-    li a2, 0
+    la a0, MSG3
+    li a1, 52
+    li a2, 4
     li a4, 0
     ecall
 
-    li s11, 3000    # contador de Loops
+    li s11, 1000    # contador de Loops
     rdtime s10  # le o tempo inicial
     rdinstret s8    # le o numero de instruções inicial
 
@@ -90,29 +86,43 @@ PULAERRO7: li t0, -7
 
 
 SUCESSO: addi s11,s11,-1
-     bne s11,zero,MAIN
+     bne s11,zero, MAIN
      rdtime s9
      rdinstret s7
 
-    sub a0,s7,s8
-    li a7, 101
+    li a0, 0x38         # pinta a tela de verde
     li a1, 0
-    li a2, 0
+    li a7, 148
+    ecall
+
+    li a3,0x3800        # print string sucesso
+    li a7, 104
+    la a0, MSG2
+    li a1, 64
+    li a2, 4
+    li a4, 0
+    ecall
+
+    sub a0,s7,s8        # printa a qtd de insts
+    li a7, 101
+    li a1, 4
+    li a2, 4
     li a3, 0x3800
     li a4, 0
     ecall
 
-    sub a0,s9,s10
+    sub a0,s9,s10       # printa o tempo gasto
     li a7, 101
     li a1, 272
-    li a2, 0
+    li a2, 4
     li a3, 0x3800
     li a4, 0
     ecall
 
     j END
 
-ERRO:   li a0, 0x07
+
+ERRO:   li a0, 0x07     # pinta a tela de vermelho
     li a7, 148
     li a1, 0
     ecall
@@ -120,8 +130,8 @@ ERRO:   li a0, 0x07
     #Print string erro
     li a7, 104
     la a0, MSG
-    li a1, 0
-    li a2, 0
+    li a1, 4
+    li a2, 4
     li a3, 0x0700
     li a4, 0
     ecall
@@ -129,8 +139,8 @@ ERRO:   li a0, 0x07
     #print endereco erro
     addi a0, t0, -12 #Endereco onde ocorreu o erro
     li a7, 134
-    li a1, 148
-    li a2, 0
+    li a1, 152
+    li a2, 4
     li a3, 0x0700
     li a4, 0
     ecall
@@ -138,5 +148,5 @@ ERRO:   li a0, 0x07
 END:    addi a7, zero, 10
     ecall
 
-.include "../../system/SYSTEMv21.s"
+.include "../../system/SYSTEM.s"
 

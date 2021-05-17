@@ -166,9 +166,9 @@ div10.pula2:    csrw    %rd,uscratch
 
 #definicao do mapa de enderecamento de MMIO
 .eqv VGAADDRESSINI0     0xFF000000
-.eqv VGAADDRESSFIM0     0xFF012C00
+.eqv VGAADDRESSFIM0     0xFF012BFC
 .eqv VGAADDRESSINI1     0xFF100000
-.eqv VGAADDRESSFIM1     0xFF112C00
+.eqv VGAADDRESSFIM1     0xFF112BFC
 .eqv NUMLINHAS          240
 .eqv NUMCOLUNAS         320
 .eqv VGAFRAMESELECT     0xFF200604

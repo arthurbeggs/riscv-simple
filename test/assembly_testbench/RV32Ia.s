@@ -2,14 +2,14 @@
 #   Testbench para a ISA RV32I
 #  Baseado no trabalho:
 #
-# Versão que usa os contadores do CSR
+# Versï¿½o que usa os contadores do CSR
 #
 # Marcus Vinicius Lamar
 # 2020/1
 #################################################
 
 # Include macros
-.include "../../system/MACROSv21.s"
+.include "../../system/MACROS.s"
 
 .data
 N:      .word 5
@@ -21,24 +21,20 @@ NB:     .byte 2
 NB1:    .byte 0
 MSG:    .string "Endereco do erro : "
 MSG2:   .string "RV32I - Nao ha erros :)"
+MSG3:   .string "RV32I - Teste em progresso..."
 
 .text
-    li a0, 0x38
-    li a1, 0
-    li a7, 148
-    ecall
-
-    li a3,0x3800        #print string sucesso
+    li a3,0xC7FF        # print string de teste
     li a7, 104
-    la a0, MSG2
-    li a1, 64
-    li a2, 0
+    la a0, MSG3
+    li a1, 52
+    li a2, 4
     li a4, 0
     ecall
 
     li s11,1000 # contador de loop
     rdtime s10  # le o tempo inicial
-    rdinstret s8    # le o numero de instruções inicial
+    rdinstret s8    # le o numero de instruï¿½ï¿½es inicial
 
 MAIN:   la t1, N    # t1 = N  testa AUIPC e ADDI
     lw t0, 0(t1)    # testa LW
@@ -228,18 +224,31 @@ SUCESSO: addi s11,s11,-1
      rdtime s9
      rdinstret s7
 
-    sub a0,s7,s8
-    li a7, 101
+    li a0, 0x38         # pinta a tela de verde
     li a1, 0
-    li a2, 0
+    li a7, 148
+    ecall
+
+    li a3,0x3800        # print string sucesso
+    li a7, 104
+    la a0, MSG2
+    li a1, 64
+    li a2, 4
+    li a4, 0
+    ecall
+
+    sub a0,s7,s8        # printa a qtd de insts
+    li a7, 101
+    li a1, 4
+    li a2, 4
     li a3, 0x3800
     li a4, 0
     ecall
 
-    sub a0,s9,s10
+    sub a0,s9,s10       # printa o tempo gasto
     li a7, 101
     li a1, 272
-    li a2, 0
+    li a2, 4
     li a3, 0x3800
     li a4, 0
     ecall
@@ -247,7 +256,7 @@ SUCESSO: addi s11,s11,-1
     j END
 
 
-ERRO:   li a0, 0x07
+ERRO:   li a0, 0x07     # pinta a tela de vermelho
     li a7, 148
     li a1, 0
     ecall
@@ -255,8 +264,8 @@ ERRO:   li a0, 0x07
     #Print string erro
     li a7, 104
     la a0, MSG
-    li a1, 0
-    li a2, 0
+    li a1, 4
+    li a2, 4
     li a3, 0x0700
     li a4, 0
     ecall
@@ -264,8 +273,8 @@ ERRO:   li a0, 0x07
     #print endereco erro
     addi a0, t0, -12 #Endereco onde ocorreu o erro
     li a7, 134
-    li a1, 148
-    li a2, 0
+    li a1, 152
+    li a2, 4
     li a3, 0x0700
     li a4, 0
     ecall
@@ -273,5 +282,5 @@ ERRO:   li a0, 0x07
 END:    addi a7, zero, 10
     ecall
 
-.include "../../system/SYSTEMv21.s"
+.include "../../system/SYSTEM.s"
 
