@@ -27,6 +27,33 @@ full_compilation (){
     fi
 }
 
+# Simulation
+simulate (){
+    [[ -d ../../test/simulation/output/waveforms ]] || mkdir -p ../../test/simulation/output/waveforms
+    [[ -d ../../test/simulation/output/logs ]] || mkdir -p ../../test/simulation/output/logs
+    [[ -f ../../test/simulation/output/waveforms/rv"$1".vcd ]] && rm ../../test/simulation/output/waveforms/rv"$1".vcd
+    [[ -f ../../test/simulation/output/logs/rv"$1"_sim.log ]] && rm ../../test/simulation/output/logs/rv"$1"_sim.log
+    [[ -f ../../test/simulation/default_data.mif ]] && rm ../../test/simulation/default_data.mif
+    [[ -f ../../test/simulation/default_text.mif ]] && rm ../../test/simulation/default_text.mif
+    full_compilation "$1"
+    if [[ $? -eq 0 ]]; then
+        printf "${GRN}Simulando versão ${1}:${NOC}\n...\n"
+        cp output_files/rv"$1"_make.log ../../test/simulation/output/logs/rv"$1"_sim.log
+        quartus_fit --read_settings_files=off --write_settings_files=off fpga_top -c fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log \
+            && quartus_asm --read_settings_files=off --write_settings_files=off fpga_top -c fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log \
+            && quartus_sta fpga_top -c fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log \
+            && quartus_eda --read_settings_files=off --write_settings_files=off fpga_top -c fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log \
+            && quartus_sh -t "$QUARTUS_PATH/common/tcl/internal/nativelink/qnativesim.tcl" fpga_top fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log
+        if [[ $? -eq 0 ]]; then
+            printf "${GRN}[SUCESSO]${NOC}\n\n"
+            cp ../../test/simulation/simulation_output.vcd ../../test/simulation/output/waveforms/rv"$1".vcd
+            cat ../../test/simulation/msim_transcript >> ../../test/simulation/output/logs/rv"$1"_sim.log
+        else
+            printf "${RED}[FALHA]${NOC}\n\n"
+        fi
+    fi
+}
+
 # Analysis and synthesis only
 analysis_and_synthesis (){
     [[ -d output_files/partial_logs ]] || mkdir -p output_files/partial_logs
@@ -38,28 +65,6 @@ analysis_and_synthesis (){
     else
         printf "$[FALHA]${NOC}\n\n"
         return 1
-    fi
-}
-
-# Simulation
-simulate (){
-    [[ -d ../../test/simulation/output/waveforms ]] || mkdir -p ../../test/simulation/output/waveforms
-    [[ -d ../../test/simulation/output/logs ]] || mkdir -p ../../test/simulation/output/logs
-    [[ -f ../../test/simulation/output/waveforms/rv"$1".vcd ]] && rm ../../test/simulation/output/waveforms/rv"$1".vcd
-    [[ -f ../../test/simulation/output/logs/rv"$1"_sim.log ]] && rm ../../test/simulation/output/logs/rv"$1"_sim.log
-    printf "${GRN}Simulando versão ${1}:${NOC}\n...\n"
-    quartus_sh --flow compile fpga_top > ../../test/simulation/output/logs/rv"$1"_sim.log \
-        && quartus_fit --read_settings_files=off --write_settings_files=off fpga_top -c fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log \
-        && quartus_asm --read_settings_files=off --write_settings_files=off fpga_top -c fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log \
-        && quartus_sta fpga_top -c fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log \
-        && quartus_eda --read_settings_files=off --write_settings_files=off fpga_top -c fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log \
-        && quartus_sh -t "$QUARTUS_PATH/common/tcl/internal/nativelink/qnativesim.tcl" fpga_top fpga_top >> ../../test/simulation/output/logs/rv"$1"_sim.log
-    if [[ $? -eq 0 ]]; then
-        printf "${GRN}[SUCESSO]${NOC}\n\n"
-        cp ../../test/simulation/simulation_output.vcd ../../test/simulation/output/waveforms/rv"$1".vcd
-        cat ../../test/simulation/msim_transcript >> ../../test/simulation/output/logs/rv"$1"_sim.log
-    else
-        printf "${RED}[FALHA]${NOC}\n\n"
     fi
 }
 
@@ -128,6 +133,22 @@ compile_all_variants (){
     done
 }
 
+# Simulate all variants
+simulate_all_variants (){
+    QUARTUS_PATH=$(echo $PATH | grep -Po "([A-Za-z0-9\./_]*quartus)")
+    ARCH=('uni' 'multi' 'pipe')
+    EXTENSION=('32i' '32im' '32imf')
+    #ARCH=('pipe')
+    #EXTENSION=('32imf')
+    for i in "${ARCH[@]}"; do
+        select_uarch "$i"
+        for j in "${EXTENSION[@]}"; do
+            select_extensions "$j"
+            simulate "$j""_$i"
+        done
+    done
+}
+
 # Make a partial compilation of all variants
 analysis_and_synthesis_all_variants (){
     ARCH=('uni' 'multi' 'pipe')
@@ -137,20 +158,6 @@ analysis_and_synthesis_all_variants (){
         for j in "${EXTENSION[@]}"; do
             select_extensions "$j"
             analysis_and_synthesis "$j""_$i"
-        done
-    done
-}
-
-# Simulate all variants
-simulate_all_variants (){
-    QUARTUS_PATH=$(echo $PATH | grep -Po "([A-Za-z0-9\./_]*quartus)")
-    ARCH=('uni' 'multi' 'pipe')
-    EXTENSION=('32i' '32im' '32imf')
-    for i in "${ARCH[@]}"; do
-        select_uarch "$i"
-        for j in "${EXTENSION[@]}"; do
-            select_extensions "$j"
-            simulate "$j""_$i"
         done
     done
 }
